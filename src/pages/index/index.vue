@@ -1,36 +1,51 @@
 <template>
-  <div class="min-h-[155px] h-[9.375vw] min-w-[1000px] relative flex">
+  <div @mouseenter="onMouseEnter" @mousemove="onMouseMove" @mouseleave="onMouseleave"
+       class="min-h-[155px] h-[9.375vw] min-w-[1000px] relative flex overflow-hidden">
     <img referrerPolicy=no-referrer :src="vcList[0]" class="h-[162px] w-full absolute"/>
-    <img referrerPolicy=no-referrer :src="vcList[1]" class="h-[162px] w-[1664px] absolute"/>
-    <img referrerPolicy=no-referrer :src="vcList[2]" class="h-[162px] w-[1664px] absolute"/>
-    <img referrerPolicy=no-referrer :src="vcList[3]" class="h-[162px] w-[1664px] absolute"/>
-    <img referrerPolicy=no-referrer :src="vcList[4]" class="h-[162px] w-[1664px] absolute"/>
-    <img referrerPolicy=no-referrer :src="vcList[5]" class="h-[162px] w-[1664px] absolute"/>
-    <img referrerPolicy=no-referrer :src="vcList[6]" class="h-[162px] w-[1664px] absolute"/>
-    <img referrerPolicy=no-referrer :src="vcList[7]" class="h-[162px] w-[1664px] absolute"/>
-    <img referrerPolicy=no-referrer :src="vcList[8]" class="h-[162px] w-[1664px] absolute"/>
-    <img referrerPolicy=no-referrer :src="vcList[9]" class="h-[162px] w-[1664px] absolute"/>
-    <img referrerPolicy=no-referrer :src="vcList[10]" class="h-[162px] w-[1664px] absolute"/>
-    <img referrerPolicy=no-referrer :src="vcList[11]" class="h-[162px] w-[1664px] absolute"/>
-    <img referrerPolicy=no-referrer :src="vcList[12]" class="h-[162px] w-[1664px] absolute"/>
-    <video
-        :src="blobUrl"
-        loop playsinline muted autoplay
-        style="object-fit: cover; height: 250px; width: 100px; transform: translate(500px, 0px) rotate(0deg) scale(1); opacity: 1;"></video>
-    <img referrerPolicy=no-referrer :src="vcList[13]" class="h-[162px] w-[1664px] absolute"/>
-    <img referrerPolicy=no-referrer :src="vcList[14]" class="h-[162px] w-[1664px] absolute"/>
-    <img referrerPolicy=no-referrer :src="vcList[10]" class="h-[162px] w-[1664px] absolute"/>
-    <img referrerPolicy=no-referrer :src="vcList[15]" class="h-[162px] w-[1664px] absolute"/>
-    <img referrerPolicy=no-referrer :src="vcList[16]" class="h-[162px] w-[1664px] absolute"/>
-    <img referrerPolicy=no-referrer :src="vcList[17]" class="h-[162px] w-[1664px] absolute"/>
-    <video loop playsinline muted autoplay src="@/assets/v.webm" width="108" height="270" style="object-fit: cover; height: 270px; width: 108px; transform: translate(216px, 0px) rotate(0deg) scale(1); opacity: 1;" data-height="500" data-width="200"></video>
-    <video loop playsinline muted autoplay src="@/assets/v.webm" width="200" height="500" style="object-fit: cover; height: 500px; width: 200px; transform: translate(-700px, 0px) rotate(0deg) scale(1); opacity: 1;" data-height="500" data-width="200"></video>
+    <img ref="bannerImg" :style="bannerStyle" referrerPolicy=no-referrer :src="vcList[1]"
+         class="h-[162px] w-[1664px] absolute transition-all ease-linear"/>
+    <img :style="bannerStyle" referrerPolicy=no-referrer :src="vcList[2]"
+         class="banner-img"/>
+        <img :style="bannerStyle" referrerPolicy=no-referrer :src="vcList[3]" class="banner-img"/>
+        <img :style="bannerStyle" referrerPolicy=no-referrer :src="vcList[4]" class="banner-img"/>
+        <img :style="bannerStyle" referrerPolicy=no-referrer :src="vcList[5]" class="banner-img"/>
+        <img :style="bannerStyle" referrerPolicy=no-referrer :src="vcList[6]" class="banner-img"/>
+        <img :style="bannerStyle" referrerPolicy=no-referrer :src="vcList[7]" class="banner-img"/>
+        <img :style="bannerStyle" referrerPolicy=no-referrer :src="vcList[8]" class="banner-img"/>
+        <img :style="bannerStyle" referrerPolicy=no-referrer :src="vcList[9]" class="banner-img"/>
+        <img :style="bannerStyle" referrerPolicy=no-referrer :src="vcList[10]" class="banner-img"/>
+        <img :style="bannerStyle" referrerPolicy=no-referrer :src="vcList[11]" class="banner-img"/>
+        <img :style="bannerStyle" referrerPolicy=no-referrer :src="vcList[12]" class="banner-img"/>
+        <video
+            :src="blobUrlList[0]"
+            loop playsinline muted autoplay
+            :style="bannerStyle"
+            style="object-fit: cover; height: 250px; width: 100px; transform: translate(1170px, 0px) rotate(0deg) scale(1); opacity: 1;"></video>
+        <img :style="bannerStyle" referrerPolicy=no-referrer :src="vcList[13]" class="banner-img"/>
+        <img :style="bannerStyle" referrerPolicy=no-referrer :src="vcList[14]" class="banner-img"/>
+        <img :style="bannerStyle" referrerPolicy=no-referrer :src="vcList[10]" class="banner-img"/>
+        <img :style="bannerStyle" referrerPolicy=no-referrer :src="vcList[15]" class="banner-img"/>
+        <img :style="bannerStyle" referrerPolicy=no-referrer :src="vcList[16]" class="banner-img"/>
+        <img :style="bannerStyle" referrerPolicy=no-referrer :src="vcList[17]" class="banner-img"/>
+        <video loop playsinline muted autoplay :src="blobUrlList[1]" width="108" height="270"
+               :style="bannerStyle"
+               style="object-fit: cover; height: 270px; width: 108px; transform: translate(805px, 0px) rotate(0deg) scale(1); opacity: 1;"
+               data-height="500" data-width="200"></video>
+        <video loop playsinline muted autoplay :src="blobUrlList[2]" width="200" height="500"
+               :style="bannerStyle"
+               style="object-fit: cover; height: 500px; width: 200px; transform: translate(-200px, 0px) rotate(0deg) scale(1); opacity: 1;"
+               data-height="500" data-width="200"></video>
   </div>
+  {{ x }} {{ y }}
+  <div>bannerX{{ bannerX }}</div>
+  <div>enterX{{ enterX }}</div>
+  <div>current{{(x - enterX)/10}}</div>
 </template>
 
 <script setup lang="ts">
 
-import {ref} from "vue";
+import {CSSProperties, onMounted, ref} from "vue";
+import {useMouse} from "@vueuse/core";
 
 const vcList = [
   'https://i0.hdslb.com/bfs/vc/75ec2d45ce8c942a1f7379d4641171da4d90ab0d.png@1c.webp',
@@ -52,21 +67,53 @@ const vcList = [
   'https://i0.hdslb.com/bfs/vc/cd68251cde11936871237ca94360acb451bf7ed2.png@1c.webp',
   'https://i0.hdslb.com/bfs/vc/a43c6833d262301373234ffbd6934559d2ce7fb2.png@1c.webp',
 ]
-const blobUrl = ref<string>('')
+const webmList = [
+  'https://i0.hdslb.com/bfs/vc/4a4c1f6b2977478c73e41f39a2910c3b3c33167e.webm',
+  'https://i0.hdslb.com/bfs/vc/0de9fb9822d2d00500abc8bdb143907eb1802ddb.webm',
+  'https://i0.hdslb.com/bfs/vc/426073f920477b718b8aee5ec141aca3889500f7.webm',
+]
+const bannerImg = ref<HTMLImageElement>()
+const bannerStyle = ref<CSSProperties>({})
+const blobUrlList = ref<string[]>([])
+const getWebm = async (url: string): Promise<string> => {
 
-fetch('https://i0.hdslb.com/bfs/vc/4a4c1f6b2977478c73e41f39a2910c3b3c33167e.webm', {referrerPolicy: 'no-referrer'})
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return response.blob();
-    })
-    .then(blob => {
-      blobUrl.value = URL.createObjectURL(blob)
-    })
+  const response = await fetch(url, {referrerPolicy: 'no-referrer'})
+  const blob = await response.blob()
+  return URL.createObjectURL(blob)
+}
+for (let i = 0; i < webmList.length; i++) {
+  getWebm(webmList[i]).then(res => {
+    blobUrlList.value[i] = res
+  })
+}
+const {x, y} = useMouse()
+const bannerX = ref<number>()
 
+const onMouseMove = (e: MouseEvent) => {
+  // bannerStyle.value?.translate = `${x}px, ${y}px`
+  // bannerStyle.value.transform = `translate(${e.clientX}px)`;
+  if (bannerImg.value) {
+    bannerStyle.value.transform = `translate(${(e.clientX - enterX.value)/10}px)`;
+    bannerX.value = e.clientX - bannerImg.value.x
+  }
+}
+let enterX = ref(0)
+const onMouseEnter = (e: MouseEvent) => {
+  enterX.value = e.clientX
+}
+
+
+const onMouseleave = () => {
+  enterX.value = 0
+  bannerStyle.value.transform = `translate(0)`;
+}
+
+onMounted(() => {
+})
 </script>
 
 <style scoped>
-
+.banner-img{
+  @apply h-[162px] w-[1664px] absolute transition-all ease-out;
+}
 </style>
