@@ -1,9 +1,11 @@
 import {defineConfig} from 'vite'
 import vue from '@vitejs/plugin-vue'
 import path from "node:path";
+import svgLoader from 'vite-svg-loader';
+
 // https://vitejs.dev/config/
 export default defineConfig({
-    plugins: [vue()],
+    plugins: [vue(),svgLoader()],
     resolve: {
         alias: {
             '@': path.resolve(__dirname, './src'),
@@ -12,7 +14,7 @@ export default defineConfig({
     server: {
         proxy: {
             '/api': {
-                target: 'https://www.bilibili.com',
+                target: 'https://api.bilibili.com',
                 changeOrigin: true,
                 rewrite: path => path.replace(/^\/api/, '')
             }
