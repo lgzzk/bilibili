@@ -1,6 +1,6 @@
 const httpApi = async (url:RequestInfo | URL, options:RequestInit = {}) => {
     try {
-        const response = await fetch(url, { referrerPolicy: 'no-referrer', ...options });
+        const response = await fetch(url, {  ...options });
 
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);

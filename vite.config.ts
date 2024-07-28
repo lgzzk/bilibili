@@ -5,7 +5,7 @@ import svgLoader from 'vite-svg-loader';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-    plugins: [vue(),svgLoader()],
+    plugins: [vue(), svgLoader()],
     resolve: {
         alias: {
             '@': path.resolve(__dirname, './src'),
@@ -15,6 +15,10 @@ export default defineConfig({
         proxy: {
             '/api': {
                 target: 'https://api.bilibili.com',
+                changeOrigin: true,
+                rewrite: path => path.replace(/^\/api/, '')
+            }, '/search': {
+                target: 'https://s.search.bilibili.com',
                 changeOrigin: true,
                 rewrite: path => path.replace(/^\/api/, '')
             }

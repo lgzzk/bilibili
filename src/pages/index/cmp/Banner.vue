@@ -45,7 +45,7 @@
 <script setup lang="ts">
 
 import {CSSProperties, onMounted, ref} from "vue";
-import {useMouse} from "@vueuse/core";
+// import {useMouse} from "@vueuse/core";
 
 const vcList = [
   'https://i0.hdslb.com/bfs/vc/75ec2d45ce8c942a1f7379d4641171da4d90ab0d.png@1c.webp',
@@ -86,7 +86,7 @@ for (let i = 0; i < webmList.length; i++) {
     blobUrlList.value[i] = res
   })
 }
-const {x, y} = useMouse()
+// const {x, y} = useMouse()
 const bannerX = ref<number>()
 
 const onMouseMove = (e: MouseEvent) => {
