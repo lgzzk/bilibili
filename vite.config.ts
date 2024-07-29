@@ -20,7 +20,7 @@ export default defineConfig({
             }, '/search': {
                 target: 'https://s.search.bilibili.com',
                 changeOrigin: true,
-                rewrite: path => path.replace(/^\/api/, '')
+                rewrite: path => path.replace(/^\/search/, '')
             }
         }
     }

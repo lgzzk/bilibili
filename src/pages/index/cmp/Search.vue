@@ -21,13 +21,18 @@
           <search-svg/>
         </div>
       </div>
-      <div v-if="isClick" class="max-h-[612px] pt-[13px] pb-[15px] text-[#18191c] bg-white rounded-b-lg">
-        <div class="px-4 leading-6 text-[16px] font-medium">bilibili热搜</div>
-        <div class="flex items-center h-[38px] pl-4 hover:bg-[#e3e5e7] cursor-pointer"
-             v-for="(i,index) in trendingList">
-          <span class="leading-[17px] text-sm mr-1.5">{{ index + 1 }}</span>
-          <span class="leading-[17px] text-sm mr-1.5">{{ i.show_name }}</span>
-          <img class="h-4" referrerPolicy=no-referrer :src="i.icon">
+      <div v-if="isClick" class="max-h-[612px] text-[#18191c] bg-white rounded-b-lg">
+        <div v-show="!isEdit" class="pt-[13px] pb-[15px]">
+          <div class="px-4 leading-6 text-[16px] font-medium">bilibili热搜</div>
+          <div class="flex items-center h-[38px] pl-4 hover:bg-[#e3e5e7] cursor-pointer"
+               v-for="(i,index) in trendingList">
+            <span class="leading-[17px] text-sm mr-1.5">{{ index + 1 }}</span>
+            <span class="leading-[17px] text-sm mr-1.5">{{ i.show_name }}</span>
+            <img class="h-4" referrerPolicy=no-referrer :src="i.icon">
+          </div>
+        </div>
+        <div v-show="isEdit">
+          <div v-for="i in suggestList" v-html="i.name"></div>
         </div>
       </div>
     </div>
@@ -36,40 +41,39 @@
 
 <script setup lang="ts">
 import {ref} from "vue";
-import httpApi from "@/utils/request";
 import CleanSvg from '@/assets/icon/clean.svg'
 import SearchSvg from '@/assets/icon/search.svg'
+import {getDefaultSearch, getSearchSuggest, getTrendingList} from "@/api/serach.ts";
 
 const searchValue = ref('')
 const defaultSearch = ref('')
 const isEdit = ref(false)
 const isClick = ref(false)
 const trendingList = ref<TrendingItem[]>([])
+const suggestList = ref<SuggestItem[]>([])
 
 const searchFocus = () => {
   isClick.value = true
 }
 const searchBlur = () => {
-  isClick.value = false
+  // isClick.value = false
 }
-const searchInput = (e) => {
-  isEdit.value = true
-  httpApi(`search/main/suggest?func=suggest&suggest_type=accurate&sub_type=tag&main_ver=v1&highlight=&userid=&bangumi_acc_num=1&special_acc_num=1&topic_acc_num=1&upuser_acc_num=3&tag_num=10&special_num=10&bangumi_num=10&upuser_num=3&term=${e.target.value}&rnd=0.9941034137736526&buvid=6326C827-4CBC-68B2-70AC-5F6921FC488118553infoc&spmid=333.1007`)
-      .then(({data}) => {
-        console.log(data)
-      })
-  // console.log(typeof e)
-  console.log()
+const searchInput = (e: Event) => {
+  let data = (e.target as HTMLInputElement).value
+  isEdit.value = data !== ''
+  console.log(data)
+  getSearchSuggest(data as string).then((data) => {
+    suggestList.value = data.result.tag
+  })
 }
 const clear = () => {
   searchValue.value = ''
   isEdit.value = false
 }
-
-httpApi('api/x/web-interface/search/default').then(({data}) => {
+getDefaultSearch().then(({data}) => {
   defaultSearch.value = data.show_name
 })
-httpApi('api/x/web-interface/wbi/search/square?limit=10').then(({data}) => {
+getTrendingList().then(({data}) => {
   trendingList.value = data.trending.list
 })
 
@@ -81,10 +85,24 @@ interface TrendingItem {
   show_name: string,
   uri: string,
 }
+
+interface SuggestItem {
+  value: string,
+  term: string,
+  ref: number,
+  name: string,
+  spid: number,
+  type: string
+}
 </script>
 
 <style scoped>
 input::placeholder {
   color: #61666d;
+}
+</style>
+<style>
+.suggest_high_light {
+  color: #f25d8e;
 }
 </style>

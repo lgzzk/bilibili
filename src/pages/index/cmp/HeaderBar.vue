@@ -87,6 +87,7 @@ import FavoriteSvg from '@/assets/icon/favorite.svg'
 import HistorySvg from '@/assets/icon/history.svg'
 import CreationSvg from '@/assets/icon/creation.svg'
 import UploadSvg from '@/assets/icon/upload.svg'
+
 </script>
 
 <style scoped>
