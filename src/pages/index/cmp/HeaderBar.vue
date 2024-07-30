@@ -23,9 +23,9 @@
       <a href="https://www.bilibili.com/match/home" target="_blank">
         <span>赛事</span>
       </a>
-      <a href="https://www.bilibili.com/blackboard/era/talentweb.html?auto_media_playback=1" target="_blank">
-        <span>竞技赛</span>
-      </a>
+<!--      <a href="https://www.bilibili.com/blackboard/era/talentweb.html?auto_media_playback=1" target="_blank">-->
+<!--        <span>竞技赛</span>-->
+<!--      </a>-->
       <a href="https://www.bilibili.com/blackboard/era/SD1WyAhaIqHA1W16.html" target="_blank">
         <span>去巴黎</span>
       </a>
