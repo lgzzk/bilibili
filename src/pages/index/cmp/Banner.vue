@@ -1,32 +1,32 @@
 <template>
   <div @mouseenter="onMouseEnter" @mousemove="onMouseMove" @mouseleave="onMouseleave"
        class="min-h-[155px] h-[9.375vw] min-w-[1000px] relative flex overflow-hidden">
-    <img referrerPolicy=no-referrer :src="vcList[0]" class="h-[162px] w-full absolute"/>
-    <img ref="bannerImg" :style="bannerStyle" referrerPolicy=no-referrer :src="vcList[1]"
-         class="h-[162px] w-[1664px] absolute transition-all ease-linear"/>
-    <img :style="bannerStyle" referrerPolicy=no-referrer :src="vcList[2]"
-         class="banner-img"/>
-    <img :style="bannerStyle" referrerPolicy=no-referrer :src="vcList[3]" class="banner-img"/>
-    <img :style="bannerStyle" referrerPolicy=no-referrer :src="vcList[4]" class="banner-img"/>
-    <img :style="bannerStyle" referrerPolicy=no-referrer :src="vcList[5]" class="banner-img"/>
-    <img :style="bannerStyle" referrerPolicy=no-referrer :src="vcList[6]" class="banner-img"/>
-    <img :style="bannerStyle" referrerPolicy=no-referrer :src="vcList[7]" class="banner-img"/>
-    <img :style="bannerStyle" referrerPolicy=no-referrer :src="vcList[8]" class="banner-img"/>
-    <img :style="bannerStyle" referrerPolicy=no-referrer :src="vcList[9]" class="banner-img"/>
-    <img :style="bannerStyle" referrerPolicy=no-referrer :src="vcList[10]" class="banner-img"/>
-    <img :style="bannerStyle" referrerPolicy=no-referrer :src="vcList[11]" class="banner-img"/>
-    <img :style="bannerStyle" referrerPolicy=no-referrer :src="vcList[12]" class="banner-img"/>
+    <Image :src="vcList[0]" class="h-[162px] w-full absolute"/>
+    <Image ref="bannerImg" :style="bannerStyle" :src="vcList[1]"
+           class="h-[162px] w-[1664px] absolute transition-all ease-linear"/>
+    <Image :style="bannerStyle" :src="vcList[2]"
+           class="banner-img"/>
+    <Image :style="bannerStyle" :src="vcList[3]" class="banner-img"/>
+    <Image :style="bannerStyle" :src="vcList[4]" class="banner-img"/>
+    <Image :style="bannerStyle" :src="vcList[5]" class="banner-img"/>
+    <Image :style="bannerStyle" :src="vcList[6]" class="banner-img"/>
+    <Image :style="bannerStyle" :src="vcList[7]" class="banner-img"/>
+    <Image :style="bannerStyle" :src="vcList[8]" class="banner-img"/>
+    <Image :style="bannerStyle" :src="vcList[9]" class="banner-img"/>
+    <Image :style="bannerStyle" :src="vcList[10]" class="banner-img"/>
+    <Image :style="bannerStyle" :src="vcList[11]" class="banner-img"/>
+    <Image :style="bannerStyle" :src="vcList[12]" class="banner-img"/>
     <video
         :src="blobUrlList[0]"
         loop playsinline muted autoplay
         :style="bannerStyle"
         style="object-fit: cover; height: 250px; width: 100px; transform: translate(1170px, 0px) rotate(0deg) scale(1); opacity: 1;"></video>
-    <img :style="bannerStyle" referrerPolicy=no-referrer :src="vcList[13]" class="banner-img"/>
-    <img :style="bannerStyle" referrerPolicy=no-referrer :src="vcList[14]" class="banner-img"/>
-    <img :style="bannerStyle" referrerPolicy=no-referrer :src="vcList[10]" class="banner-img"/>
-    <img :style="bannerStyle" referrerPolicy=no-referrer :src="vcList[15]" class="banner-img"/>
-    <img :style="bannerStyle" referrerPolicy=no-referrer :src="vcList[16]" class="banner-img"/>
-    <img :style="bannerStyle" referrerPolicy=no-referrer :src="vcList[17]" class="banner-img"/>
+    <Image :style="bannerStyle" :src="vcList[13]" class="banner-img"/>
+    <Image :style="bannerStyle" :src="vcList[14]" class="banner-img"/>
+    <Image :style="bannerStyle" :src="vcList[10]" class="banner-img"/>
+    <Image :style="bannerStyle" :src="vcList[15]" class="banner-img"/>
+    <Image :style="bannerStyle" :src="vcList[16]" class="banner-img"/>
+    <Image :style="bannerStyle" :src="vcList[17]" class="banner-img"/>
     <video loop playsinline muted autoplay :src="blobUrlList[1]" width="108" height="270"
            :style="bannerStyle"
            style="object-fit: cover; height: 270px; width: 108px; transform: translate(805px, 0px) rotate(0deg) scale(1); opacity: 1;"
@@ -35,6 +35,7 @@
            :style="bannerStyle"
            style="object-fit: cover; height: 500px; width: 200px; transform: translate(-200px, 0px) rotate(0deg) scale(1); opacity: 1;"
            data-height="500" data-width="200"></video>
+    <Image class="z-10 h-[78px] left-16 bottom-2.5 absolute" src="https://i0.hdslb.com/bfs/archive/c8fd97a40bf79f03e7b76cbc87236f612caef7b2.png"/>
   </div>
   <!--  {{ x }} {{ y }}-->
   <!--  <div>bannerX{{ bannerX }}</div>-->
@@ -45,6 +46,7 @@
 <script setup lang="ts">
 
 import {CSSProperties, onMounted, ref} from "vue";
+import Image from "@/components/Image.vue";
 // import {useMouse} from "@vueuse/core";
 
 const vcList = [
@@ -93,7 +95,7 @@ const onMouseMove = (e: MouseEvent) => {
   // bannerStyle.value?.translate = `${x}px, ${y}px`
   // bannerStyle.value.transform = `translate(${e.clientX}px)`;
   if (bannerImg.value) {
-    bannerStyle.value.transform = `translate(${(e.clientX - enterX.value)/10}px)`;
+    bannerStyle.value.transform = `translate(${(e.clientX - enterX.value) / 10}px)`;
     bannerX.value = e.clientX - bannerImg.value.x
   }
 }
@@ -113,7 +115,7 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.banner-img{
+.banner-img {
   @apply h-[162px] w-[1664px] absolute transition-all ease-out;
 }
 </style>

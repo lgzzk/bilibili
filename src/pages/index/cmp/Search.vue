@@ -8,6 +8,7 @@
             :class="isClick?'bg-[#e3e5e7]':''"
             class="flex items-center justify-between rounded-md w-full cursor-pointer text-white hover:text-[#fff] py-1.5 px-[9.6px] mr-2">
           <input
+              :title="defaultSearch"
               v-model="searchValue"
               @focus="searchFocus"
               @blur="searchBlur"
@@ -30,11 +31,12 @@
                v-for="(i,index) in trendingList">
             <span class="leading-[17px] mr-1.5">{{ index + 1 }}</span>
             <span class="leading-[17px] mr-1.5">{{ i.show_name }}</span>
-            <img class="h-4" referrerPolicy=no-referrer :src="i.icon">
+            <Image class="h-4" :src="i.icon"/>
           </div>
         </div>
         <div ref="suggestion" v-show="isEdit" class="mt-[13px] mb-3">
           <div v-for="(i,index) in suggestList" v-html="i.name"
+               @click="clickSuggestion(i.value)"
                :class="index === selectIndex?'bg-[#e3e5e7]':''"
                class="px-4 mb-1 leading-8 text-sm cursor-pointer hover:bg-[#e3e5e7]"></div>
         </div>
@@ -48,6 +50,7 @@ import {ref} from "vue";
 import CleanSvg from '@/assets/icon/clean.svg'
 import SearchSvg from '@/assets/icon/search.svg'
 import {getDefaultSearch, getSearchSuggest, getTrendingList} from "@/api/serach.ts";
+import Image from "@/components/Image.vue";
 
 const searchValue = ref('')
 const defaultSearch = ref('')
@@ -62,6 +65,7 @@ const searchFocus = () => {
 }
 const searchBlur = () => {
   selectIndex.value = -1
+  isClick.value = false
 }
 const searchInput = (e: Event) => {
   selectIndex.value = -1
@@ -85,6 +89,11 @@ const selectSuggestion = (e: string) => {
   searchValue.value = suggestList.value[selectIndex.value].value
 
 }
+const clickSuggestion = (e:string) => {
+  console.log(e)
+  searchValue.value = e
+}
+
 getDefaultSearch().then(({data}) => {
   defaultSearch.value = data.show_name
 })
