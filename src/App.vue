@@ -1,5 +1,5 @@
 <template>
-  <div class="h-screen bg-neutral-300">
+  <div class="h-screen">
     <router-view/>
   </div>
 </template>

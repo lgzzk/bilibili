@@ -31,7 +31,7 @@
                v-for="(i,index) in trendingList">
             <span class="leading-[17px] mr-1.5">{{ index + 1 }}</span>
             <span class="leading-[17px] mr-1.5">{{ i.show_name }}</span>
-            <Image class="h-4" :src="i.icon"/>
+            <Image :src="i.icon" class="h-4"/>
           </div>
         </div>
         <div ref="suggestion" v-show="isEdit" class="mt-[13px] mb-3">

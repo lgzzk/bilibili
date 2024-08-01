@@ -1,5 +1,6 @@
 const httpApi = async (url: RequestInfo | URL, params: Record<string, any>={}, options: RequestInit = {}) => {
     try {
+        console.log(params)
         const queryString = new URLSearchParams(params).toString();
         const response = await fetch(`${url}?${queryString}`, {referrerPolicy: 'no-referrer', ...options});
 

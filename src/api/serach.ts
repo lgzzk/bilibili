@@ -1,15 +1,15 @@
 import httpApi from "@/utils/request";
 
 export function getDefaultSearch() {
-    return httpApi('api/x/web-interface/search/default');
+return httpApi('/api/x/web-interface/search/default');
 }
 
 export function getTrendingList() {
-    return httpApi('api/x/web-interface/wbi/search/square', {limit: 10});
+    return httpApi('/api/x/web-interface/wbi/search/square', {limit: 10});
 }
 
 export function getSearchSuggest(keyword: string) {
-    return httpApi('search/main/suggest', {
+    return httpApi('/search/main/suggest', {
         "term": keyword,
         "rnd": "0.9941034137736526",
         "buvid": "6326C827-4CBC-68B2-70AC-5F6921FC488118553infoc",
