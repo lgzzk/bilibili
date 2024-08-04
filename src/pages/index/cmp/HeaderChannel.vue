@@ -1,6 +1,6 @@
 <template>
-  <div class="flex items-center px-[60px] h-[110px] text-sm">
-    <div class="flex">
+  <div class="flex items-center px-[60px] h-[110px] text-sm tracking-[2px] text-[#61666d]">
+    <div class="flex mr-2">
       <a class="flex flex-col items-center mr-6" href="https://t.bilibili.com/">
         <div class="channel-icon-item bg-[#ff9212]">
           <dynamic-svg class="text-white scale-125"/>
@@ -14,12 +14,22 @@
         <span>热门</span>
       </a>
     </div>
-    <div class="grid grid-cols-11 grid-rows-2 gap-2.5 w-full text-sm text-[#61666d] pr-[30px]">
+    <div class="grid grid-cols-11 grid-rows-2 gap-2.5 w-full border-r border-[#e3e5e7]  pr-[30px]">
       <a
           v-for="i in channelItems"
           :href="i.href" target="_blank"
-          class="leading-[26px] border box-content border-[#f6f7f8] tracking-[2px] text-center bg-[#f6f7f8] rounded-md transition-colors duration-300 hover:text-[#18191c] hover:bg-[#e3e5e7]"
+          class="leading-[26px] border box-content border-[#f6f7f8] transition-colors duration-300 text-center bg-[#f6f7f8] rounded-md hover:text-[#18191c] hover:bg-[#e3e5e7]"
       >{{ i.title }}</a>
+    </div>
+    <div class="grid grid-rows-2 grid-flow-col gap-y-2.5 w-60 flex-shrink-0">
+      <a
+          v-for="i in channelItemsRight"
+          :href="i.href" target="_blank"
+          class="flex items-center justify-end h-7 hover:text-[#00aeec] transition-colors duration-300"
+      >
+        <component :is="i.icon" class="mr-1"/>
+        <span class="">{{ i.title }}</span>
+      </a>
     </div>
   </div>
 </template>
@@ -27,6 +37,12 @@
 <script setup lang="ts">
 import DynamicSvg from '@/assets/icon/dynamic.svg'
 import HotSvg from '@/assets/icon/hot.svg'
+import ColumnSvg from '@/assets/icon/columns.svg'
+import ActivitySvg from '@/assets/icon/activity.svg'
+import CommunalSvg from '@/assets/icon/communal.svg'
+import LiveSvg from '@/assets/icon/live.svg'
+import ClassSvg from '@/assets/icon/class.svg'
+import MusicSvg from '@/assets/icon/music.svg'
 
 const channelItems: ChannelItem[] = [
   {
@@ -42,7 +58,6 @@ const channelItems: ChannelItem[] = [
   {
     title: '综艺',
     href: 'https://www.bilibili.com/variety/',
-    subList: []
   },
   {
     title: '动画',
@@ -87,17 +102,14 @@ const channelItems: ChannelItem[] = [
   {
     title: '电影',
     href: 'https://www.bilibili.com/movie/',
-    subList: []
   },
   {
     title: '电视剧',
     href: 'https://www.bilibili.com/tv/',
-    subList: []
   },
   {
     title: '纪录片',
     href: 'https://www.bilibili.com/documentary/',
-    subList: []
   },
   {
     title: '游戏',
@@ -140,16 +152,54 @@ const channelItems: ChannelItem[] = [
     subList: ['搞笑', '日常', '美妆', '服饰', '健身', '手工', '绘画', 'ASMR', '汽车', '旅行', '生活', '时尚']
   },
 ]
+const channelItemsRight: ChannelItem[] = [
+  {
+    title: '专栏',
+    icon: ColumnSvg,
+    href: 'https://www.bilibili.com/read/home'
+  },
+  {
+    title: '直播',
+    icon: LiveSvg,
+    href: 'https://live.bilibili.com/',
+    subList: ['全部直播', '游戏直播', '手游直播', '电台', '绘画直播', '二次元直播', '唱见直播', '舞见直播', '星乐直播', 'VR直播', '其他直播']
+  },
+  {
+    title: '活动',
+    icon: ActivitySvg,
+    href: 'https://www.bilibili.com/blackboard/activity-list.html'
+  },
+  {
+    title: '课堂',
+    icon: ClassSvg,
+    href: 'https://www.bilibili.com/cheese/',
+    subList: ['全部课程', '职业技能', '兴趣爱好', '考试认证', '学术科研', '生活养生', '游戏动漫', '影视文学', '音乐舞蹈', '美妆时尚', '体育健身', '亲子教育', '其他课程']
+  },
+  {
+    title: '社区中心',
+    icon: CommunalSvg,
+    href: 'https://www.bilibili.com/blackboard/activity-5zJxM3spoS.html'
+  },
+  {
+    title: '新歌热榜',
+    icon: MusicSvg,
+    href: 'https://music.bilibili.com/pc/music-center'
+  }
+]
 
 interface ChannelItem {
   title: string
+  icon?: string
   href: string
-  subList: string[]
+  subList?: string[]
 }
 </script>
 
 <style scoped>
 .channel-icon-item {
   @apply w-[46px] h-[46px] mb-1.5 flex items-center justify-center rounded-full
+}
+.transition {
+  @apply transition-all duration-300
 }
 </style>

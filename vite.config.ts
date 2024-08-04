@@ -23,7 +23,11 @@ export default defineConfig({
                 target: 'https://s.search.bilibili.com',
                 changeOrigin: true,
                 rewrite: path => path.replace(/^\/search/, '')
-            }
+            }, '/host': {
+            target: 'https://www.bilibili.com/',
+            changeOrigin: true,
+            rewrite: path => path.replace(/^\/host/, '')
+        }
         }
     }
 })
