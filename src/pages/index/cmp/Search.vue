@@ -49,7 +49,7 @@
 import {ref} from "vue";
 import CleanSvg from '@/assets/icon/clean.svg'
 import SearchSvg from '@/assets/icon/search.svg'
-import {getDefaultSearch, getSearchSuggest, getTrendingList} from "@/api/serach.ts";
+import {getDefaultSearch, getSearchSuggest, getTrendingList, SuggestItem, TrendingItem} from "@/api/serach.ts";
 import Image from "@/components/Image.vue";
 
 const searchValue = ref('')
@@ -71,8 +71,8 @@ const searchInput = (e: Event) => {
   selectIndex.value = -1
   let data = (e.target as HTMLInputElement).value
   isEdit.value = data !== ''
-  getSearchSuggest(data as string).then((data) => {
-    suggestList.value = data.result.tag
+  getSearchSuggest(data as string).then(data => {
+    suggestList.value = data
   })
 }
 const clear = () => {
@@ -94,30 +94,15 @@ const clickSuggestion = (e:string) => {
   searchValue.value = e
 }
 
-getDefaultSearch().then(({data}) => {
+getDefaultSearch().then(data => {
   defaultSearch.value = data.show_name
 })
-getTrendingList().then(({data}) => {
-  trendingList.value = data.trending.list
+getTrendingList().then(data => {
+  trendingList.value = data
 })
 
 
-interface TrendingItem {
-  goto: string
-  icon: string,
-  keyword: string,
-  show_name: string,
-  uri: string,
-}
 
-interface SuggestItem {
-  value: string,
-  term: string,
-  ref: number,
-  name: string,
-  spid: number,
-  type: string
-}
 </script>
 
 <style scoped>

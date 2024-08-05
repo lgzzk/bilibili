@@ -2,13 +2,15 @@
   <div class="w-[547px] h-[391px] rounded-md overflow-x-hidden relative">
     <div
         :style="{transform: `translateX(${translateX}%)`}"
-        class="flex z-10 w-full shrink-0 transition-all translate-x-[-900%] duration-300 ease-in-out">
-      <Image v-for="i in swipes" :src="i.pic"></Image>
+        class="flex z-10 w-full h-full z-10 transition-all translate-x-[-900%] duration-300 ease-in-out">
+      <a v-for="i in swipes" :href="i.url" class="w-full h-full shrink-0" target="_blank">
+        <Image :src="i.pic"></Image>
+      </a>
     </div>
     <a
         v-if="swipes.length"
-        :href="swipes[-(translateX/100)].url"
-        class="z-10 text-white text-lg absolute bottom-[42px] left-[15px] ">{{ swipes[-(translateX / 100)].name }}</a>
+        :href="getCurrentSwipeItem.url"
+        class="z-10 text-white text-lg absolute bottom-[42px] left-[15px] ">{{ getCurrentSwipeItem.name }}</a>
     <div class="flex items-end z-10 space-x-3 absolute bottom-[42px] right-[15px] ">
       <button @click="play(0)" class="arrow">
         <Arrow class="w-3 h-3 rotate-180"/>
@@ -19,7 +21,7 @@
     </div>
     <div
         v-if="swipes.length"
-        :style="{backgroundColor: swipes[-(translateX/100)].color}"
+        :style="{backgroundColor: getCurrentSwipeItem.color}"
         class="w-full h-[780px] absolute bottom-0 mask">
 
     </div>
@@ -28,14 +30,14 @@
 
 <script setup lang="ts">
 import {getRecommendSwipe, SwipeItem} from "@/api/swiper.ts";
-import {ref} from "vue";
+import {computed, ref} from "vue";
 import Image from "@/components/Image.vue";
 import Arrow from '@/assets/icon/arrow.svg'
 
 const swipes = ref<SwipeItem[]>([])
 const translateX = ref(0)
 
-setInterval(()=>play(1),5000)
+setInterval(() => play(1), 5000)
 getRecommendSwipe().then(data => {
   swipes.value = data
   console.log(data)
@@ -52,6 +54,9 @@ const play = (e: number) => {
     else translateX.value -= 100
   }
 }
+const getCurrentSwipeItem = computed(() => {
+  return swipes.value[-(translateX.value / 100)]
+})
 
 // interface SwipeItem {
 //   id: number

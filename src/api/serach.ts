@@ -1,15 +1,40 @@
 import httpApi from "@/utils/request";
 
-export function getDefaultSearch() {
-return httpApi('/api/x/web-interface/search/default');
+export interface TrendingItem {
+    goto: string
+    icon: string,
+    keyword: string,
+    show_name: string,
+    uri: string,
 }
 
-export function getTrendingList() {
-    return httpApi('/api/x/web-interface/wbi/search/square', {limit: 10});
+export interface SuggestItem {
+    value: string,
+    term: string,
+    ref: number,
+    name: string,
+    spid: number,
+    type: string
 }
 
-export function getSearchSuggest(keyword: string) {
-    return httpApi('/search/main/suggest', {
+export interface DefaultSuggest {
+    id: number
+    name: string
+    seid: string
+    show_name: string
+    url: string
+}
+
+export async function getDefaultSearch(): Promise<DefaultSuggest> {
+    return (await httpApi('/api/x/web-interface/search/default')).data;
+}
+
+export async function getTrendingList():Promise<TrendingItem[]> {
+    return (await httpApi('/api/x/web-interface/wbi/search/square', {limit: 10})).data.trending.list;
+}
+
+export async function getSearchSuggest(keyword: string):Promise<SuggestItem[]> {
+    return (await httpApi('/search/main/suggest', {
         "term": keyword,
         "rnd": "0.9941034137736526",
         "buvid": "6326C827-4CBC-68B2-70AC-5F6921FC488118553infoc",
@@ -28,5 +53,5 @@ export function getSearchSuggest(keyword: string) {
         "special_num": "10",
         "bangumi_num": "10",
         "upuser_num": "3",
-    });
+    })).result.tag;
 }
