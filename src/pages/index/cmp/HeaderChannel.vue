@@ -14,7 +14,7 @@
         <span>热门</span>
       </a>
     </div>
-    <div class="grid grid-cols-11 grid-rows-2 gap-2.5 w-full border-r border-[#e3e5e7]  pr-[30px]">
+    <div class="grid grid-rows-2 grid-flow-col gap-2.5 w-full border-r border-[#e3e5e7] pr-[30px]">
       <a
           v-for="i in channelItems"
           :href="i.href" target="_blank"
@@ -199,6 +199,7 @@ interface ChannelItem {
 .channel-icon-item {
   @apply w-[46px] h-[46px] mb-1.5 flex items-center justify-center rounded-full
 }
+
 .transition {
   @apply transition-all duration-300
 }

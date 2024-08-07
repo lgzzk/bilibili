@@ -3,7 +3,7 @@
     <div class="flex flex-col w-full mt-3">
       <div
           :class="isClick?' rounded-t-md':'rounded-md'"
-          class="flex items-center justify-between z-10 text-[#61666d] bg-[#f1f2f3] px-[5px] h-10 min-w-[181px] transition-colors duration-[.3s] max-w-[500px] hover:bg-white hover:opacity-100 opacity-90">
+          class="flex items-center justify-between z-10 text-[#61666d] bg-[#f1f2f3] px-[5px] h-10 min-w-[250px] transition-colors duration-[.3s] max-w-[500px] hover:bg-white hover:opacity-100 opacity-90">
         <div
             :class="isClick?'bg-[#e3e5e7]':''"
             class="flex items-center justify-between rounded-md w-full cursor-pointer text-white hover:text-[#fff] py-1.5 px-[9.6px] mr-2">
