@@ -11,9 +11,13 @@ export interface VideoItem {
         mid: number
         name: string
         face: string
+    },
+    stat: {
+        view: number
+        danmaku: number
     }
 }
 
 export async function getRecommendVideo(): Promise<VideoItem[]> {
-    return (await httpApi('api/x/web-interface/wbi/index/top/feed/rcmd', {ps: 11})).data.item
+    return (await httpApi('api/x/web-interface/wbi/index/top/feed/rcmd', {ps: 30})).data.item
 }

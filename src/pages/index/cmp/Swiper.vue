@@ -2,7 +2,7 @@
   <div
       @mouseenter="clearTimer"
       @mouseleave="setTimer"
-      class="w-[547px] h-[391px] rounded-md overflow-x-hidden relative">
+      class="w-[547.6px] h-[391px] rounded-md overflow-x-hidden relative">
     <div
         :style="{transform: `translateX(${translateX}%)`}"
         class="flex transition-all translate-x-[-900%] duration-300 ease-in-out">
@@ -13,7 +13,8 @@
     <a
         v-if="swipes.length"
         :href="getCurrentSwipeItem.url"
-        class="z-20 text-white text-lg absolute bottom-[42px] left-[15px] ">{{ getCurrentSwipeItem.name }}</a>
+        class="z-20 text-white text-lg absolute bottom-[42px] left-[15px]"
+        target="_blank">{{ getCurrentSwipeItem.name }}</a>
     <div class="flex items-end z-10 space-x-3 absolute bottom-[42px] right-[15px] ">
       <button @click="play(0)" class="arrow">
         <Arrow class="w-3 h-3 rotate-180"/>
@@ -65,7 +66,6 @@ getRecommendSwipe().then(data => {
 })
 
 const play = (e: number) => {
-  console.log(getCurrentSwipeIndex.value)
   swipeDrect.value = e
   let max = -100 * (swipes.value.length - 1)
   if (e === 0) {
