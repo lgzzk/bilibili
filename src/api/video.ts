@@ -19,5 +19,5 @@ export interface VideoItem {
 }
 
 export async function getRecommendVideo(): Promise<VideoItem[]> {
-    return (await httpApi('api/x/web-interface/wbi/index/top/feed/rcmd', {ps: 30})).data.item
+    return (await httpApi('/api/x/web-interface/wbi/index/top/feed/rcmd', {ps: 30})).data.item
 }

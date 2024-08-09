@@ -1,4 +1,4 @@
-const httpApi = async (url: RequestInfo | URL, params: Record<string, any>={}, options: RequestInit = {}) => {
+const httpApi = async (url: RequestInfo | URL, params: Record<string, any> = {}, options: RequestInit = {}) => {
     try {
         const queryString = new URLSearchParams(params).toString();
         const response = await fetch(`${url}?${queryString}`, {referrerPolicy: 'no-referrer', ...options});
@@ -18,5 +18,9 @@ const httpApi = async (url: RequestInfo | URL, params: Record<string, any>={}, o
         throw err;
     }
 };
+
+export function setCookie() {
+    document.cookie = 'buvid3=6EEA3187-0C6D-37FB-91C5-ACF59BF7FED518835infoc;'
+}
 
 export default httpApi;
