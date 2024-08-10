@@ -20,7 +20,8 @@ const httpApi = async (url: RequestInfo | URL, params: Record<string, any> = {},
 };
 
 export function setCookie() {
-    document.cookie = 'buvid3=6EEA3187-0C6D-37FB-91C5-ACF59BF7FED518835infoc;'
+    const oneYearInSeconds = 365 * 24 * 60 * 60;
+    document.cookie = `buvid3=6EEA3187-0C6D-37FB-91C5-ACF59BF7FED518835infoc;path=/;max-age=${oneYearInSeconds};`
 }
 
 export default httpApi;

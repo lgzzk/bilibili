@@ -10,7 +10,7 @@
         <flushed-svg
             :style="{transform: `rotate(${rate}deg)`}"
             class="mb-1.5 transition-transform duration-500"/>
-        <span>换一批</span>
+        <span>换一换</span>
       </div>
     </div>
   </div>
@@ -35,6 +35,7 @@ const getrRecmdList = () => {
 }
 getRecommendVideo().then(data => {
   recmdList.value = data
+  console.log(data)
 })
 
 
@@ -45,5 +46,8 @@ getRecommendVideo().then(data => {
   @apply absolute top-0 left-full text-[#18191c] translate-x-2.5 p-[9px] border border-[#e3e5e7]
   rounded-lg w-10 leading-[13.8px] text-[12px] flex flex-col items-center text-center cursor-pointer
   transition duration-200 hover:bg-[#e3e5e7] active:scale-95 select-none
+}
+.grid > :nth-child(n+8):nth-child(-n+12) {
+  margin-top: 40px;
 }
 </style>

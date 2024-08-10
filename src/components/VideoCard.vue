@@ -4,9 +4,11 @@
       @mouseleave="isShow = false"
       class="flex flex-col">
     <a :href="video.uri"
-       class="relative"
+       class="relative bg-[#f1f2f3]"
        target="_blank">
-      <Image class="w-full h-full rounded-md " :src="`${video.pic}@672w_378h_1c_!web-home-common-cover.avif`"/>
+      <div class="pt-[56.25%]"></div>
+      <Image class="absolute top-0 w-full h-full rounded-md "
+             :src="`${video.pic}@672w_378h_1c_!web-home-common-cover.avif`"/>
       <div class="mask justify-between">
         <div class="flex">
           <play-count-svg class="icon"/>
@@ -30,7 +32,8 @@
       <a :href="`https://space.bilibili.com/${video.owner.mid}`"
          class="flex items-center mt-1 text-[#9499A0] title-transition text-[13px] leading-[17px]"
          target="_blank">
-        <up-svg class="w-[17px] h-[17px] mr-0.5"/>
+        <div class="px-1 mr-1 rounded text-[12px] text-[#ff7f24] bg-[#fff0e3]" v-if="video.rcmd_reason.content">{{ video.rcmd_reason.content }}</div>
+        <up-svg v-else class="w-[17px] h-[17px] mr-0.5 align-text-top"/>
         <span class="mr-1">{{ video.owner.name }}</span>
         <span>{{ getPubdate }}</span>
       </a>

@@ -5,27 +5,27 @@
         <zhu-zhan-svg class="mr-1.5 "/>
         <span>首页</span>
       </a>
-      <a href="https://www.bilibili.com/anime/" target="_blank">
+      <a class="hover:animate-jump" href="https://www.bilibili.com/anime/" target="_blank">
         <span>番剧</span>
       </a>
-      <a href="https://live.bilibili.com" target="_blank">
+      <a class="hover:animate-jump" href="https://live.bilibili.com" target="_blank">
         <span>直播</span>
       </a>
-      <a href="https://game.bilibili.com/platform" target="_blank">
+      <a class="hover:animate-jump" href="https://game.bilibili.com/platform" target="_blank">
         <span>游戏中心</span>
       </a>
-      <a href="https://show.bilibili.com/platform/home.html" target="_blank">
+      <a class="hover:animate-jump" href="https://show.bilibili.com/platform/home.html" target="_blank">
         <span>会员购</span>
       </a>
-      <a href="https://manga.bilibili.com/" target="_blank">
+      <a class="hover:animate-jump" href="https://manga.bilibili.com/" target="_blank">
         <span>漫画</span>
       </a>
-      <a href="https://www.bilibili.com/match/home" target="_blank">
+      <a class="hover:animate-jump" href="https://www.bilibili.com/match/home" target="_blank">
         <span>赛事</span>
       </a>
-<!--      <a href="https://www.bilibili.com/blackboard/era/talentweb.html?auto_media_playback=1" target="_blank">-->
-<!--        <span>竞技赛</span>-->
-<!--      </a>-->
+      <!--      <a href="https://www.bilibili.com/blackboard/era/talentweb.html?auto_media_playback=1" target="_blank">-->
+      <!--        <span>竞技赛</span>-->
+      <!--      </a>-->
       <a href="https://www.bilibili.com/blackboard/era/SD1WyAhaIqHA1W16.html" target="_blank">
         <span>去巴黎</span>
       </a>
@@ -42,32 +42,32 @@
           <span>登录</span>
         </div>
       </div>
-      <div class="bar-item">
-        <big-svg/>
+      <div class="bar-item group">
+        <big-svg class="group-hover:animate-jump"/>
         <span>大会员</span>
       </div>
-      <div class="bar-item">
-        <message-svg/>
+      <div class="bar-item group">
+        <message-svg class="group-hover:animate-jump"/>
         <span>消息</span>
       </div>
-      <div class="bar-item">
-        <dynamic-svg/>
+      <div class="bar-item group">
+        <dynamic-svg class="group-hover:animate-jump"/>
         <span>动态</span>
       </div>
-      <div class="bar-item">
-        <favorite-svg/>
+      <div class="bar-item group">
+        <favorite-svg class="group-hover:animate-jump"/>
         <span>收藏</span>
       </div>
-      <div class="bar-item">
-        <history-svg/>
+      <div class="bar-item group">
+        <history-svg class="group-hover:animate-jump"/>
         <span>历史</span>
       </div>
-      <div class="bar-item">
-        <creation-svg/>
+      <div class="bar-item group">
+        <creation-svg class="group-hover:animate-jump"/>
         <span>创作中心</span>
       </div>
-      <div class="flex items-center justify-center rounded-lg ml-1.5 bg-[#fb7299] text-sm w-[90px] h-[34px]">
-       <upload-svg/>
+      <div class="flex group items-center justify-center rounded-lg ml-1.5 bg-[#fb7299] text-sm w-[90px] h-[34px]">
+        <upload-svg class="group-hover:animate-jump mr-[5px]"/>
         <span>投稿</span>
       </div>
     </div>
@@ -103,4 +103,6 @@ import UploadSvg from '@/assets/icon/upload.svg'
   background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAcCAYAAAAEN20fAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAO6SURBVHgBvVc9bBRHFP7e7NnofI0LnNabEmiCEiVdcnSJKGywD13+JKeKlBRR+ki+SKRKESKFCCpAAnHiMJgCRMcBHT+yG+ySNR0cxTW2gdudx3uzt3dn7Nv12YZPOt3OzJuZN+/nmzeEbWD9h+miF2GCCUX5+WCMpk4gNGGxaIDFiHEjX71az9hCpqQp8F1pRgRmAfaxK3BgCJXhS3MXMIgi6+Wyb0x4nYFPsKfggG10JF+dD94dMdikxPEZ8sKFvVdCQT6Z3MLrb6cmN430NlSAia7jA8Awzwxf7rqqYxF1Bxs6lzaZxj/G8L+n4R0vIQs0UoD39VHQ2EdbjluiU+vlST9p5zoTTXSnXzaYL4u9W8D75ij4ZaPTw48eiMwRUdQHRkZgfB+0P1YgOnAQ4T9/b7XsqDE5tf7heFUk2cF9rbHvUg1peHNyFkM//woUCsDqKuzKCtB4Dru8BF5+Al5b6zvXkLhIsinX1mY2baOWbGQOHHIbWTm9myNuovFx2Ht1YCVwfRwEaP1VwSCwjIr8XTBKVlk8oSejg4eci/TbtcUNnriDG43UE2eD/PXydDHnMSZslqhYg2VztYqnysjmRhSzYnZIMBK1k68w4mQ3QeKJGy/6ru8RJujV99MapMW+SoyNYfjU/0hD68xp5KZKfTNEx+39etoSizlRIp24VtfQOvtfp6nuUMv09qm1gJI7dSQxQ4U4dXnlKaJHD8HPAmTA12BNvcB4bRVYWu52fPpF3N/Tl6Syxkt0reasqIpo9mh7GxjNbUdq6I/ZTWZXYkvw5rdfsFuoIk1kWCW6fcsRlcL77HOXMeHcla6AWE0VVYvsEE0jAR9kSUW3bzrKZuELm3BGO4WtjCVXlsbEjsASrLJEPeum1dMqreuMXqh1HHMqkwIbaH8QaAFlIsKNTEG5LxTR44edPuUQzRIjyiR3keOVHYBA8yZ/Uco4piBN0Js64TaN07SLUGLHLj1x5ObG25YZCMzB0OXaXRN/489+ckbuFBUI52py/Z9wmybQ+HCxsn/Mje8EokCl/Q/kq7XzEiuLWwlaCcDWyYpjRiOXXKxUN2PUHdp+lzkdpctNnAqxRlIcdSo0LYzIhAvISOU9RJNteDipXzsVWr5alcKWfscHAoX8U28RvaF4di5iPoaY5N4Xmlqv7rsyN9/b2fc5QSSlI+32PbMRJMRlOTy21XMi/YFVlhKSpHrbrUISlJodvVX7QIokaP1Y+opDnrRGGDguG7ICuikLB2KBupKV8kSGPN4C0oikKGkFJUIAAAAASUVORK5CYII=) center center no-repeat;
   background-size: cover;
 }
+
+
 </style>

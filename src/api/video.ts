@@ -14,7 +14,12 @@ export interface VideoItem {
     },
     stat: {
         view: number
+        like: number
         danmaku: number
+    },
+    rcmd_reason: {
+        content: string,
+        reason_type: number
     }
 }
 

@@ -1,51 +1,54 @@
 <template>
-  <div
-      @mouseenter="clearTimer"
-      @mouseleave="setTimer"
-      class="w-[547.6px] h-[391px] rounded-md overflow-x-hidden relative">
+  <div class="pb-[75px]">
     <div
-        :style="{transform: `translateX(${translateX}%)`}"
-        class="flex transition-all translate-x-[-900%] duration-300 ease-in-out">
-      <a v-for="{url,pic} in swipes" :href="url" class="w-full h-full shrink-0" target="_blank">
-        <Image :src="pic"></Image>
-      </a>
-    </div>
-    <a
-        v-if="swipes.length"
-        :href="getCurrentSwipeItem.url"
-        class="z-20 text-white text-lg absolute bottom-[42px] left-[15px]"
-        target="_blank">{{ getCurrentSwipeItem.name }}</a>
-    <div class="flex items-end z-10 space-x-3 absolute bottom-[42px] right-[15px] ">
-      <button @click="play(0)" class="arrow">
-        <Arrow class="w-3 h-3 rotate-180"/>
-      </button>
-      <button @click="play(1)" class="arrow">
-        <Arrow class="w-3 h-3"/>
-      </button>
-    </div>
-    <div
-        class="flex items-center justify-center absolute left-[15px] bottom-[20px] m-[-1.5px] z-10">
-      <div v-for="(_,index) in swipes.length"
-           :class="getCurrentSwipeIndex == index?'active-dot':'carousel-dot'"
-           @click="selectSwipe(index)"
-           class="rounded-full relative overflow-hidden cursor-pointer">
-        <div
-            :class="getCurrentSwipeIndex == index?swipeDrect==1?'eat-haha-up':'eat-haha-down':''"
-            class="w-3.5 h-[7px] top-0 bg-white rounded-t-[7px] origin-bottom"></div>
-        <div
-            :class="getCurrentSwipeIndex == index?swipeDrect==1?'eat-haha-down':'eat-haha-up':''"
-            class="w-3.5 h-[7px] bottom-0 bg-white rounded-b-[7px] origin-top"></div>
+        @mouseenter="clearTimer"
+        @mouseleave="setTimer"
+        class="h-full rounded-md overflow-x-hidden relative">
+      <div
+          :style="{transform: `translateX(${translateX}%)`}"
+          class="flex transition-all translate-x-[-900%] duration-300 ease-in-out">
+        <a v-for="{url,pic} in swipes" :href="url"
+           class="w-full h-full shrink-0" target="_blank">
+          <Image :src="pic"></Image>
+        </a>
       </div>
+      <a
+          v-if="swipes.length"
+          :href="getCurrentSwipeItem.url"
+          class="z-20 text-white text-lg absolute bottom-[42px] left-[15px]"
+          target="_blank">{{ getCurrentSwipeItem.name }}</a>
+      <div class="flex items-end z-20 space-x-3 absolute bottom-[42px] right-[15px] ">
+        <button @click="play(0)" class="arrow">
+          <Arrow class="w-3 h-3 rotate-180"/>
+        </button>
+        <button @click="play(1)" class="arrow">
+          <Arrow class="w-3 h-3"/>
+        </button>
+      </div>
+      <div
+          class="flex items-center justify-center absolute left-[15px] bottom-[20px] m-[-1.5px] z-10">
+        <div v-for="(_,index) in swipes.length"
+             :class="getCurrentSwipeIndex == index?'active-dot':'carousel-dot'"
+             @click="selectSwipe(index)"
+             class="rounded-full relative overflow-hidden cursor-pointer">
+          <div
+              :class="getCurrentSwipeIndex == index?swipeDrect==1?'eat-haha-up':'eat-haha-down':''"
+              class="w-3.5 h-[7px] top-0 bg-white rounded-t-[7px] origin-bottom"></div>
+          <div
+              :class="getCurrentSwipeIndex == index?swipeDrect==1?'eat-haha-down':'eat-haha-up':''"
+              class="w-3.5 h-[7px] bottom-0 bg-white rounded-b-[7px] origin-top"></div>
+        </div>
+      </div>
+      <div
+          v-if="swipes.length"
+          :style="{backgroundColor: getCurrentSwipeItem.color}"
+          class="w-full h-[780px] absolute bottom-0 pointer-events-none mask"></div>
     </div>
-    <div
-        v-if="swipes.length"
-        :style="{backgroundColor: getCurrentSwipeItem.color}"
-        class="w-full h-[780px] absolute bottom-0 pointer-events-none mask"></div>
   </div>
 </template>
 
 <script setup lang="ts">
-import {getRecommendSwipe, SwipeItem} from "@/api/swiper.ts";
+import {getRecommendSwipe, setSwipeColor, SwipeItem} from "@/api/swiper.ts";
 import {computed, ref} from "vue";
 import Image from "@/components/Image.vue";
 import Arrow from '@/assets/icon/arrow.svg'
@@ -57,6 +60,7 @@ let swipeDrect = ref(1)
 
 getRecommendSwipe().then(data => {
   swipes.value = data
+  setSwipeColor(swipes.value)
   // swipes.value = [
   //   data[data.length - 1],
   //   ...data,

@@ -10,10 +10,13 @@ export interface SwipeItem {
 }
 
 export async function getRecommendSwipe() {
-    let swipes: SwipeItem[] = (await httpApi('/api/x/web-show/res/locs', {
+    return (await httpApi('/api/x/web-show/res/locs', {
         pf: 0,
         ids: 4694
     })).data[4694]
+}
+
+export async function setSwipeColor(swipes: SwipeItem[]) {
     for (const i of swipes) {
         i.color = (await httpApi(
                 `${i.pic}@.avg_color`.startsWith('http://')
@@ -21,5 +24,4 @@ export async function getRecommendSwipe() {
                     : `${i.pic}@.avg_color`)
         )['RGB']
     }
-    return swipes
 }
