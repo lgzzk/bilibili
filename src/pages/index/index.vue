@@ -1,7 +1,7 @@
 <template>
   <Header/>
   <div class="px-[60px] pb-[60px]">
-    <div class="grid grid-cols-5 gap-5 relative">
+    <div class="grid gird-content gap-5 relative">
       <Swiper class="col-span-2 row-span-2"/>
       <VideoCard v-for="i in recmdList" :video="i"/>
       <div
@@ -35,7 +35,6 @@ const getrRecmdList = () => {
 }
 getRecommendVideo().then(data => {
   recmdList.value = data
-  console.log(data)
 })
 
 
@@ -47,7 +46,36 @@ getRecommendVideo().then(data => {
   rounded-lg w-10 leading-[13.8px] text-[12px] flex flex-col items-center text-center cursor-pointer
   transition duration-200 hover:bg-[#e3e5e7] active:scale-95 select-none
 }
+
 .grid > :nth-child(n+8):nth-child(-n+12) {
-  margin-top: 40px;
+  @apply mt-10
 }
+.grid > :nth-child(n+12){
+  @apply mt-6
+}
+.gird-content {
+  @apply grid-cols-5 mx-auto
+}
+@media (max-width: 1400px) {
+  .grid > :nth-child(n+6):nth-child(-n+10) {
+    @apply mt-10
+  }
+  .grid > :nth-child(n+10){
+    @apply mt-6
+  }
+  .gird-content {
+    @apply grid-cols-4
+  }
+}
+/*@media (min-width: 1400px) and (max-width: 1559.9px) and (min-width: 1400px) and (max-width: 1559.9px){
+  .gird-content {
+    @apply grid-cols-5
+  }
+  .grid > :nth-child(n+8):nth-child(-n+12) {
+    @apply mt-10
+  }
+}*/
+
+
+
 </style>

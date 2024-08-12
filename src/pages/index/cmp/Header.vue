@@ -1,7 +1,9 @@
 <template>
-  <header-bar/>
-  <Banner/>
-  <header-channel/>
+  <div class="w-full ">
+    <header-bar/>
+    <Banner/>
+    <header-channel/>
+  </div>
 </template>
 
 <script setup lang="ts">

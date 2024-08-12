@@ -9,7 +9,7 @@ export interface SwipeItem {
     server_type: number
 }
 
-export async function getRecommendSwipe() {
+export async function getRecommendSwipe(): Promise<SwipeItem[]> {
     return (await httpApi('/api/x/web-show/res/locs', {
         pf: 0,
         ids: 4694

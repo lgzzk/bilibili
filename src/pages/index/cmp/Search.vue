@@ -1,8 +1,7 @@
 <template>
-  <div class="flex-1 h-16 text-[#18191C]">
-    <div class="flex flex-col w-full mt-3">
+  <div class="flex-1 h-16 text-[#18191C] max-w-[500px]">
+    <div class="flex flex-col mt-3 border border-[#e3e5e7] rounded-lg overflow-hidden">
       <div
-          :class="isClick?' rounded-t-md':'rounded-md'"
           class="flex items-center justify-between z-10 text-[#61666d] bg-[#f1f2f3] px-[5px] h-10 min-w-[250px] transition-colors duration-[.3s] max-w-[500px] hover:bg-white hover:opacity-100 opacity-90">
         <div
             :class="isClick?'bg-[#e3e5e7]':''"
@@ -24,12 +23,12 @@
           <search-svg/>
         </div>
       </div>
-      <div v-if="isClick" class="text-sm max-h-[612px] pb-[5px]  bg-white rounded-b-lg">
+      <div v-if="isClick" class="text-sm w-full max-h-[612px] pb-[5px] bg-white">
         <div v-show="!isEdit" class="pt-[13px] pb-[15px]">
           <div class="px-4 leading-6 text-[16px] font-medium">bilibili热搜</div>
           <div class="flex items-center h-[38px] pl-4 hover:bg-[#e3e5e7] cursor-pointer"
                v-for="(i,index) in trendingList">
-            <span class="leading-[17px] mr-1.5">{{ index + 1 }}</span>
+            <span class="leading-[17px] mr-1.5 min-w-[15px]">{{ index + 1 }}</span>
             <span class="leading-[17px] mr-1.5">{{ i.show_name }}</span>
             <Image :src="i.icon" class="h-4"/>
           </div>

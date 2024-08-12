@@ -3,10 +3,10 @@
     <div
         @mouseenter="clearTimer"
         @mouseleave="setTimer"
-        class="h-full rounded-md overflow-x-hidden relative">
+        class="h-full w-full rounded-md overflow-x-hidden relative">
       <div
           :style="{transform: `translateX(${translateX}%)`}"
-          class="flex transition-all translate-x-[-900%] duration-300 ease-in-out">
+          class="flex transition-all duration-300 ease-in-out">
         <a v-for="{url,pic} in swipes" :href="url"
            class="w-full h-full shrink-0" target="_blank">
           <Image :src="pic"></Image>
@@ -59,7 +59,7 @@ let swipeDrect = ref(1)
 
 
 getRecommendSwipe().then(data => {
-  swipes.value = data
+  swipes.value = data.filter(item => item.name !== "")
   setSwipeColor(swipes.value)
   // swipes.value = [
   //   data[data.length - 1],
@@ -112,7 +112,8 @@ setTimer()
 
 <style scoped>
 .arrow {
-  @apply bg-[#FFFFFF1A] text-white w-7 h-7 rounded-lg flex items-center justify-center active:scale-95 hover:bg-[#FFFFFF33]
+  @apply bg-[#FFFFFF1A] text-white w-7 h-7 rounded-lg flex items-center
+  justify-center active:scale-95 hover:bg-[#FFFFFF33]
 }
 
 .carousel-dot {

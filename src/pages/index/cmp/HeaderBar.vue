@@ -22,13 +22,16 @@
       </a>
       <a class="hover:animate-jump" href="https://www.bilibili.com/match/home" target="_blank">
         <span>赛事</span>
-      </a>
-      <!--      <a href="https://www.bilibili.com/blackboard/era/talentweb.html?auto_media_playback=1" target="_blank">-->
+      </a><a class="hover:animate-jump" href="https://live.bilibili.com/blackboard/foreverlove.html" target="_blank">
+      <span>仙侠夜</span>
+    </a>
+      <!--      <a class="hover:animate-jump" href="https://www.bilibili.com/blackboard/era/talentweb.html?auto_media_playback=1"-->
+      <!--         target="_blank">-->
       <!--        <span>竞技赛</span>-->
       <!--      </a>-->
-      <a href="https://www.bilibili.com/blackboard/era/SD1WyAhaIqHA1W16.html" target="_blank">
-        <span>去巴黎</span>
-      </a>
+      <!--      <a href="https://www.bilibili.com/blackboard/era/SD1WyAhaIqHA1W16.html" target="_blank">-->
+      <!--        <span>去巴黎</span>-->
+      <!--      </a>-->
       <a class="flex items-center" href="https://app.bilibili.com" target="_blank">
         <download-svg class="mr-1.5"/>
         <span>下载客户端</span>
@@ -36,7 +39,7 @@
       </a>
     </div>
     <Search/>
-    <div class="flex shrink-0 items-center ml-2.5 *:min-w-[50px] [&>*]:mr-1 *:cursor-pointer text-[13px] text-center">
+    <div id="bar" class="flex shrink-0 items-center ml-2.5 *:cursor-pointer text-[13px] text-center">
       <div class="flex justify-center">
         <div class="rounded-[50%] bg-[#00aeec] mr-1 text-sm leading-9 h-9 w-9">
           <span>登录</span>
@@ -66,8 +69,8 @@
         <creation-svg class="group-hover:animate-jump"/>
         <span>创作中心</span>
       </div>
-      <div class="flex group items-center justify-center rounded-lg ml-1.5 bg-[#fb7299] text-sm w-[90px] h-[34px]">
-        <upload-svg class="group-hover:animate-jump mr-[5px]"/>
+      <div class="flex items-center justify-center rounded-lg ml-1.5 bg-[#fb7299] text-sm w-[90px] h-[34px]">
+        <upload-svg class="mr-[5px]"/>
         <span>投稿</span>
       </div>
     </div>
@@ -104,5 +107,31 @@ import UploadSvg from '@/assets/icon/upload.svg'
   background-size: cover;
 }
 
+#bar > * {
+  @apply min-w-[50px] mx-[5px]
+}
 
+@media (max-width: 1448px) {
+  #bar > * {
+    @apply min-w-[25px]
+  }
+}
+
+@media (max-width: 1331px) {
+  .bar-item span {
+    @apply hidden
+  }
+}
+
+@media (max-width: 1230px) {
+  #bar > :last-child span {
+    @apply hidden
+  }
+  #bar > :last-child * {
+    @apply m-0
+  }
+  #bar > :last-child {
+    @apply w-[34px] h-[34px]
+  }
+}
 </style>

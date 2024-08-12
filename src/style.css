@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 body{
-    min-width: 1100px;
+    min-width: 1160px;
     font-size: 14px;
     line-height: 1.6;
     font-weight: 400;
-    /*background-color: #f1f2f3;*/
+    background-color: #f1f2f3;
 }

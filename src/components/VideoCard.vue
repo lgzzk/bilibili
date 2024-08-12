@@ -1,15 +1,26 @@
 <template>
   <div
-      @mouseenter="isShow = true"
-      @mouseleave="isShow = false"
+      @mouseenter="isDanmaku = true"
+      @mouseleave="isDanmaku = false"
+      ref="videoCard"
       class="flex flex-col">
-    <a :href="video.uri"
-       class="relative bg-[#f1f2f3]"
-       target="_blank">
+    <a
+        @mouseenter="isMask = false"
+        @mouseleave="isMask = true"
+        :href="video.uri"
+        class="relative bg-[#f1f2f3]"
+        target="_blank">
       <div class="pt-[56.25%]"></div>
-      <Image class="absolute top-0 w-full h-full rounded-md "
+      <div
+          :style="{opacity: isMask ? 0 : 1}"
+          class="absolute z-30 top-2 right-2 px-[3px] cursor-autoh-7 h-7 min-w-7 rounded-md bg-[#212121CC] flex items-center mask-transition">
+        <watch-later-svg class="w-[22px] h-[22px] text-white"/>
+      </div>
+      <Image class="absolute top-0 w-full h-full rounded-md"
              :src="`${video.pic}@672w_378h_1c_!web-home-common-cover.avif`"/>
-      <div class="mask justify-between">
+      <div
+          :style="{opacity: isMask ? 1 : 0}"
+          class="mask mask-transition justify-between">
         <div class="flex">
           <play-count-svg class="icon"/>
           <span class="mr-3">{{ getVideoData(video.stat.view) }}</span>
@@ -32,13 +43,16 @@
       <a :href="`https://space.bilibili.com/${video.owner.mid}`"
          class="flex items-center mt-1 text-[#9499A0] title-transition text-[13px] leading-[17px]"
          target="_blank">
-        <div class="px-1 mr-1 rounded text-[12px] text-[#ff7f24] bg-[#fff0e3]" v-if="video.rcmd_reason.content">{{ video.rcmd_reason.content }}</div>
-        <up-svg v-else class="w-[17px] h-[17px] mr-0.5 align-text-top"/>
+        <div class="px-1 mr-1 rounded text-[12px] text-[#ff7f24] bg-[#fff0e3]"
+             v-if="video.rcmd_reason&&video.rcmd_reason.reason_type!=0">
+          {{ video.rcmd_reason.content }}
+        </div>
+        <up-svg v-else class="w-[17px] h-[17px] mr-0.5 "/>
         <span class="mr-1">{{ video.owner.name }}</span>
         <span>{{ getPubdate }}</span>
       </a>
       <ellipsis-svg
-          :class="isShow ? 'block' : 'hidden'"
+          :class="isDanmaku ? 'block' : 'hidden'"
           class="absolute right-0 top-[2px] rounded icon text-[#61666d] hover:bg-[#f1f2f3]"/>
     </div>
   </div>
@@ -51,10 +65,13 @@ import UpSvg from "@/assets/icon/up.svg"
 import EllipsisSvg from "@/assets/icon/ellipsis.svg"
 import PlayCountSvg from "@/assets/icon/play-count.svg"
 import DanmakuSvg from "@/assets/icon/danmaku.svg"
+import WatchLaterSvg from "@/assets/icon/watch-later.svg"
 import {computed, ref} from "vue";
+import {computedAsync} from "@vueuse/core";
 
 const {video} = defineProps<{ video: VideoItem }>()
-const isShow = ref(false)
+const isDanmaku = ref(false)
+const isMask = ref(true)
 
 const getPubdate = computed(() => {
   let now = new Date();
@@ -88,6 +105,26 @@ const getVideoData = (data: number) => {
   else return (data / 10000).toFixed(1) + '万'
 }
 
+/*const evaluating = ref(false)
+const videoCard = ref<HTMLElement | null>(null)
+
+const userInfo = computedAsync(
+    async () => { /!* 你的逻辑 *!/ },
+    videoCard,
+    { lazy: true, evaluating },
+)*/
+import {useIntersectionObserver } from '@vueuse/core';
+
+const videoCard = ref<HTMLElement | null>(null);
+const isVisible = ref(false);
+
+// 监听元素是否进入视口
+useIntersectionObserver(
+    videoCard,
+    ([{ isIntersecting }]) => {
+      isVisible.value = isIntersecting;
+    }
+);
 </script>
 
 <style scoped>
@@ -103,6 +140,10 @@ const getVideoData = (data: number) => {
 
 .title-transition {
   @apply transition-colors duration-200 ease-linear hover:text-[#00aeec]
+}
+
+.mask-transition {
+  transition: all .2s linear .2s;
 }
 
 .icon {
