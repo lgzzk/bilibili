@@ -121,17 +121,18 @@ import UploadSvg from '@/assets/icon/upload.svg'
   .bar-item span {
     @apply hidden
   }
-}
 
-@media (max-width: 1230px) {
   #bar > :last-child span {
     @apply hidden
   }
+
   #bar > :last-child * {
     @apply m-0
   }
+
   #bar > :last-child {
     @apply w-[34px] h-[34px]
   }
 }
+
 </style>

@@ -1,5 +1,6 @@
 <template>
   <div
+      v-if="video.id"
       @mouseenter="isDanmaku = true"
       @mouseleave="isDanmaku = false"
       ref="videoCard"
@@ -56,6 +57,15 @@
           class="absolute right-0 top-[2px] rounded icon text-[#61666d] hover:bg-[#f1f2f3]"/>
     </div>
   </div>
+
+  <div v-else>
+    <div class="loading_animation pt-[56.25%] rounded-md"></div>
+    <div class="mt-2.5 *:rounded *:h-[18px]">
+      <p class="loading_animation w-[94%] mb-1"></p>
+      <p class="loading_animation w-[72%] mb-3"></p>
+      <p class="loading_animation w-[50%] mb-3"></p>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -67,12 +77,10 @@ import PlayCountSvg from "@/assets/icon/play-count.svg"
 import DanmakuSvg from "@/assets/icon/danmaku.svg"
 import WatchLaterSvg from "@/assets/icon/watch-later.svg"
 import {computed, ref} from "vue";
-import {computedAsync} from "@vueuse/core";
 
 const {video} = defineProps<{ video: VideoItem }>()
 const isDanmaku = ref(false)
 const isMask = ref(true)
-
 const getPubdate = computed(() => {
   let now = new Date();
   let pubdate = new Date(video.pubdate * 1000);
@@ -104,27 +112,6 @@ const getVideoData = (data: number) => {
   if (data < 10000) return data
   else return (data / 10000).toFixed(1) + '万'
 }
-
-/*const evaluating = ref(false)
-const videoCard = ref<HTMLElement | null>(null)
-
-const userInfo = computedAsync(
-    async () => { /!* 你的逻辑 *!/ },
-    videoCard,
-    { lazy: true, evaluating },
-)*/
-import {useIntersectionObserver } from '@vueuse/core';
-
-const videoCard = ref<HTMLElement | null>(null);
-const isVisible = ref(false);
-
-// 监听元素是否进入视口
-useIntersectionObserver(
-    videoCard,
-    ([{ isIntersecting }]) => {
-      isVisible.value = isIntersecting;
-    }
-);
 </script>
 
 <style scoped>
@@ -165,5 +152,20 @@ useIntersectionObserver(
   border-bottom-left-radius: 6px;
   border-bottom-right-radius: 6px;
   background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, .8) 100%);
+}
+
+.loading_animation {
+  background: linear-gradient(-45deg, #f1f2f3 25%, #ffffff 45%, #f1f2f3 65%);
+  background-size: 400% 100%;
+  animation: skeleton-loading 1.2s ease-in-out infinite;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
 }
 </style>

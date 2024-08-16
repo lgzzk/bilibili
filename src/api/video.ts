@@ -5,6 +5,7 @@ export interface VideoItem {
     uri: string
     title: string
     pic: string
+    goto: string
     duration: number
     pubdate: number
     owner: {
@@ -23,6 +24,6 @@ export interface VideoItem {
     }
 }
 
-export async function getRecommendVideo(): Promise<VideoItem[]> {
-    return (await httpApi('/api/x/web-interface/wbi/index/top/feed/rcmd', {ps: 30})).data.item
+export async function getRecommendVideo(ps: number = 11): Promise<VideoItem[]> {
+    return (await httpApi('/api/x/web-interface/wbi/index/top/feed/rcmd', {ps})).data.item
 }

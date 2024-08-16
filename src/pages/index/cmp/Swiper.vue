@@ -9,7 +9,7 @@
           class="flex transition-all duration-300 ease-in-out">
         <a v-for="{url,pic} in swipes" :href="url"
            class="w-full h-full shrink-0" target="_blank">
-          <Image :src="pic"></Image>
+          <Image class="w-full h-full" :src="pic+'@800w_512h_!web-home-carousel-cover.avif'"></Image>
         </a>
       </div>
       <a
