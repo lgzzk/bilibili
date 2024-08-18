@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full h-16 px-6 flex items-center justify-between absolute top-0 z-10 text-white text-sm ">
+  <div class="w-full h-16 px-6 flex items-center justify-between absolute top-0 z-10 max-w-[2560px] text-white text-sm ">
     <div class="flex shrink-0 mr-[30px] space-x-[15px] last:mr-0 leading-[64px]">
       <a class="flex items-center" href="https://www.bilibili.com" target="_blank">
         <zhu-zhan-svg class="mr-1.5 "/>

@@ -2,6 +2,8 @@ import httpApi from "@/utils/request";
 
 export interface VideoItem {
     id: number
+    cid: number
+    bvid: string
     uri: string
     title: string
     pic: string
@@ -25,5 +27,7 @@ export interface VideoItem {
 }
 
 export async function getRecommendVideo(ps: number = 11): Promise<VideoItem[]> {
-    return (await httpApi('/api/x/web-interface/wbi/index/top/feed/rcmd', {ps})).data.item
+    return (await httpApi('/api/x/web-interface/wbi/index/top/feed/rcmd', {
+        ps,
+    })).data.item
 }
