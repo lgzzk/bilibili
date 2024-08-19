@@ -1,7 +1,7 @@
 const httpApi = async (url: RequestInfo | URL, params: Record<string, any> = {}, options: RequestInit = {}) => {
     try {
         const queryString = new URLSearchParams(params).toString();
-        const response = await fetch(`${url}?${queryString}`, {referrerPolicy: 'no-referrer', ...options});
+        const response = await fetch(queryString ? `${url}?${queryString}` : url, {referrerPolicy: 'no-referrer', ...options});
 
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
@@ -20,7 +20,7 @@ const httpApi = async (url: RequestInfo | URL, params: Record<string, any> = {},
 };
 
 export function setCookie() {
-    const expiresInSeconds = 24 * 60 * 60;
+    const expiresInSeconds = 60 * 60;
     if (!document.cookie) {
         // document.cookie = `buvid3=076C65D9-5A16-58C2-BC36-B8F8BDD641B476644infoc;path=/;max-age=${oneYearInSeconds};`
         document.cookie = `b_nut=1723348237;path=/;max-age=${expiresInSeconds};`

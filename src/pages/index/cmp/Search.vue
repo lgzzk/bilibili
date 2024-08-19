@@ -1,5 +1,7 @@
 <template>
-  <div class="flex-1 h-16 text-[#18191C] max-w-[500px]">
+  <div
+      @click.stop
+      class="flex-1 h-16 text-[#18191C] max-w-[500px]">
     <div class="flex flex-col mt-3 border border-[#e3e5e7] rounded-lg overflow-hidden">
       <div
           class="flex items-center justify-between z-10 text-[#61666d] bg-[#f1f2f3] px-[5px] h-10 min-w-[250px] transition-colors duration-[.3s] max-w-[500px] hover:bg-white hover:opacity-100 opacity-90">
@@ -10,7 +12,6 @@
               :title="defaultSearch"
               v-model="searchValue"
               @focus="searchFocus"
-              @blur="searchBlur"
               @input="searchInput"
               @keydown.up.prevent="selectSuggestion('up')"
               @keydown.down.prevent="selectSuggestion('down')"
@@ -19,6 +20,7 @@
           <clean-svg @mousedown.prevent="clear" v-show="isEdit" class="text-[#c9ccd0] hover:text-[#636B74]"/>
         </div>
         <div
+            @click="goToSearch(searchValue)"
             class="min-w-8 h-8 rounded-md hover:bg-[#e3e5e7] flex items-center justify-center cursor-pointer">
           <search-svg/>
         </div>
@@ -26,8 +28,10 @@
       <div v-if="isClick" class="text-sm w-full max-h-[612px] pb-[5px] bg-white">
         <div v-show="!isEdit" class="pt-[13px] pb-[15px]">
           <div class="px-4 leading-6 text-[16px] font-medium">bilibili热搜</div>
-          <div class="flex items-center h-[38px] pl-4 hover:bg-[#e3e5e7] cursor-pointer"
-               v-for="(i,index) in trendingList">
+          <div
+              @click="goToSearch(i.show_name)"
+              v-for="(i,index) in trendingList"
+              class="flex items-center h-[38px] pl-4 hover:bg-[#e3e5e7] cursor-pointer">
             <span class="leading-[17px] mr-1.5 min-w-[15px]">{{ index + 1 }}</span>
             <span class="leading-[17px] mr-1.5">{{ i.show_name }}</span>
             <Image :src="i.icon" class="h-4"/>
@@ -35,7 +39,7 @@
         </div>
         <div ref="suggestion" v-show="isEdit" class="mt-[13px] mb-3">
           <div v-for="(i,index) in suggestList" v-html="i.name"
-               @click="clickSuggestion(i.value)"
+               @click="goToSearch(i.value)"
                :class="index === selectIndex?'bg-[#e3e5e7]':''"
                class="px-4 mb-1 leading-8 text-sm cursor-pointer hover:bg-[#e3e5e7]"></div>
         </div>
@@ -50,6 +54,7 @@ import CleanSvg from '@/assets/icon/clean.svg'
 import SearchSvg from '@/assets/icon/search.svg'
 import {getDefaultSearch, getSearchSuggest, getTrendingList, SuggestItem, TrendingItem} from "@/api/serach.ts";
 import Image from "@/components/Image.vue";
+import {Fn, useEventListener} from '@vueuse/core'
 
 const searchValue = ref('')
 const defaultSearch = ref('')
@@ -58,13 +63,11 @@ const isClick = ref(false)
 const trendingList = ref<TrendingItem[]>([])
 const suggestList = ref<SuggestItem[]>([])
 const selectIndex = ref(-1)
+let otherClickEvent: Fn | null;
 
 const searchFocus = () => {
   isClick.value = true
-}
-const searchBlur = () => {
-  selectIndex.value = -1
-  isClick.value = false
+  addEvent()
 }
 const searchInput = (e: Event) => {
   selectIndex.value = -1
@@ -88,9 +91,22 @@ const selectSuggestion = (e: string) => {
   searchValue.value = suggestList.value[selectIndex.value].value
 
 }
-const clickSuggestion = (e:string) => {
-  console.log(e)
-  searchValue.value = e
+const addEvent = () => {
+  if (!otherClickEvent) {
+    otherClickEvent = useEventListener(document, 'click', _ => {
+      isClick.value = false
+      removeEvent()
+    })
+  }
+}
+const removeEvent = () => {
+  if (otherClickEvent) otherClickEvent()
+  otherClickEvent = null
+}
+const goToSearch = (key: string) => {
+  searchValue.value = key
+  setTimeout(_ =>
+      window.open(`https://search.bilibili.com/all?keyword=${key}`), 80)
 }
 
 getDefaultSearch().then(data => {
@@ -99,7 +115,6 @@ getDefaultSearch().then(data => {
 getTrendingList().then(data => {
   trendingList.value = data
 })
-
 
 
 </script>

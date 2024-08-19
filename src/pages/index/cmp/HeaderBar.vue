@@ -1,37 +1,24 @@
 <template>
-  <div class="w-full h-16 px-6 flex items-center justify-between absolute top-0 z-10 max-w-[2560px] text-white text-sm ">
-    <div class="flex shrink-0 mr-[30px] space-x-[15px] last:mr-0 leading-[64px]">
-      <a class="flex items-center" href="https://www.bilibili.com" target="_blank">
+  <div
+      class="w-full h-16 px-6 flex items-center justify-between absolute top-0 z-10 max-w-[2560px] text-white text-sm">
+    <div class="flex items-center shrink-0 mr-[30px] space-x-[15px] last:mr-0 leading-[64px]">
+      <a class="flex items-center" href="/">
         <zhu-zhan-svg class="mr-1.5 "/>
         <span>首页</span>
       </a>
-      <a class="hover:animate-jump" href="https://www.bilibili.com/anime/" target="_blank">
-        <span>番剧</span>
+      <a
+          v-for="i in barItems"
+          :href="i.uri"
+          class="hover:animate-jump" target="_blank">
+        <span>{{ i.title }}</span>
       </a>
-      <a class="hover:animate-jump" href="https://live.bilibili.com" target="_blank">
-        <span>直播</span>
+      <a class="w-[54px] overflow-hidden h-16">
+        <div class="h-[160px] mt-[8px] animate-slider">
+          <span class="text-center inline-block h-9 w-full">{{ headerBar.name }}</span>
+          <Image :src="headerBar.pic" class="my-[1px]"/>
+          <span class="text-center inline-block h-9 w-full">{{ headerBar.name }}</span>
+        </div>
       </a>
-      <a class="hover:animate-jump" href="https://game.bilibili.com/platform" target="_blank">
-        <span>游戏中心</span>
-      </a>
-      <a class="hover:animate-jump" href="https://show.bilibili.com/platform/home.html" target="_blank">
-        <span>会员购</span>
-      </a>
-      <a class="hover:animate-jump" href="https://manga.bilibili.com/" target="_blank">
-        <span>漫画</span>
-      </a>
-      <a class="hover:animate-jump" href="https://www.bilibili.com/match/home" target="_blank">
-        <span>赛事</span>
-      </a><a class="hover:animate-jump" href="https://live.bilibili.com/blackboard/foreverlove.html" target="_blank">
-      <span>仙侠夜</span>
-    </a>
-      <!--      <a class="hover:animate-jump" href="https://www.bilibili.com/blackboard/era/talentweb.html?auto_media_playback=1"-->
-      <!--         target="_blank">-->
-      <!--        <span>竞技赛</span>-->
-      <!--      </a>-->
-      <!--      <a href="https://www.bilibili.com/blackboard/era/SD1WyAhaIqHA1W16.html" target="_blank">-->
-      <!--        <span>去巴黎</span>-->
-      <!--      </a>-->
       <a class="flex items-center" href="https://app.bilibili.com" target="_blank">
         <download-svg class="mr-1.5"/>
         <span>下载客户端</span>
@@ -45,29 +32,9 @@
           <span>登录</span>
         </div>
       </div>
-      <div class="bar-item group">
-        <big-svg class="group-hover:animate-jump"/>
-        <span>大会员</span>
-      </div>
-      <div class="bar-item group">
-        <message-svg class="group-hover:animate-jump"/>
-        <span>消息</span>
-      </div>
-      <div class="bar-item group">
-        <dynamic-svg class="group-hover:animate-jump"/>
-        <span>动态</span>
-      </div>
-      <div class="bar-item group">
-        <favorite-svg class="group-hover:animate-jump"/>
-        <span>收藏</span>
-      </div>
-      <div class="bar-item group">
-        <history-svg class="group-hover:animate-jump"/>
-        <span>历史</span>
-      </div>
-      <div class="bar-item group">
-        <creation-svg class="group-hover:animate-jump"/>
-        <span>创作中心</span>
+      <div v-for="i in barItems_right" class="bar-item group">
+        <component :is="i.icon" class="group-hover:animate-jump"/>
+        <span>{{ i.title }}</span>
       </div>
       <div class="flex items-center justify-center rounded-lg ml-1.5 bg-[#fb7299] text-sm w-[90px] h-[34px]">
         <upload-svg class="mr-[5px]"/>
@@ -90,7 +57,70 @@ import FavoriteSvg from '@/assets/icon/favorite.svg'
 import HistorySvg from '@/assets/icon/history.svg'
 import CreationSvg from '@/assets/icon/creation.svg'
 import UploadSvg from '@/assets/icon/upload.svg'
+import {getHeaderBar, HeaderBarItem} from "@/api/header.ts";
+import {ref} from "vue";
+import Image from "@/components/Image.vue";
 
+
+interface BarItem {
+  title: string
+  uri: string
+  icon?: string
+}
+
+const barItems: BarItem[] = [
+  {
+    title: '番剧',
+    uri: 'https://www.bilibili.com/anime/'
+  }, {
+    title: '直播',
+    uri: 'https://live.bilibili.com'
+  }, {
+    title: '游戏中心',
+    uri: 'https://game.bilibili.com/platform'
+  }, {
+    title: '会员购',
+    uri: 'https://show.bilibili.com/platform/home.html'
+  }, {
+    title: '漫画',
+    uri: 'https://manga.bilibili.com/'
+  }, {
+    title: '赛事',
+    uri: 'https://www.bilibili.com/match/home'
+  }
+]
+const barItems_right: BarItem[] = [
+  {
+    title: '大会员',
+    uri: '',
+    icon: BigSvg
+  }, {
+    title: '消息',
+    uri: '',
+    icon: MessageSvg
+  }, {
+    title: '动态',
+    uri: '',
+    icon: DynamicSvg
+  }, {
+    title: '收藏',
+    uri: '',
+    icon: FavoriteSvg
+  }, {
+    title: '历史',
+    uri: '',
+    icon: HistorySvg
+  }, {
+    title: '创作中心',
+    uri: '',
+    icon: CreationSvg
+  }
+]
+const headerBar = ref<HeaderBarItem>({} as HeaderBarItem)
+
+getHeaderBar().then(data => {
+  headerBar.value = data
+})
 </script>
 
 <style scoped>
@@ -135,4 +165,26 @@ import UploadSvg from '@/assets/icon/upload.svg'
   }
 }
 
+.animate-slider {
+  animation: slider 10s infinite ease-out;
+}
+
+@keyframes slider {
+  0% {
+    transform: translateY(0);
+  }
+  5% {
+    transform: translateY(-57px);
+  }
+  50% {
+    transform: translateY(-57px);
+  }
+  55% {
+    transform: translateY(-110px);
+  }
+  100% {
+    transform: translateY(-110px);
+  }
+
+}
 </style>
