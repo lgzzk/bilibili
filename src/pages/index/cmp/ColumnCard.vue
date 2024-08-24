@@ -65,7 +65,7 @@
 </template>
 
 <script setup lang="ts">
-import {VideoItem} from "@/api/video.ts";
+import {VideoItem} from "@/api/videoItem.ts";
 import Image from "@/components/Image.vue";
 import UpSvg from "@/assets/icon/up.svg"
 import PlayCountSvg from "@/assets/icon/play-count.svg"

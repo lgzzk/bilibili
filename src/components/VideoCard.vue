@@ -8,7 +8,7 @@
     <a
         @mouseenter="isMask = false"
         @mouseleave="isMask = true"
-        :href="video.uri"
+        :href="`/bilibili/video/${video.bvid}`"
         class="relative bg-[#f1f2f3]"
         target="_blank">
       <div class="pt-[56.25%]"></div>
@@ -69,7 +69,7 @@
 </template>
 
 <script setup lang="ts">
-import {VideoItem} from "@/api/video.ts";
+import {VideoItem} from "@/api/videoItem.ts";
 import Image from "@/components/Image.vue";
 import UpSvg from "@/assets/icon/up.svg"
 import EllipsisSvg from "@/assets/icon/ellipsis.svg"

@@ -21,7 +21,7 @@
       </div>
       <div
           :style="{opacity}"
-           class="transition-opacity duration-300">
+          class="transition-opacity duration-300">
         <div
             @click="flushed"
             class="rounded-lg py-2.5 cursor-pointer mt-1.5 text-white flex justify-center bg-[#00aeec]">
@@ -45,7 +45,7 @@
 <script setup lang="ts">
 import Header from "@/pages/index/cmp/Header.vue";
 import Swiper from "@/pages/index/cmp/Swiper.vue";
-import {getRecommendVideo, VideoItem} from "@/api/video.ts";
+import {getRecommendVideos, RecommendVideo} from "@/api/videoItem.ts";
 import {nextTick, Ref, ref, watch} from "vue";
 import VideoCard from "@/components/VideoCard.vue";
 import FlushedSvg from "@/assets/icon/flushed.svg"
@@ -53,7 +53,7 @@ import {useIntersectionObserver} from "@vueuse/core";
 import {useWindowScroll} from '@vueuse/core'
 
 
-const recmdList = ref<VideoItem[]>([])
+const recmdList = ref<RecommendVideo[]>([])
 const videoCards = ref<Ref<HTMLElement>[]>()
 const entityVideoItems = ref<VideoItem[]>([])
 const rate = ref(0)
@@ -85,7 +85,7 @@ const setObserver = (el: Ref<HTMLElement>) => {
         if (isIntersecting) {
           stop()
           setTimeout(_ =>
-              getRecommendVideo(15).then(data => {
+              getRecommendVideos(15).then(data => {
                 entityVideoItems.value.forEach((i, index) =>
                     Object.assign(i, data[index]))
                 setTimeout(_ => addSkeleton(), 300)
@@ -96,7 +96,7 @@ const setObserver = (el: Ref<HTMLElement>) => {
 }
 const init = () => {
   entityVideoItems.value = []
-  getRecommendVideo(11).then(data => {
+  getRecommendVideos(11).then(data => {
     recmdList.value = data
     addSkeleton()
   })
@@ -118,25 +118,28 @@ init()
   transition duration-200 hover:bg-[#e3e5e7] active:scale-95 select-none z-10
 }
 
-.grid > :nth-child(n+8):nth-child(-n+12) {
-  @apply mt-10
-}
 
-.grid > :nth-child(n+12) {
-  @apply mt-6
-}
+@media (min-width: 1400px) {
+  .grid > :nth-child(n+8):nth-child(-n+12) {
+    @apply mt-10
+  }
 
-.gird-content {
-  @apply grid-cols-5 mx-auto
+  .grid > :nth-child(n+12) {
+    @apply mt-6
+  }
+
+  .gird-content {
+    @apply grid-cols-5 mx-auto
+  }
 }
 
 @media (max-width: 1400px) {
-  .grid > :nth-child(n+6):nth-child(-n+10) {
+  .grid > :nth-child(n+6):nth-child(-n+9) {
     @apply mt-10
   }
 
   .grid > :nth-child(n+10) {
-    @apply mt-6
+    @apply mt-[22px]
   }
 
   .gird-content {

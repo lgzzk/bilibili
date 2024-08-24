@@ -1,11 +1,12 @@
-import {createMemoryHistory, createRouter} from 'vue-router'
+import {createRouter, createWebHistory} from 'vue-router'
 
 
 const routes = [
     {path: '/', component: () => import('../pages/index/index.vue')},
+    {path: '/video/:bvid', component: () => import('../pages/video/index.vue'),props: true},
 ]
 const router = createRouter({
-    history: createMemoryHistory('bilibili'),
+    history: createWebHistory('bilibili'),
     routes,
 })
 export default router

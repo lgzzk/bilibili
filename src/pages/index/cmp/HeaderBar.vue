@@ -12,11 +12,11 @@
           class="hover:animate-jump" target="_blank">
         <span>{{ i.title }}</span>
       </a>
-      <a class="w-[54px] overflow-hidden h-16">
-        <div class="h-[160px] mt-[8px] animate-slider">
-          <span class="text-center inline-block h-9 w-full">{{ headerBar.name }}</span>
-          <Image :src="headerBar.pic" class="my-[1px]"/>
-          <span class="text-center inline-block h-9 w-full">{{ headerBar.name }}</span>
+      <a v-if="headerBar" class="w-[54px] overflow-hidden h-16">
+        <div class="h-[160px]  animate-slider">
+          <span class="text-center inline-block w-full">{{ headerBar.name }}</span>
+          <Image :src="headerBar.pic"/>
+          <span class="text-center inline-block w-full">{{ headerBar.name }}</span>
         </div>
       </a>
       <a class="flex items-center" href="https://app.bilibili.com" target="_blank">
@@ -68,27 +68,29 @@ interface BarItem {
   icon?: string
 }
 
-const barItems: BarItem[] = [
-  {
-    title: '番剧',
-    uri: 'https://www.bilibili.com/anime/'
-  }, {
-    title: '直播',
-    uri: 'https://live.bilibili.com'
-  }, {
-    title: '游戏中心',
-    uri: 'https://game.bilibili.com/platform'
-  }, {
-    title: '会员购',
-    uri: 'https://show.bilibili.com/platform/home.html'
-  }, {
-    title: '漫画',
-    uri: 'https://manga.bilibili.com/'
-  }, {
-    title: '赛事',
-    uri: 'https://www.bilibili.com/match/home'
-  }
-]
+const barItems = ref<BarItem[]>(
+    [
+      {
+        title: '番剧',
+        uri: 'https://www.bilibili.com/anime/'
+      }, {
+      title: '直播',
+      uri: 'https://live.bilibili.com'
+    }, {
+      title: '游戏中心',
+      uri: 'https://game.bilibili.com/platform'
+    }, {
+      title: '会员购',
+      uri: 'https://show.bilibili.com/platform/home.html'
+    }, {
+      title: '漫画',
+      uri: 'https://manga.bilibili.com/'
+    }, {
+      title: '赛事',
+      uri: 'https://www.bilibili.com/match/home'
+    }
+    ]
+)
 const barItems_right: BarItem[] = [
   {
     title: '大会员',
@@ -116,10 +118,16 @@ const barItems_right: BarItem[] = [
     icon: CreationSvg
   }
 ]
-const headerBar = ref<HeaderBarItem>({} as HeaderBarItem)
+const headerBar = ref<HeaderBarItem>()
 
 getHeaderBar().then(data => {
-  headerBar.value = data
+  data.forEach(i => {
+    console.log(i)
+    if (i.pic === "") {
+      barItems.value.push({title: i.name, uri: i.url} as BarItem)
+    } else headerBar.value = i
+  })
+  // console.log(data)
 })
 </script>
 
@@ -167,6 +175,7 @@ getHeaderBar().then(data => {
 
 .animate-slider {
   animation: slider 10s infinite ease-out;
+  animation-delay: 4.5s;
 }
 
 @keyframes slider {
@@ -174,16 +183,16 @@ getHeaderBar().then(data => {
     transform: translateY(0);
   }
   5% {
-    transform: translateY(-57px);
+    transform: translateY(-50px);
   }
   50% {
-    transform: translateY(-57px);
+    transform: translateY(-50px);
   }
   55% {
-    transform: translateY(-110px);
+    transform: translateY(-100px);
   }
   100% {
-    transform: translateY(-110px);
+    transform: translateY(-100px);
   }
 
 }
