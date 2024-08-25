@@ -45,7 +45,7 @@
 <script setup lang="ts">
 import Header from "@/pages/index/cmp/Header.vue";
 import Swiper from "@/pages/index/cmp/Swiper.vue";
-import {getRecommendVideos, RecommendVideo} from "@/api/videoItem.ts";
+import {getRecommendVideos, RecommendVideo} from "@/api/video.ts";
 import {nextTick, Ref, ref, watch} from "vue";
 import VideoCard from "@/components/VideoCard.vue";
 import FlushedSvg from "@/assets/icon/flushed.svg"
@@ -55,7 +55,7 @@ import {useWindowScroll} from '@vueuse/core'
 
 const recmdList = ref<RecommendVideo[]>([])
 const videoCards = ref<Ref<HTMLElement>[]>()
-const entityVideoItems = ref<VideoItem[]>([])
+const entityVideoItems = ref<RecommendVideo[]>([])
 const rate = ref(0)
 const opacity = ref(0)
 const {y} = useWindowScroll()
@@ -66,12 +66,12 @@ const flushed = () => {
 }
 const swap = () => {
   rate.value += 360
-  getRecommendVideo(11).then(data => {
+  getRecommendVideos(11).then(data => {
     recmdList.value.splice(0, 11, ...data)
   })
 }
 const addSkeleton = async () => {
-  entityVideoItems.value = Array.from({length: 15}, _ => ({} as VideoItem))
+  entityVideoItems.value = Array.from({length: 15}, _ => ({} as RecommendVideo))
   recmdList.value.push(...entityVideoItems.value)
   await nextTick()
   if (videoCards.value) {

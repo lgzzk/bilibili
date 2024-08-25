@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full ">
+  <div class="w-full">
     <header-bar/>
     <Banner/>
     <header-channel/>
@@ -14,9 +14,5 @@ import HeaderChannel from "@/pages/index/cmp/HeaderChannel.vue";
 </script>
 
 <style scoped>
-.icon {
-  vertical-align: -0.15em;
-  fill: currentColor;
-  overflow: hidden;
-}
+
 </style>

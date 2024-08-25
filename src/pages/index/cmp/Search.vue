@@ -95,6 +95,7 @@ const addEvent = () => {
   if (!otherClickEvent) {
     otherClickEvent = useEventListener(document, 'click', _ => {
       isClick.value = false
+      selectIndex.value = -1
       removeEvent()
     })
   }

@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-import {getVideoPlayer, getVideoView} from "@/api/videoItem.ts";
+import {getVideoPlayer, getVideoView} from "@/api/video.ts";
 import {ref} from "vue";
 
 const props = defineProps({bvid: String})
@@ -15,7 +15,7 @@ const audioSrc = ref()
 const videoSrc = ref()
 
 
-getVideoView(props.bvid).then(async data => {
+getVideoView(props.bvid!).then(async data => {
   let videoPlayer = await getVideoPlayer(data);
   let videoUrl = new URL(videoPlayer.dash.video[2].baseUrl);
   let audioUrl = new URL(videoPlayer.dash.audio[2].baseUrl);
@@ -25,7 +25,7 @@ getVideoView(props.bvid).then(async data => {
   audioSrc.value = getFinalUrl(audioUrl, basePath);
 })
 
-function getFinalUrl(url, basePath) {
+function getFinalUrl(url:URL, basePath:string) {
   if (url.pathname.startsWith('/v1')) {
     return url.href;
   } else {

@@ -69,7 +69,7 @@
 </template>
 
 <script setup lang="ts">
-import {VideoItem} from "@/api/videoItem.ts";
+import {RecommendVideo} from "@/api/video.ts";
 import Image from "@/components/Image.vue";
 import UpSvg from "@/assets/icon/up.svg"
 import EllipsisSvg from "@/assets/icon/ellipsis.svg"
@@ -78,7 +78,7 @@ import DanmakuSvg from "@/assets/icon/danmaku.svg"
 import WatchLaterSvg from "@/assets/icon/watch-later.svg"
 import {computed, ref} from "vue";
 
-const {video} = defineProps<{ video: VideoItem }>()
+const {video} = defineProps<{ video: RecommendVideo }>()
 const isDanmaku = ref(false)
 const isMask = ref(true)
 const getPubdate = computed(() => {

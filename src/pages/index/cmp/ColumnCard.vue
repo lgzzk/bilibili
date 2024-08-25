@@ -65,7 +65,7 @@
 </template>
 
 <script setup lang="ts">
-import {VideoItem} from "@/api/videoItem.ts";
+import {RecommendVideo} from "@/api/video.ts";
 import Image from "@/components/Image.vue";
 import UpSvg from "@/assets/icon/up.svg"
 import PlayCountSvg from "@/assets/icon/play-count.svg"
@@ -75,7 +75,7 @@ import {ref} from "vue";
 
 // TODO 待完成ColumnCard列表
 
-const {column} = defineProps<{ column: VideoItem }>()
+const {column} = defineProps<{ column: RecommendVideo }>()
 const isDanmaku = ref(false)
 const isMask = ref(true)
 
