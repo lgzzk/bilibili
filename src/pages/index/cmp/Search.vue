@@ -13,14 +13,15 @@
               v-model="searchValue"
               @focus="searchFocus"
               @input="searchInput"
+              @keydown.enter.prevent="goToSearch(searchValue)"
               @keydown.up.prevent="selectSuggestion('up')"
               @keydown.down.prevent="selectSuggestion('down')"
               :placeholder="defaultSearch"
               class="w-full border-none text-[#000] leading-5 focus:outline-none bg-transparent">
-          <clean-svg @mousedown.prevent="clear" v-show="isEdit" class="text-[#c9ccd0] hover:text-[#636B74]"/>
+          <clean-svg @mousedown.prevent="clear" v-show="searchValue" class="text-[#c9ccd0] hover:text-[#636B74]"/>
         </div>
         <div
-            @click="goToSearch(searchValue)"
+            @click="goToSearch(searchValue || defaultSearch)"
             class="min-w-8 h-8 rounded-md hover:bg-[#e3e5e7] flex items-center justify-center cursor-pointer">
           <search-svg/>
         </div>

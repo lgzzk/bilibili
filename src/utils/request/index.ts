@@ -1,28 +1,32 @@
-const httpApi = async (url: RequestInfo | URL, params: Record<string, any> = {}, options: RequestInit = {}) => {
+const httpApi = async (
+    url: RequestInfo | URL,
+    options?: HttpApiOptions,
+    includeHeaders: boolean = false
+) => {
     try {
-        const queryString = new URLSearchParams(params).toString();
-        const response = await fetch(queryString ? `${url}?${queryString}` : url, {referrerPolicy: 'no-referrer', ...options});
+        const queryString = new URLSearchParams(options?.params).toString()
+        const response = await fetch(queryString ? `${url}?${queryString}` : url, {...options?.options})
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`)
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const contentType = response.headers.get('Content-Type');
-        if (contentType && contentType.includes('application/json')) {
-            return await response.json();
-        } else {
-            const textData = await response.text();
-            return JSON.parse(textData);
-        }
+        // response.headers.forEach((value, key) => {
+        //     console.log(`${key}: ${value}`);
+        // });
+
+        let data = await handleContentType(response)
+
+        if (includeHeaders) return {data, headers: response.headers} as HttpApiResult
+
+        return data
+
     } catch (err) {
-        console.error('Fetch error:', err);
-        throw err;
+        console.error('Fetch error:', err)
+        throw err
     }
-};
+}
 
 export function setCookie() {
-    const expiresInSeconds = 60 * 60;
+    const expiresInSeconds = 12 * 60 * 60;
     if (!document.cookie) {
-        // document.cookie = `buvid3=076C65D9-5A16-58C2-BC36-B8F8BDD641B476644infoc;path=/;max-age=${oneYearInSeconds};`
         document.cookie = `b_nut=1723348237;path=/;max-age=${expiresInSeconds};`
         httpApi('https://api.bilibili.com/x/frontend/finger/spi').then(({data}) => {
             document.cookie = `buvid3=${data.b_3};path=/;max-age=${expiresInSeconds};`
@@ -31,4 +35,31 @@ export function setCookie() {
     }
 }
 
-export default httpApi;
+async function handleContentType(response: Response): Promise<any> {
+    const contentType = response.headers.get('Content-Type')
+    if (!contentType) return JSON.parse(await response.text())
+
+    const contentHandlers: Map<string, ContentHandler> = new Map([
+        ['application/json', (response) => response.json()],
+        ['application/json; charset=utf-8', (response) => response.json()],
+        ['application/octet-stream', (response) => response.arrayBuffer()],
+        ['video/mp4', (response) => response.arrayBuffer()],
+    ]);
+
+    if (contentHandlers.has(contentType))
+        return contentHandlers.get(contentType)!(response)
+
+    return Promise.reject(new Error('Unsupported Content-Type: ' + contentType));
+}
+
+
+type ContentHandler = (response: Response) => Promise<any>
+type HttpApiOptions = {
+    params?: Record<string, any>
+    options?: RequestInit
+}
+type HttpApiResult = {
+    data: any
+    headers: Headers
+}
+export default httpApi

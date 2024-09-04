@@ -33,6 +33,9 @@ export default defineConfig({
                 target: 'https://www.bilibili.com/',
                 changeOrigin: true,
                 rewrite: path => path.replace(/^\/host/, '')
+            },'/range': {
+                target: 'https://www.lgzzk.site/',
+                changeOrigin: true,
             }
         }
     }
