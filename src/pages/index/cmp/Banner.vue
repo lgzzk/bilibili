@@ -15,6 +15,7 @@
           class="object-cover w-[200px] h-[500px] top-0 absolute"
           loop playsinline muted autoplay width="200" height="500"></video>
     </template>
+    <Image :src="litpic" class="absolute left-[var(--litpic-left)] bottom-[10px] h-[78px] w-[162px]"/>
     <div class="mask"></div>
   </div>
 </template>
@@ -25,11 +26,12 @@ import Image from "@/components/Image.vue";
 import {LayerItem} from "@/api/header.ts";
 import httpApi from "@/utils/request";
 
-defineProps<{ layerItems: LayerItem[] }>()
-
+defineProps<{
+  layerItems: LayerItem[]
+  litpic: string
+}>()
 
 const setBlob = async (el: HTMLVideoElement, url: string) => {
-  console.log(el)
   const blob = await httpApi(url, {options: {referrerPolicy: 'no-referrer'}})
   el.src = URL.createObjectURL(blob)
 }

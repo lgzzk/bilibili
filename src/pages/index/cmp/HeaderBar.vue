@@ -1,8 +1,8 @@
 <template>
   <div
       class="w-full h-16 px-6 flex items-center justify-between absolute top-0 z-10 max-w-[2560px] text-white text-sm">
-    <div class="flex items-center shrink-0 mr-[30px] space-x-[15px] last:mr-0 leading-[64px]">
-      <a class="flex items-center" href="/">
+    <div id="bar-left" class="flex items-center mr-[30px] shrink-0 space-x-[15px] last:mr-0 leading-[64px]">
+      <a class="flex items-center" href="/bilibili">
         <zhu-zhan-svg class="mr-1.5 "/>
         <span>首页</span>
       </a>
@@ -26,7 +26,7 @@
       </a>
     </div>
     <Search/>
-    <div id="bar" class="flex shrink-0 items-center ml-2.5 *:cursor-pointer text-[13px] text-center">
+    <div id="bar-right" class="flex shrink-0 items-center ml-2.5 *:cursor-pointer text-[13px] text-center">
       <div class="flex justify-center text-white">
         <div class="rounded-[50%] bg-[#00aeec] mr-1 text-sm leading-9 h-9 w-9">
           <span>登录</span>
@@ -143,12 +143,14 @@ getHeaderBar().then(data => {
   background-size: cover;
 }
 
-#bar > * {
+#bar-right > * {
   @apply min-w-[50px] mx-[5px]
 }
 
 @media (max-width: 1448px) {
-  #bar > * {
+
+
+  #bar-right > * {
     @apply min-w-[25px]
   }
 }
@@ -158,15 +160,19 @@ getHeaderBar().then(data => {
     @apply hidden
   }
 
-  #bar > :last-child span {
+  #bar-left {
+    @apply mr-2.5
+  }
+
+  #bar-right > :last-child span {
     @apply hidden
   }
 
-  #bar > :last-child * {
+  #bar-right > :last-child * {
     @apply m-0
   }
 
-  #bar > :last-child {
+  #bar-right > :last-child {
     @apply w-[34px] h-[34px]
   }
 }

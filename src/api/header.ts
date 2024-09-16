@@ -22,7 +22,7 @@ export interface LayerItem {
     opacity: { wrap: string }
     resources: [{ src: string }]
     rotate: {}
-    scale: {initial:number}
+    scale: { initial: number }
     translate: {
         initial: number[],
         offset: number[]
@@ -37,8 +37,9 @@ export async function getHeaderBar(): Promise<HeaderBarItem[]> {
         .map(item => item[1][0])
 }
 
-export async function getBannerLayer(): Promise<LayerItem[]> {
+export async function getBannerLayer(): Promise<{ litpic: string, layers: LayerItem[] }> {
     let layer = await httpApi('/api/x/web-show/page/header?resource_id=142')
-    return JSON.parse(layer.data.split_layer).layers
+    let layers = JSON.parse(layer.data.split_layer).layers
+    return {litpic: layer.data.litpic, layers}
 }
 

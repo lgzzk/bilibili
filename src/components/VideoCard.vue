@@ -18,6 +18,7 @@
         <watch-later-svg class="w-[22px] h-[22px] text-white"/>
       </div>
       <Image class="absolute top-0 w-full h-full rounded-md"
+             :alt="video.title"
              :src="`${video.pic}@672w_378h_1c_!web-home-common-cover.avif`"/>
       <div
           :style="{opacity: isMask ? 1 : 0}"

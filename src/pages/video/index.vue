@@ -1,12 +1,16 @@
 <template>
-  <header-bar class="relative text-gray-600"/>
-  <div class="flex flex-col justify-center items-center">
-    <div class="">{{ videoView?.title }}</div>
-    <video
-        ref="video"
-        :src="videoSrc"
-        class="w-[668px] h-[376px]"
-        loop controls preload="auto"></video>
+  <header-bar class="relative" style="color: #18191c"/>
+  <div class="flex justify-center items-center">
+    <div class="w-fit min-w-[1080px]">
+      <div class="pt-[22px] inline-block">
+        <span class="inline-block overflow-hidden whitespace-nowrap text-ellipsis max-w-[63ch] text-xl" :title="videoView?.title">{{ videoView?.title }}</span>
+      </div>
+      <video
+          ref="video"
+          :src="videoSrc"
+          class="w-[784px] h-[441px]"
+          loop controls autoplay preload="auto"></video>
+    </div>
   </div>
 </template>
 
@@ -36,12 +40,9 @@ getVideoView(props.bvid!).then(async data => {
   if (videoList.length === 0) videoList = videoPlayer.dash.video.filter(item => {
     return !item.codecs.includes('hev')
   })
-  videoPlayer.dash.video.forEach(video => {
-    console.log(video.id, video.codecs, video.baseUrl)
-  })
 
   let videoDash = videoList[0]
-  let audioDash = videoPlayer.dash.audio[2]
+  let audioDash = videoPlayer.dash.audio[2] || videoPlayer.dash.audio[1]
 
   videoSrc.value = URL.createObjectURL(mediaSource)
   mediaSource.addEventListener('sourceopen', handleSourceOpen)
@@ -91,5 +92,4 @@ getVideoView(props.bvid!).then(async data => {
 </script>
 
 <style scoped>
-
 </style>

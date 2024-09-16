@@ -3,7 +3,7 @@
        @mousemove="onMouseMove"
        @mouseleave="onMouseleave">
     <header-bar/>
-    <Banner :layer-items="layerItems" ref="bannerRes"/>
+    <Banner :layer-items="layerItems" :litpic="litpic" ref="bannerRes"/>
   </div>
   <header-channel/>
 </template>
@@ -18,12 +18,16 @@ import {getBannerLayer, LayerItem} from "@/api/header.ts";
 
 const bannerRes = ref()
 const layerItems = ref<LayerItem[]>([])
+const litpic = ref('')
 
 let offsetX = 0
 let enterX = 0
 let imageDoms: HTMLImageElement[] = []
 
-getBannerLayer().then(res => layerItems.value = res)
+getBannerLayer().then(res => {
+  layerItems.value = res.layers
+  litpic.value = res.litpic
+})
 
 const setTranslateStyle = () => {
   if (imageDoms.length === 0) imageDoms = bannerRes.value.$el.querySelectorAll('.banner-img')

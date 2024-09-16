@@ -1,18 +1,13 @@
 <template>
-  <img ref="imgRef" :src="src" referrerPolicy=no-referrer :alt="src"/>
+  <img ref="imgRef" :src="src" referrerPolicy=no-referrer :alt="alt"/>
 </template>
 
 <script setup lang="ts">
-import {ref} from "vue";
 
-defineProps({
-  src: String
-})
-const imgRef = ref<HTMLImageElement | null>(null)
-
-defineExpose({
-  imgRef
-});
+defineProps<{
+  src: string
+  alt?: string
+}>()
 
 </script>
 

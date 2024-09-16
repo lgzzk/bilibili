@@ -8,6 +8,8 @@ body{
     line-height: 1.6;
     font-weight: 400;
     background-color: #f1f2f3;
+    -webkit-font-smoothing: antialiased;
+    font-family: PingFang SC, HarmonyOS_Regular, Helvetica Neue, Microsoft YaHei, sans-serif !important;
 }
 
 @media (min-width: 1560px) {
@@ -16,6 +18,7 @@ body{
         --layout-right: 90px;
         --swiper-font-size: 20px;
         --header-height: 120px;
+        --litpic-left: 96px;
     }
 }
 @media (max-width: 1560px) {
@@ -24,5 +27,6 @@ body{
         --layout-right: 9px;
         --swiper-font-size: 18px;
         --header-height: 110px;
+        --litpic-left: 64px;
     }
 }
