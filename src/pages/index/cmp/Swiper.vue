@@ -15,7 +15,7 @@
       <a
           v-if="swipes.length"
           :href="getCurrentSwipeItem.url"
-          class="z-20 text-white text-lg absolute bottom-[42px] left-[15px]"
+          class="z-20 text-white text-variable absolute bottom-[42px] left-[15px]"
           target="_blank">{{ getCurrentSwipeItem.name }}</a>
       <div class="flex items-end z-20 space-x-3 absolute bottom-[42px] right-[15px] ">
         <button @click="play(0)" class="arrow">
@@ -61,6 +61,7 @@ let swipeDrect = ref(1)
 getRecommendSwipe().then(data => {
   swipes.value = data.filter(item => item.name !== "")
   setSwipeColor(swipes.value)
+  /*去广*/
   // swipes.value = [
   //   data[data.length - 1],
   //   ...data,
@@ -136,6 +137,11 @@ setTimer()
 .eat-haha-down {
   animation: eat-haha-down .8s;
 }
+
+.text-variable {
+  font-size: var(--swiper-font-size);
+}
+
 
 @keyframes eat-haha-up {
   0% {

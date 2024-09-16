@@ -9,3 +9,20 @@ body{
     font-weight: 400;
     background-color: #f1f2f3;
 }
+
+@media (min-width: 1560px) {
+    :root {
+        --layout-padding: 140px;
+        --layout-right: 90px;
+        --swiper-font-size: 20px;
+        --header-height: 120px;
+    }
+}
+@media (max-width: 1560px) {
+    :root {
+        --layout-padding: 60px;
+        --layout-right: 9px;
+        --swiper-font-size: 18px;
+        --header-height: 110px;
+    }
+}

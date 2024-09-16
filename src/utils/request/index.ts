@@ -8,10 +8,6 @@ const httpApi = async (
         const response = await fetch(queryString ? `${url}?${queryString}` : url, {...options?.options})
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`)
 
-        // response.headers.forEach((value, key) => {
-        //     console.log(`${key}: ${value}`);
-        // });
-
         let data = await handleContentType(response)
 
         if (includeHeaders) return {data, headers: response.headers} as HttpApiResult
@@ -44,10 +40,13 @@ async function handleContentType(response: Response): Promise<any> {
         ['application/json; charset=utf-8', (response) => response.json()],
         ['application/octet-stream', (response) => response.arrayBuffer()],
         ['video/mp4', (response) => response.arrayBuffer()],
+        ['video/webm', (response) => response.blob()],
+        ['text/html', (response) => response.text()],
     ]);
 
     if (contentHandlers.has(contentType))
         return contentHandlers.get(contentType)!(response)
+
 
     return Promise.reject(new Error('Unsupported Content-Type: ' + contentType));
 }

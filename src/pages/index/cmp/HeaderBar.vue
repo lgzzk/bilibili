@@ -12,7 +12,7 @@
           class="hover:animate-jump" target="_blank">
         <span>{{ i.title }}</span>
       </a>
-      <a v-if="headerBar" class="w-[54px] overflow-hidden h-16">
+      <a v-if="headerBar" :href="headerBar.url" target="_blank" class="w-[54px] overflow-hidden h-16">
         <div class="h-[160px]  animate-slider">
           <span class="text-center inline-block w-full">{{ headerBar.name }}</span>
           <Image :src="headerBar.pic"/>
@@ -27,7 +27,7 @@
     </div>
     <Search/>
     <div id="bar" class="flex shrink-0 items-center ml-2.5 *:cursor-pointer text-[13px] text-center">
-      <div class="flex justify-center">
+      <div class="flex justify-center text-white">
         <div class="rounded-[50%] bg-[#00aeec] mr-1 text-sm leading-9 h-9 w-9">
           <span>登录</span>
         </div>
@@ -36,7 +36,7 @@
         <component :is="i.icon" class="group-hover:animate-jump"/>
         <span>{{ i.title }}</span>
       </div>
-      <div class="flex items-center justify-center rounded-lg ml-1.5 bg-[#fb7299] text-sm w-[90px] h-[34px]">
+      <div class="flex items-center justify-center rounded-lg ml-1.5 bg-[#fb7299] text-sm w-[90px] text-white h-[34px]">
         <upload-svg class="mr-[5px]"/>
         <span>投稿</span>
       </div>
@@ -122,12 +122,10 @@ const headerBar = ref<HeaderBarItem>()
 
 getHeaderBar().then(data => {
   data.forEach(i => {
-    console.log(i)
     if (i.pic === "") {
       barItems.value.push({title: i.name, uri: i.url} as BarItem)
     } else headerBar.value = i
   })
-  // console.log(data)
 })
 </script>
 

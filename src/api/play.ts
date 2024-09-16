@@ -24,7 +24,7 @@ export async function setSourceBuffer(url: string, sourceBuffer: SourceBuffer,st
 }
 
 
-function getFinalUrl(url: string) {
+export function getFinalUrl(url: string) {
     let basePath = 'https://www.lgzzk.site/stream'
     let newUrl = new URL(url)
     if (newUrl.pathname.startsWith('/v1')) {

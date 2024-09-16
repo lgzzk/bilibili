@@ -1,40 +1,53 @@
 <template>
-  <div>
-    <video ref="video" :src="videoSrc" loop controls preload="auto"></video>
+  <header-bar class="relative text-gray-600"/>
+  <div class="flex flex-col justify-center items-center">
+    <div class="">{{ videoView?.title }}</div>
+    <video
+        ref="video"
+        :src="videoSrc"
+        class="w-[668px] h-[376px]"
+        loop controls preload="auto"></video>
   </div>
 </template>
 
 
 <script setup lang="ts">
-import {getVideoPlayer, getVideoView} from "@/api/video.ts";
+import {getVideoPlayer, getVideoView, VideoView} from "@/api/video.ts";
 import {ref} from "vue";
 import {getRange, setSourceBuffer} from "@/api/play.ts";
+import HeaderBar from "@/pages/index/cmp/HeaderBar.vue";
 
+const videoView = ref<VideoView>()
 const props = defineProps({bvid: String})
 const video = ref<HTMLVideoElement | null>(null)
 const videoSrc = ref()
-const mediaSource = new MediaSource();
+const mediaSource = new MediaSource()
 
 
 getVideoView(props.bvid!).then(async data => {
-  let videoPlayer = await getVideoPlayer(data);
+  videoView.value = data
+  document.title = data.title + '_哔哩哔哩_bilibili'
 
+  let videoPlayer = await getVideoPlayer(data);
   let videoList = videoPlayer.dash.video.filter(item => {
     let url = new URL(item.baseUrl)
     return !item.codecs.includes('hev') && url.pathname.startsWith('/v1')
   })
-  videoList.forEach(video => {
+  if (videoList.length === 0) videoList = videoPlayer.dash.video.filter(item => {
+    return !item.codecs.includes('hev')
+  })
+  videoPlayer.dash.video.forEach(video => {
     console.log(video.id, video.codecs, video.baseUrl)
   })
 
-  let videoDash = videoList[0] || videoPlayer.dash.video[0]
+  let videoDash = videoList[0]
   let audioDash = videoPlayer.dash.audio[2]
 
   videoSrc.value = URL.createObjectURL(mediaSource)
-  mediaSource.addEventListener('sourceopen', handleSourceOpen);
+  mediaSource.addEventListener('sourceopen', handleSourceOpen)
 
   video.value?.addEventListener('error', (event) => {
-    console.error('Video error occurred:', event);
+    console.error('Video error occurred:', event)
   });
 
   async function handleSourceOpen() {

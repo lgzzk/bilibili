@@ -101,9 +101,9 @@ const getDuration = computed(() => {
   let minutes = Math.floor((video.duration % 3600) / 60)
   let seconds = video.duration % 60
 
-  let hoursStr = hours > 0 && hours < 9 ? '0' + hours : hours
-  let minutesStr = minutes > 0 && minutes < 10 ? '0' + minutes : minutes
-  let secondsStr = seconds > 0 && seconds < 10 ? '0' + seconds : seconds
+  let hoursStr = hours >= 0 && hours < 9 ? '0' + hours : hours
+  let minutesStr = minutes >= 0 && minutes < 10 ? '0' + minutes : minutes
+  let secondsStr = seconds >= 0 && seconds < 10 ? '0' + seconds : seconds
 
   if (hours > 0) return `${hoursStr}:${minutesStr}:${secondsStr}`
   else return `${minutesStr}:${secondsStr}`

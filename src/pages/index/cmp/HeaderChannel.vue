@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center px-[60px] h-[110px] text-sm tracking-[2px] text-[#61666d]">
+  <div class="flex items-center px-[var(--layout-padding)] h-[var(--header-height)] text-sm tracking-[2px] text-[#61666d]">
     <div class="flex mr-2">
       <a class="flex flex-col items-center mr-6" href="https://t.bilibili.com/">
         <div class="channel-icon-item bg-[#ff9212]">

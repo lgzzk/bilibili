@@ -1,19 +1,19 @@
 <template>
   <Header/>
-  <div class="px-[60px] pb-[60px] relative">
+  <div class="px-[var(--layout-padding)] pb-[60px] relative">
     <div class="grid gird-content gap-5">
       <Swiper class="col-span-2 row-span-2"/>
       <VideoCard ref="videoCards" v-for="i in recmdList" :key="i.id" :video="i"/>
     </div>
     <div
         @click="swap"
-        class="absolute top-0 p-[9px] right-2 button">
+        class="absolute top-0 p-[9px] right-[var(--layout-right)] z-20 button">
       <flushed-svg
           :style="{transform: `rotate(${rate}deg)`}"
           class="mb-1.5 transition-transform duration-500"/>
       <span>换一换</span>
     </div>
-    <div class="fixed bottom-[30px] right-2">
+    <div class="fixed bottom-[30px] right-[var(--layout-right)]">
       <div class="button h-10 flex justify-center bg-white">
         <svg class="w-[22px] h-[22px]" aria-hidden="true">
           <use xlink:href="#widget-watch-later"></use>
