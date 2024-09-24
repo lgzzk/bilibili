@@ -15,7 +15,7 @@
           class="object-cover w-[200px] h-[500px] top-0 absolute"
           loop playsinline muted autoplay width="200" height="500"></video>
     </template>
-    <Image :src="litpic" class="absolute left-[var(--litpic-left)] bottom-[10px] h-[78px] w-[162px]"/>
+    <Image v-if="litpic" :src="litpic" class="absolute left-[var(--litpic-left)] bottom-[10px] h-[78px] w-[162px]"/>
     <div class="mask"></div>
   </div>
 </template>

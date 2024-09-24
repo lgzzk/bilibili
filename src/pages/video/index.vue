@@ -84,6 +84,7 @@ getVideoView(props.bvid!).then(async data => {
       console.log(audioRange, audioMaxRange)
       if (audioRange < audioMaxRange) {
         audioRange += await setSourceBuffer(audioDash.baseUrl, audioSourceBuffer, audioRange, initSize + audioRange)
+        video.value?.play()
       }
     })
   }

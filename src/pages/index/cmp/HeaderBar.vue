@@ -1,6 +1,6 @@
 <template>
   <div
-      class="w-full h-16 px-6 flex items-center justify-between absolute top-0 z-10 max-w-[2560px] text-white text-sm">
+      class="w-full h-16 px-6 flex items-center justify-between absolute top-0 z-20 max-w-[2560px] text-white text-sm">
     <div id="bar-left" class="flex items-center mr-[30px] shrink-0 space-x-[15px] last:mr-0 leading-[64px]">
       <a class="flex items-center" href="/bilibili">
         <zhu-zhan-svg class="mr-1.5 "/>

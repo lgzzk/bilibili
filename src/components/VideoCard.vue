@@ -6,8 +6,8 @@
       ref="videoCard"
       class="flex flex-col">
     <a
-        @mouseenter="isMask = false"
-        @mouseleave="isMask = true"
+        @mouseenter="handlerMouseenter(video)"
+        @mouseleave="handlerMouseleave"
         :href="`/bilibili/video/${video.bvid}`"
         class="relative bg-[#f1f2f3]"
         target="_blank">
@@ -17,12 +17,19 @@
           class="absolute z-30 top-2 right-2 px-[3px] cursor-autoh-7 h-7 min-w-7 rounded-md bg-[#212121CC] flex items-center mask-transition">
         <watch-later-svg class="w-[22px] h-[22px] text-white"/>
       </div>
-      <Image class="absolute top-0 w-full h-full rounded-md"
-             :alt="video.title"
-             :src="`${video.pic}@672w_378h_1c_!web-home-common-cover.avif`"/>
+      <Image
+          :style="{opacity: !isMask ? 0 : 1}"
+          class="card-content z-10"
+          :alt="video.title"
+          :src="`${video.pic}@672w_378h_1c_!web-home-common-cover.avif`"/>
+      <video
+          :style="{opacity: isMask ? 0 : 1}"
+          ref="videoRef"
+          class="card-content bg-black"
+          loop muted autoplay preload="auto"></video>
       <div
           :style="{opacity: isMask ? 1 : 0}"
-          class="mask mask-transition justify-between">
+          class="mask mask-transition justify-between z-10">
         <div class="flex">
           <play-count-svg class="icon"/>
           <span class="mr-3">{{ getVideoData(video.stat.view) }}</span>
@@ -58,19 +65,11 @@
           class="absolute right-0 top-[2px] rounded icon text-[#61666d] hover:bg-[#f1f2f3]"/>
     </div>
   </div>
-
-  <div v-else>
-    <div class="loading_animation pt-[56.25%] rounded-md"></div>
-    <div class="mt-2.5 *:rounded *:h-[18px]">
-      <p class="loading_animation w-[94%] mb-1"></p>
-      <p class="loading_animation w-[72%] mb-3"></p>
-      <p class="loading_animation w-[50%] mb-3"></p>
-    </div>
-  </div>
+  <skeleton v-else/>
 </template>
 
 <script setup lang="ts">
-import {RecommendVideo} from "@/api/video.ts";
+import {getVideoPlayer, RecommendVideo, Video, VideoPlayer, VideoView} from "@/api/video.ts";
 import Image from "@/components/Image.vue";
 import UpSvg from "@/assets/icon/up.svg"
 import EllipsisSvg from "@/assets/icon/ellipsis.svg"
@@ -78,10 +77,22 @@ import PlayCountSvg from "@/assets/icon/play-count.svg"
 import DanmakuSvg from "@/assets/icon/danmaku.svg"
 import WatchLaterSvg from "@/assets/icon/watch-later.svg"
 import {computed, ref} from "vue";
+import Skeleton from "@/components/Skeleton.vue";
+import {getRange, setSourceBuffer} from "@/api/play.ts";
 
 const {video} = defineProps<{ video: RecommendVideo }>()
 const isDanmaku = ref(false)
 const isMask = ref(true)
+const videoRef = ref<HTMLVideoElement | null>(null)
+const mediaSource = new MediaSource()
+let isLoadSegment = true
+let videoPlayer: VideoPlayer
+let videoDash: Video
+let initSize = 300 * 1024
+let videoMaxRange = 0
+let videoRange = 0
+let videoSourceBuffer: SourceBuffer
+
 const getPubdate = computed(() => {
   let now = new Date();
   let pubdate = new Date(video.pubdate * 1000);
@@ -97,6 +108,7 @@ const getPubdate = computed(() => {
     return `· ${now.getHours() - pubdate.getHours()}小时前`
   } else return `· ${now.getMinutes() - pubdate.getMinutes()}分钟前`
 })
+
 const getDuration = computed(() => {
   let hours = Math.floor(video.duration / 3600)
   let minutes = Math.floor((video.duration % 3600) / 60)
@@ -109,9 +121,64 @@ const getDuration = computed(() => {
   if (hours > 0) return `${hoursStr}:${minutesStr}:${secondsStr}`
   else return `${minutesStr}:${secondsStr}`
 })
+
 const getVideoData = (data: number) => {
   if (data < 10000) return data
   else return (data / 10000).toFixed(1) + '万'
+}
+
+const handlerMouseenter = (video: RecommendVideo) => {
+  if (videoRef.value?.src) {
+    isMask.value = false
+    videoRef.value?.play()
+    isLoadSegment = true
+    // TODO 待完成 分段续传
+    // handleSourceOpen()
+  } else firstPlay(video)
+}
+
+async function handlerMouseleave() {
+  isMask.value = true
+  isLoadSegment = false
+  setTimeout(_ => videoRef.value?.pause(), 180)
+}
+
+const firstPlay = async (video: RecommendVideo) => {
+  videoPlayer = await getVideoPlayer({bvid: video.bvid, cid: video.cid} as VideoView)
+  let videoList = videoPlayer.dash.video.filter(item => {
+    let url = new URL(item.baseUrl)
+    return item.id === 32 && !item.codecs.includes('hev') && url.pathname.startsWith('/v1')
+  })
+  if (videoList.length === 0) videoList = videoPlayer.dash.video.filter(item => {
+    return item.id === 32 && !item.codecs.includes('hev')
+  })
+  videoDash = videoList[0];
+
+  [videoMaxRange] = await Promise.all([
+    getRange(videoDash.baseUrl),
+  ])
+  videoRef.value!.src = URL.createObjectURL(mediaSource)
+  mediaSource.addEventListener('sourceopen', handleSourceOpen)
+
+}
+
+async function handleSourceOpen() {
+  console.log(mediaSource.readyState, 'mediaSource')
+  if (!videoSourceBuffer)
+    videoSourceBuffer = mediaSource.addSourceBuffer(`${videoDash.mimeType};codecs=${videoDash.codecs}`)
+  setSourceBuffer(videoDash.baseUrl, videoSourceBuffer, videoRange, initSize + videoRange).then(
+      data => {
+        videoRange += data
+        if (isLoadSegment) isMask.value = false
+      })
+
+  videoSourceBuffer.addEventListener('updateend', async () => {
+    if (isLoadSegment && videoRange < videoMaxRange) {
+      let content_length = await setSourceBuffer(videoDash.baseUrl, videoSourceBuffer, videoRange, initSize + videoRange);
+      // console.log(content_length,videoRange, videoMaxRange)
+      videoRange += content_length
+    }
+  })
 }
 </script>
 
@@ -138,6 +205,11 @@ const getVideoData = (data: number) => {
   @apply w-[18px] h-[18px] mr-[2px]
 }
 
+.card-content {
+  @apply absolute top-0 left-0 w-full h-full rounded-md;
+  transition: all .2s linear .2s;
+}
+
 .mask {
   position: absolute;
   bottom: 0;
@@ -155,18 +227,4 @@ const getVideoData = (data: number) => {
   background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, .8) 100%);
 }
 
-.loading_animation {
-  background: linear-gradient(-45deg, #f1f2f3 25%, #ffffff 45%, #f1f2f3 65%);
-  background-size: 400% 100%;
-  animation: skeleton-loading 1.2s ease-in-out infinite;
-}
-
-@keyframes skeleton-loading {
-  0% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0 50%;
-  }
-}
 </style>
