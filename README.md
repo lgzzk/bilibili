@@ -1,7 +1,7 @@
 ## 🚀
 - [Vue3.4](https://cn.vuejs.org/)
 - [Typescript](https://www.tslang.cn/index.html)
-- [Vite4](https://vitejs.cn/)
+- [Vite](https://vitejs.cn/)
 - [Vue-Router](https://router.vuejs.org/zh)
 - [Tailwind CSS](https://www.tailwindcss.cn/)
 
