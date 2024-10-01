@@ -2,10 +2,10 @@
   <div @mouseenter="onMouseEnter"
        @mousemove="onMouseMove"
        @mouseleave="onMouseleave">
-    <header-bar/>
-    <Banner :layer-items="layerItems" :litpic="litpic" ref="bannerRes"/>
+        <header-bar/>
+    <Banner :layer-items="layerItems" :litpic="litpic" :pic="pic" ref="bannerRes"/>
   </div>
-  <header-channel/>
+    <header-channel/>
 </template>
 
 <script setup lang="ts">
@@ -19,14 +19,17 @@ import {getBannerLayer, LayerItem} from "@/api/header.ts";
 const bannerRes = ref()
 const layerItems = ref<LayerItem[]>([])
 const litpic = ref('')
+const pic = ref('')
 
 let offsetX = 0
 let enterX = 0
 let imageDoms: HTMLImageElement[] = []
 
 getBannerLayer().then(res => {
+  console.log(res)
   layerItems.value = res.layers
   litpic.value = res.litpic
+  pic.value = res.pic
 })
 
 const setTranslateStyle = () => {
@@ -35,8 +38,9 @@ const setTranslateStyle = () => {
     let offset = layerItems.value[index].translate.offset || [0, 0]
     let scale = .0004
     let scaledOffsetX = offsetX * scale * (offset[0] - offset[1])
-    i.style.transform = `translateX(${scaledOffsetX}px) scale(1.05)`
+    i.style.transform = `translateX(${scaledOffsetX}px)`
   })
+
 }
 
 const onMouseMove = (e: MouseEvent) => {

@@ -1,15 +1,17 @@
 <template>
   <header-bar class="relative" style="color: #18191c"/>
-  <div class="flex justify-center items-center">
+  <div class="flex justify-center items-center whitespace-pre-line">
     <div class="w-fit min-w-[1080px]">
-      <div class="pt-[22px] inline-block">
-        <span class="inline-block overflow-hidden whitespace-nowrap text-ellipsis max-w-[63ch] text-xl" :title="videoView?.title">{{ videoView?.title }}</span>
-      </div>
+      <video-info :video-view="videoView"></video-info>
       <video
           ref="video"
           :src="videoSrc"
-          class="w-[784px] h-[441px]"
-          loop controls autoplay preload="auto"></video>
+          class="w-[784px] h-[441px] bg-black"
+          loop controls muted autoplay preload="auto"></video>
+      <span class="h-[300px]">{{ videoView?.desc }}</span>
+    </div>
+    <div>
+      <up-info v-if="videoView" :owner="videoView?.owner"/>
     </div>
   </div>
 </template>
@@ -20,8 +22,10 @@ import {getVideoPlayer, getVideoView, VideoView} from "@/api/video.ts";
 import {ref} from "vue";
 import {getRange, setSourceBuffer} from "@/api/play.ts";
 import HeaderBar from "@/pages/index/cmp/HeaderBar.vue";
+import VideoInfo from "@/pages/video/cmp/VideoInfo.vue";
+import UpInfo from "@/pages/video/cmp/UpInfo.vue";
 
-const videoView = ref<VideoView>()
+const videoView = ref<VideoView | null>(null)
 const props = defineProps({bvid: String})
 const video = ref<HTMLVideoElement | null>(null)
 const videoSrc = ref()
@@ -30,6 +34,7 @@ const mediaSource = new MediaSource()
 
 getVideoView(props.bvid!).then(async data => {
   videoView.value = data
+  console.log(data)
   document.title = data.title + '_哔哩哔哩_bilibili'
 
   let videoPlayer = await getVideoPlayer(data);
@@ -84,7 +89,6 @@ getVideoView(props.bvid!).then(async data => {
       console.log(audioRange, audioMaxRange)
       if (audioRange < audioMaxRange) {
         audioRange += await setSourceBuffer(audioDash.baseUrl, audioSourceBuffer, audioRange, initSize + audioRange)
-        video.value?.play()
       }
     })
   }

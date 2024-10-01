@@ -89,6 +89,8 @@ const getCurrentSwipeIndex = computed(() => {
   let index = (translateX.value / 100)
   return index < 0 ? index * -1 : index
 })
+
+// TODO 无限滚动
 // const getFlexDerctClass = computed(() => {
 //   return getCurrentSwipeIndex.value == 0 ? 'flex-row-reverse' : ''
 // })
@@ -106,8 +108,6 @@ const clearTimer = () => {
 }
 
 setTimer()
-// const getAnimation = computed(() => {
-// })
 
 </script>
 

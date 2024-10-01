@@ -10,20 +10,24 @@ export interface RecommendVideo {
     goto: string
     duration: number
     pubdate: number
-    owner: {
-        mid: number
-        name: string
-        face: string
-    },
-    stat: {
-        view: number
-        like: number
-        danmaku: number
-    },
+    owner: Owner
+    stat: Stat
     rcmd_reason: {
         content: string,
         reason_type: number
     }
+}
+
+export interface Stat {
+    view: number
+    like: number
+    danmaku: number
+}
+
+export interface Owner {
+    mid: number
+    name: string
+    face: string
 }
 
 export interface VideoView {
@@ -32,6 +36,15 @@ export interface VideoView {
     cid: number
     pic: string
     title: string
+    desc: string
+    pubdate: number
+    stat: Stat
+    owner: Owner
+    argue_info: {
+        argue_link: string
+        argue_msg: string
+        argue_type: number
+    }
 }
 
 export interface VideoPlayer {

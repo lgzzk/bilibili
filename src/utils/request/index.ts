@@ -22,7 +22,7 @@ const httpApi = async (
 
 export function setCookie() {
     const expiresInSeconds = 12 * 60 * 60;
-    if (!document.cookie) {
+    if (!document.cookie.includes('buvid3') || !document.cookie.includes('buvid4')) {
         document.cookie = `b_nut=1723348237;path=/;max-age=${expiresInSeconds};`
         httpApi('https://api.bilibili.com/x/frontend/finger/spi').then(({data}) => {
             document.cookie = `buvid3=${data.b_3};path=/;max-age=${expiresInSeconds};`

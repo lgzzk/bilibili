@@ -32,9 +32,9 @@
           class="mask mask-transition justify-between z-10">
         <div class="flex">
           <play-count-svg class="icon"/>
-          <span class="mr-3">{{ getVideoData(video.stat.view) }}</span>
+          <span class="mr-3">{{ getVideoPlayCount(video.stat.view) }}</span>
           <danmaku-svg class="icon"/>
-          <span>{{ getVideoData(video.stat.danmaku) }}</span>
+          <span>{{ getVideoPlayCount(video.stat.danmaku) }}</span>
         </div>
         <span>{{ getDuration }}</span>
       </div>
@@ -79,6 +79,7 @@ import WatchLaterSvg from "@/assets/icon/watch-later.svg"
 import {computed, ref} from "vue";
 import Skeleton from "@/components/Skeleton.vue";
 import {getRange, setSourceBuffer} from "@/api/play.ts";
+import {getVideoPlayCount} from "@/utils/video";
 
 const {video} = defineProps<{ video: RecommendVideo }>()
 const isDanmaku = ref(false)
@@ -95,7 +96,7 @@ let videoSourceBuffer: SourceBuffer
 
 const getPubdate = computed(() => {
   let now = new Date();
-  let pubdate = new Date(video.pubdate * 1000);
+  let pubdate = new Date(video.pubdate * 1000)
   if (now.getFullYear() != pubdate.getFullYear()) {
     return `· ${pubdate.getFullYear()}-${pubdate.getMonth() + 1}-${pubdate.getDate()}`
   } else if (now.getMonth() != pubdate.getMonth()) {
@@ -121,11 +122,6 @@ const getDuration = computed(() => {
   if (hours > 0) return `${hoursStr}:${minutesStr}:${secondsStr}`
   else return `${minutesStr}:${secondsStr}`
 })
-
-const getVideoData = (data: number) => {
-  if (data < 10000) return data
-  else return (data / 10000).toFixed(1) + '万'
-}
 
 const handlerMouseenter = (video: RecommendVideo) => {
   if (videoRef.value?.src) {

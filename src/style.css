@@ -2,7 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-body{
+
+:root {
+    --text: #9499a0;
+}
+
+body {
     min-width: 1160px;
     font-size: 14px;
     line-height: 1.6;
@@ -21,6 +26,7 @@ body{
         --litpic-left: 96px;
     }
 }
+
 @media (max-width: 1560px) {
     :root {
         --layout-padding: 60px;

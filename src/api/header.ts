@@ -37,9 +37,9 @@ export async function getHeaderBar(): Promise<HeaderBarItem[]> {
         .map(item => item[1][0])
 }
 
-export async function getBannerLayer(): Promise<{ litpic: string, layers: LayerItem[] }> {
+export async function getBannerLayer(): Promise<{ litpic: string, layers: LayerItem[] ,pic:string}> {
     let layer = await httpApi('/api/x/web-show/page/header?resource_id=142')
     let layers = JSON.parse(layer.data.split_layer).layers
-    return {litpic: layer.data.litpic, layers}
+    return {litpic: layer.data.litpic, layers, pic: layer.data.pic}
 }
 
