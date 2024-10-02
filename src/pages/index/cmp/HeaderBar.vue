@@ -12,7 +12,7 @@
           class="hover:animate-jump" target="_blank">
         <span>{{ i.title }}</span>
       </a>
-      <a v-if="headerBar" :href="headerBar.url" target="_blank" class="w-[54px] overflow-hidden h-16">
+      <a v-if="headerBar" :href="headerBar.url" id="bar-item" target="_blank" class="w-[54px] overflow-hidden h-16">
         <div class="h-[160px]  animate-slider">
           <span class="text-center inline-block w-full">{{ headerBar.name }}</span>
           <Image :src="headerBar.pic"/>
@@ -148,8 +148,6 @@ getHeaderBar().then(data => {
 }
 
 @media (max-width: 1448px) {
-
-
   #bar-right > * {
     @apply min-w-[25px]
   }
@@ -157,6 +155,10 @@ getHeaderBar().then(data => {
 
 @media (max-width: 1331px) {
   .bar-item span {
+    @apply hidden
+  }
+
+  #bar-item {
     @apply hidden
   }
 
