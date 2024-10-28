@@ -1,4 +1,5 @@
-## 🚀
+## 👉[在线体验](https://www.lgzzk.site/bilibili/)
+## 🚀技术栈
 - [Vue3.4](https://cn.vuejs.org/)
 - [Typescript](https://www.tslang.cn/index.html)
 - [Vite](https://vitejs.cn/)
