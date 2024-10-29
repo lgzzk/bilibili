@@ -32,7 +32,7 @@ getBannerLayer().then(res => {
 })
 
 const setTranslateStyle = () => {
-  if (bannerRes.value) return
+  if (!bannerRes.value) return
   if (imageDoms.length === 0) imageDoms = bannerRes.value.$el.querySelectorAll('.banner-img')
   imageDoms.forEach((i, index) => {
     let offset = layerItems.value[index].translate.offset || [0, 0]

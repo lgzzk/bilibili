@@ -15,7 +15,7 @@
           class="object-cover top-0 absolute"
           loop playsinline muted autoplay></video>
     </template>
-    <Image v-if="pic" :src="pic" class="banner-img"/>
+    <Image v-if="!layerItems" :src="pic" class="banner-img"/>
     <Image v-if="litpic" :src="litpic" class="absolute left-[var(--litpic-left)] bottom-[10px] h-[78px] w-[162px]"/>
     <div class="mask"></div>
   </div>

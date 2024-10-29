@@ -52,6 +52,7 @@ import {getRecommendSwipe, setSwipeColor, SwipeItem} from "@/api/swiper.ts";
 import {computed, ref} from "vue";
 import Image from "@/components/Image.vue";
 import Arrow from '@/assets/icon/arrow.svg'
+import {useThrottleFn} from "@vueuse/core";
 
 const swipes = ref<SwipeItem[]>([])
 const translateX = ref(0)
@@ -70,7 +71,7 @@ getRecommendSwipe().then(data => {
 
 })
 
-const play = (e: number) => {
+const throttleFn = useThrottleFn((e: number) => {
   swipeDrect.value = e
   let max = -100 * (swipes.value.length - 1)
   if (e === 0) {
@@ -81,7 +82,10 @@ const play = (e: number) => {
     if (translateX.value === max) translateX.value = 0
     else translateX.value -= 100
   }
-}
+}, 300)
+
+const play = (e: number) => throttleFn(e)
+
 const getCurrentSwipeItem = computed(() => {
   return swipes.value[getCurrentSwipeIndex.value]
 })

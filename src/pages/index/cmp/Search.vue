@@ -55,7 +55,7 @@ import CleanSvg from '@/assets/icon/clean.svg'
 import SearchSvg from '@/assets/icon/search.svg'
 import {getDefaultSearch, getSearchSuggest, getTrendingList, SuggestItem, TrendingItem} from "@/api/serach.ts";
 import Image from "@/components/Image.vue";
-import {Fn, useEventListener} from '@vueuse/core'
+import {Fn, useDebounceFn, useEventListener} from '@vueuse/core'
 
 const searchValue = ref('')
 const defaultSearch = ref('')
@@ -70,14 +70,17 @@ const searchFocus = () => {
   isClick.value = true
   addEvent()
 }
-const searchInput = (e: Event) => {
+
+const debounceFn = useDebounceFn((e: Event) => {
   selectIndex.value = -1
   let data = (e.target as HTMLInputElement).value
   isEdit.value = data !== ''
   getSearchSuggest(data as string).then(data => {
     suggestList.value = data
   })
-}
+})
+
+const searchInput = (e: Event) => debounceFn(e)
 const clear = () => {
   searchValue.value = ''
   isEdit.value = false

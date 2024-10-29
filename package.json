@@ -20,7 +20,7 @@
     "postcss": "^8.4.39",
     "tailwindcss": "^3.4.6",
     "typescript": "^5.2.2",
-    "vite": "^5.3.4",
+    "vite": "5.4.6",
     "vite-svg-loader": "^5.1.0",
     "vue-tsc": "^2.0.24"
   }

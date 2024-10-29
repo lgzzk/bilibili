@@ -58,7 +58,7 @@ const videoCards = ref<Ref<HTMLElement>[]>()
 const entityVideoItems = ref<RecommendVideo[]>([])
 const rate = ref(0)
 const opacity = ref(0)
-const {y} = useWindowScroll()
+const {y} = useWindowScroll({ behavior: 'smooth' })
 
 const flushed = () => {
   goTop()
