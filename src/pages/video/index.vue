@@ -1,17 +1,22 @@
 <template>
   <header-bar class="relative" style="color: #18191c"/>
-  <div class="flex justify-center items-center whitespace-pre-line">
-    <div class="w-fit min-w-[1080px]">
-      <video-info :video-view="videoView"></video-info>
+  <div
+      class="flex justify-center  max-w-[2540px] min-w-[1080px] px-[10px] mx-auto whitespace-pre-line">
+    <div class="w-[771px] ">
+      <video-info :video-view></video-info>
       <video
           ref="video"
           :src="videoSrc"
-          class="w-[784px] h-[441px] bg-black"
-          loop controls muted autoplay preload="auto"></video>
-      <span class="h-[300px]">{{ videoView?.desc }}</span>
+          class="w-full h-[480px]  bg-black"
+          loop controls autoplay preload="auto"></video>
+      <div class="text-wrap">{{ videoView?.desc }}</div>
     </div>
-    <div>
-      <up-info v-if="videoView" :owner="videoView?.owner"/>
+    <div class="w-[350px] content-right h-full ml-[30px]">
+      <template v-if="videoView">
+        <up-info :video-view/>
+        <danmaku-list :video-view/>
+        <related-list :bvid="videoView.bvid"/>
+      </template>
     </div>
   </div>
 </template>
@@ -19,22 +24,28 @@
 
 <script setup lang="ts">
 import {getVideoPlayer, getVideoView, VideoView} from "@/api/video.ts";
-import {ref} from "vue";
+import {ref, watch} from "vue";
 import {getRange, setSourceBuffer} from "@/api/play.ts";
 import HeaderBar from "@/pages/index/cmp/HeaderBar.vue";
 import VideoInfo from "@/pages/video/cmp/VideoInfo.vue";
 import UpInfo from "@/pages/video/cmp/UpInfo.vue";
+import DanmakuList from "@/pages/video/cmp/DanmakuList.vue";
+import RelatedList from "@/pages/video/cmp/RelatedList.vue";
 
 const videoView = ref<VideoView | null>(null)
 const props = defineProps({bvid: String})
 const video = ref<HTMLVideoElement | null>(null)
 const videoSrc = ref()
-const mediaSource = new MediaSource()
+
+watch(() => props.bvid, (newBvid) => {
+  if (!newBvid) return
+  initVideoView()
+}, {immediate: true})
 
 
-getVideoView(props.bvid!).then(async data => {
+async function initVideoView() {
+  const data = await getVideoView(props.bvid!)
   videoView.value = data
-  console.log(data)
   document.title = data.title + '_哔哩哔哩_bilibili'
 
   let videoPlayer = await getVideoPlayer(data);
@@ -48,6 +59,8 @@ getVideoView(props.bvid!).then(async data => {
 
   let videoDash = videoList[0]
   let audioDash = videoPlayer.dash.audio[2] || videoPlayer.dash.audio[1]
+
+  const mediaSource = new MediaSource()
 
   videoSrc.value = URL.createObjectURL(mediaSource)
   mediaSource.addEventListener('sourceopen', handleSourceOpen)
@@ -77,24 +90,31 @@ getVideoView(props.bvid!).then(async data => {
         data => audioRange = data)
 
     videoSourceBuffer.addEventListener('updateend', async () => {
-      console.log(mediaSource.readyState, 'videoSourceBuffer')
-      console.log(videoRange, videoMaxRange)
-      if (videoRange < videoMaxRange) {
+      // console.log(mediaSource.readyState, 'videoSourceBuffer')
+      // console.log(videoRange, videoMaxRange)
+      if (videoRange < videoMaxRange && video.value) {
         videoRange += await setSourceBuffer(videoDash.baseUrl, videoSourceBuffer, videoRange, initSize + videoRange)
       }
     })
 
     audioSourceBuffer.addEventListener('updateend', async () => {
-      console.log(mediaSource.readyState, 'audioSourceBuffer')
+      // console.log(mediaSource.readyState, 'audioSourceBuffer')
       console.log(audioRange, audioMaxRange)
-      if (audioRange < audioMaxRange) {
+      if (audioRange < audioMaxRange && video.value) {
         audioRange += await setSourceBuffer(audioDash.baseUrl, audioSourceBuffer, audioRange, initSize + audioRange)
       }
     })
   }
-})
+}
 
 </script>
 
 <style scoped>
+
+@media (min-width: 1681px) {
+  .content-right {
+    @apply w-[411px]
+  }
+}
+
 </style>

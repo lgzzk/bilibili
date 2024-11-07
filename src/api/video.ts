@@ -19,15 +19,65 @@ export interface RecommendVideo {
 }
 
 export interface Stat {
+    aid: number
     view: number
-    like: number
     danmaku: number
+    reply: number
+    favorite: number
+    coin: number
+    share: number
+    now_rank: number
+    his_rank: number
+    like: number
+    dislike: number
+    vt: number
+    vv: number
 }
 
 export interface Owner {
     mid: number
     name: string
     face: string
+}
+
+export interface Dimension {
+    width: number
+    height: number
+    rotate: number
+}
+
+export interface VideoRelated {
+    aid: number
+    videos: number
+    tid: number
+    tname: string
+    copyright: number
+    pic: string
+    title: string
+    pubdate: number
+    ctime: number
+    desc: string
+    state: number
+    duration: number
+    mission_id: number
+    rights: Rights
+    owner: Owner
+    stat: Stat
+    dynamic: string
+    cid: number
+    dimension: Dimension
+    season_id: number
+    short_link_v2: string
+    first_frame: string
+    pub_location: string
+    cover43: string
+    bvid: string
+    season_type: number
+    is_ogv: boolean
+    ogv_info: any
+    rcmd_reason: string
+    enable_vt: number
+    ai_rcmd: any
 }
 
 export interface VideoView {
@@ -40,11 +90,45 @@ export interface VideoView {
     pubdate: number
     stat: Stat
     owner: Owner
+    honor_reply: Honor
+    rights: Rights
     argue_info: {
         argue_link: string
         argue_msg: string
         argue_type: number
     }
+}
+
+export interface Honor {
+    honor: [
+        {
+            aid: number
+            type: number
+            desc: string
+            weekly_recommend_num: number
+        }
+    ]
+}
+
+export interface Rights {
+    bp: number
+    elec: number
+    download: number
+    movie: number
+    pay: number
+    hd5: number
+    no_reprint: number
+    autoplay: number
+    ugc_pay: number
+    is_cooperation: number
+    ugc_pay_preview: number
+    no_background: number
+    clean_mode: number
+    is_stein_gate: number
+    is_360: number
+    no_share: number
+    arc_pay: number
+    free_watch: number
 }
 
 export interface VideoPlayer {
@@ -141,5 +225,11 @@ export async function getVideoPlayer(video: VideoView): Promise<VideoPlayer> {
             try_look: 1,
             gaia_source: 'pre-load'
         }
+    })).data
+}
+
+export async function getVideoRelated(bvid: string): Promise<VideoRelated[]> {
+    return (await httpApi('/api/x/web-interface/archive/related', {
+        params: {bvid}
     })).data
 }

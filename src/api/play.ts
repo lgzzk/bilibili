@@ -11,18 +11,36 @@ export async function getRange(url: string): Promise<number> {
 }
 
 
-export async function setSourceBuffer(url: string, sourceBuffer: SourceBuffer,startRange:number,endRange:number) {
+export async function setSourceBuffer(url: string, sourceBuffer: SourceBuffer, startRange: number, endRange: number) {
+
+    // await manageBuffer(sourceBuffer, currentTime);
+
     let response = await httpApi(getFinalUrl(url), {
         options: {
             headers: {
                 range: `bytes=${startRange}-${endRange}`,
             }
         }
-    },true)
+    }, true)
     sourceBuffer.appendBuffer(response.data)
     return parseInt(response.headers.get('content-length'))
 }
 
+// async function manageBuffer(sourceBuffer: SourceBuffer, currentTime: number) {
+//     if (sourceBuffer.buffered.length > 0) {
+//         // 保留当前时间前后的一定范围，例如60秒
+//         const safetyOffset = 60;
+//         const start = sourceBuffer.buffered.start(0);
+//         const removeEnd = Math.max(start, currentTime - safetyOffset);
+//
+//         if (removeEnd > start) {
+//             await new Promise<void>((resolve) => {
+//                 sourceBuffer.remove(start, removeEnd);
+//                 sourceBuffer.addEventListener('updateend', () => resolve(), {once: true});
+//             });
+//         }
+//     }
+// }
 
 export function getFinalUrl(url: string) {
     let basePath = 'https://www.lgzzk.site/stream'

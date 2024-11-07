@@ -1,7 +1,7 @@
 <template>
   <div
       class="relative flex justify-center items-center overflow-hidden h-[9.375vw] max-h-[240px] min-h-[155px] ">
-    <template v-for="i in layerItems">
+      <template v-for="i in layerItems">
       <Image
           v-if="i.resources[0].src.includes('.png')"
           :key="'image-'+i.id"
@@ -9,7 +9,7 @@
           class="banner-img"/>
       <video
           v-else
-          :key="'video-'+i.id"
+          :key="'format-'+i.id"
           :ref="el => setBlob(el as HTMLVideoElement,i.resources[0].src)"
           :style="{transform: `translate(${i.translate.initial[0]}px,${i.translate.initial[1]}px)`}"
           class="object-cover top-0 absolute"

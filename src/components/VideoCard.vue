@@ -5,10 +5,10 @@
       @mouseleave="isDanmaku = false"
       ref="videoCard"
       class="flex flex-col">
-    <a
+    <router-link
         @mouseenter="handlerMouseenter(video)"
         @mouseleave="handlerMouseleave"
-        :href="`/bilibili/video/${video.bvid}`"
+        :to="`/video/${video.bvid}`"
         class="relative bg-[#f1f2f3]"
         target="_blank">
       <div class="pt-[56.25%]"></div>
@@ -36,9 +36,9 @@
           <danmaku-svg class="icon"/>
           <span>{{ getVideoPlayCount(video.stat.danmaku) }}</span>
         </div>
-        <span>{{ getDuration }}</span>
+        <span>{{ getDuration(video.duration) }}</span>
       </div>
-    </a>
+    </router-link>
     <div class="flex flex-col mt-2.5 relative">
       <h3
           class="text-[15px] font-medium pr-[30px] clamp-2">
@@ -79,7 +79,7 @@ import WatchLaterSvg from "@/assets/icon/watch-later.svg"
 import {computed, ref} from "vue";
 import Skeleton from "@/components/Skeleton.vue";
 import {getRange, setSourceBuffer} from "@/api/play.ts";
-import {getVideoPlayCount} from "@/utils/video";
+import {getDuration, getVideoPlayCount} from "@/utils/format";
 
 const {video} = defineProps<{ video: RecommendVideo }>()
 const isDanmaku = ref(false)
@@ -108,19 +108,6 @@ const getPubdate = computed(() => {
   } else if (now.getHours() != pubdate.getHours()) {
     return `· ${now.getHours() - pubdate.getHours()}小时前`
   } else return `· ${now.getMinutes() - pubdate.getMinutes()}分钟前`
-})
-
-const getDuration = computed(() => {
-  let hours = Math.floor(video.duration / 3600)
-  let minutes = Math.floor((video.duration % 3600) / 60)
-  let seconds = video.duration % 60
-
-  let hoursStr = hours >= 0 && hours < 9 ? '0' + hours : hours
-  let minutesStr = minutes >= 0 && minutes < 10 ? '0' + minutes : minutes
-  let secondsStr = seconds >= 0 && seconds < 10 ? '0' + seconds : seconds
-
-  if (hours > 0) return `${hoursStr}:${minutesStr}:${secondsStr}`
-  else return `${minutesStr}:${secondsStr}`
 })
 
 const handlerMouseenter = (video: RecommendVideo) => {

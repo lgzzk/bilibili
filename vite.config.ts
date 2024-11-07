@@ -29,11 +29,19 @@ export default defineConfig({
                 headers: {
                     Referer: 'https://www.bilibili.com/'
                 }
-            }, '/host': {
+            }, '/live': {
+                target: 'https://api.live.bilibili.com',
+                changeOrigin: true,
+                rewrite: path => path.replace(/^\/live/, ''),
+                headers: {
+                    Referer: 'https://www.bilibili.com/'
+                }
+            },
+            '/host': {
                 target: 'https://www.bilibili.com/',
                 changeOrigin: true,
                 rewrite: path => path.replace(/^\/host/, '')
-            },'/range': {
+            }, '/range': {
                 target: 'https://www.lgzzk.site/',
                 changeOrigin: true,
             }
