@@ -4,6 +4,7 @@
 - [Typescript](https://www.tslang.cn/index.html)
 - [Vite](https://vitejs.cn/)
 - [Vue-Router](https://router.vuejs.org/zh)
+- [VueUse](https://vueuse.pages.dev/guide)
 - [Tailwind CSS](https://www.tailwindcss.cn/)
 ## 👀声明
 此项目是个人为了兴趣而开发, 仅用于学习和测试，所用API皆从官方网站收集, 不提供任何破解内容。
