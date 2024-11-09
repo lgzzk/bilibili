@@ -40,8 +40,8 @@
               src="https://i0.hdslb.com/bfs/garb/item/33e2e72d9a0c855f036b4cb55448f44af67a0635.png@.webp"/>
           充电
         </div>
-        <div class="flex-1 flex justify-center items-center transition-all duration-300
-                    h-[30px] max-w-[200px] text-white bg-[#00aeec] cursor-pointer rounded-md hover:bg-[#00b8f6]">
+        <div class="flex-auto flex justify-center items-center transition-all duration-300
+                    h-[30px] text-white bg-[#00aeec] cursor-pointer rounded-md hover:bg-[#00b8f6]">
           <follow-svg class="w-4 h-4 mr-1"/>
           关注
           {{ getVideoPlayCount(upCard?.card.fans || 0) }}
@@ -56,7 +56,7 @@
 import Image from "@/components/Image.vue";
 import {VideoView} from "@/api/video.ts";
 import {getUpCard, UpCard} from "@/api/card.ts";
-import {computed, onMounted, ref} from "vue";
+import {computed, ref, watch} from "vue";
 import {getLiveRoomInfo, LiveRoomInfo} from "@/api/live.ts";
 import FollowSvg from "@/assets/icon/follow.svg";
 import {getVideoPlayCount} from "@/utils/format";
@@ -78,14 +78,14 @@ const getLiveUrl = computed(() => {
   }
 })
 
-onMounted(async () => {
-  if (props.videoView) {
-    [upCard.value, liveRoomInfo.value] = await Promise.all([
-      getUpCard(props.videoView.owner.mid),
-      getLiveRoomInfo(props.videoView.owner.mid),
-    ])
-  }
-})
+watch(() => props.videoView, async (newVideoView) => {
+  if (!newVideoView) return
+  [upCard.value, liveRoomInfo.value] = await Promise.all([
+    getUpCard(newVideoView.owner.mid),
+    getLiveRoomInfo(newVideoView.owner.mid),
+  ])
+}, {immediate: true})
+
 </script>
 
 <style scoped>

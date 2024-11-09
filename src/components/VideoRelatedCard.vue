@@ -2,7 +2,7 @@
   <div class="flex mt-3">
     <div
         @click="goVideo"
-        class="w-[141px] h-[80px] shrink-0 relative cursor-pointer">
+        class="w-[141px] h-[80px] pic-box shrink-0 relative cursor-pointer">
       <Image :src="`${videoRelated.pic}@336w_190h_1c_!web-video-rcmd-cover.avif`"
              class="w-full h-full rounded-md"/>
       <span class="absolute bottom-[6px] right-[6px] rounded-sm text-[13px] text-white bg-[#00000066] px-1">
@@ -13,8 +13,8 @@
       <span
           @click="goVideo"
           :title="videoRelated.title"
-          class="text-[15px] text-[#18191c] overflow-hidden line-clamp-2 break-all
-                 cursor-pointer transition-all duration-300 hover:text-[#00aeec]">
+          class="text-[15px] text-[#18191c] overflow-hidden line-clamp-2 break-all leading-[19px]
+                 cursor-pointer transition-all duration-300 hover:text-[#00aeec] video-title">
         {{ videoRelated.title }}
       </span>
       <a
@@ -47,10 +47,23 @@ const {videoRelated} = defineProps<{ videoRelated: VideoRelated }>()
 
 
 const goVideo = () => {
+  console.log('videoRelated', videoRelated)
   router.push(`/video/${videoRelated.bvid}`)
 }
 </script>
 
 <style scoped>
+@media (min-width: 1681px) {
+  .pic-box {
+    width: 189px;
+    height: 107px;
+  }
+}
 
+@media (min-width: 1681px) {
+  .video-title {
+    font-size: 16px;
+    line-height: 20px;
+  }
+}
 </style>

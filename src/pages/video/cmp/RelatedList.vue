@@ -23,7 +23,7 @@
     <div
         v-if="relatedList"
         @click="setOpen"
-        class="leading-[42px] text-center rounded-md text=[#18191c] bg-[#f1f2f3] mt-[10px] text-[12px]
+        class="leading-[42px] text-center rounded-md text-[#18191c] bg-[#f1f2f3] mt-[10px] text-[12px]
                mb-6 cursor-pointer select-none transition-all duration-300 hover:bg-[#e3e5e7]">
       {{ isOpen ? '收起' : '展开' }}
     </div>
