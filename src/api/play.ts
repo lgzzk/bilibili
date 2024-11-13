@@ -11,19 +11,34 @@ export async function getRange(url: string): Promise<number> {
 }
 
 
-export async function setSourceBuffer(url: string, sourceBuffer: SourceBuffer, startRange: number, endRange: number) {
+export async function setSourceBuffer(
+    url: string,
+    sourceBuffer: SourceBuffer,
+    startRange: number,
+    endRange: number,
+    signal?: AbortSignal
+) {
 
-    // await manageBuffer(sourceBuffer, currentTime);
-
-    let response = await httpApi(getFinalUrl(url), {
-        options: {
-            headers: {
-                range: `bytes=${startRange}-${endRange}`,
+    try {
+        let response = await httpApi(getFinalUrl(url), {
+            options: {
+                headers: {
+                    range: `bytes=${startRange}-${endRange}`,
+                },
+                signal
             }
-        }
-    }, true)
-    sourceBuffer.appendBuffer(response.data)
-    return parseInt(response.headers.get('content-length'))
+        }, true)
+
+        if (!response) return 0
+
+        sourceBuffer.appendBuffer(response.data)
+        return parseInt(response.headers.get('content-length'))
+    } catch (error: Error | any) {
+        if (error.name === 'AbortError')
+            return 0
+        console.warn('SetSourceBuffer error:', error)
+        return 0
+    }
 }
 
 // async function manageBuffer(sourceBuffer: SourceBuffer, currentTime: number) {

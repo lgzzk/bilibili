@@ -16,8 +16,9 @@ const httpApi = async (
 
         return data
 
-    } catch (err) {
-        const error = err instanceof Error ? err : new Error(String(err))
+    } catch (error: Error | any) {
+        if (error.name === 'AbortError')
+            return
         console.error('Fetch error:', error)
         throw error
     }

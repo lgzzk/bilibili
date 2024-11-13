@@ -47,7 +47,6 @@ const {videoRelated} = defineProps<{ videoRelated: VideoRelated }>()
 
 
 const goVideo = () => {
-  console.log('videoRelated', videoRelated)
   router.push(`/video/${videoRelated.bvid}`)
 }
 </script>

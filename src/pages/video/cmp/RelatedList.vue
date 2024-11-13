@@ -7,7 +7,7 @@
     </div>
   </div>
   <video-related-card
-      v-if="relatedList"
+      v-if="relatedList[0]"
       :video-related="relatedList[0]"
       class="pb-[21px] border-b-2"/>
   <div class="mt-[18px] w-full">
@@ -39,7 +39,7 @@ import VideoRelatedCard from "@/components/VideoRelatedCard.vue";
 
 const isEnable = ref(true)
 const isOpen = ref(false)
-const relatedList = ref<VideoRelated[]>()
+const relatedList = ref<VideoRelated[]>([])
 const props = defineProps<{ bvid: string | null }>()
 
 const setOpen = () => {
