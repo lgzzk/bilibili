@@ -32,10 +32,11 @@
 
 <script setup lang="ts">
 
-import {getVideoRelated, VideoRelated} from "@/api/video.ts";
+import {getVideoRelated} from "@/api/video.ts";
 import {ref, watch} from "vue";
 import SwitchButton from "@/components/SwitchButton.vue";
 import VideoRelatedCard from "@/components/VideoRelatedCard.vue";
+import {VideoRelated} from "@/api/types/video.ts";
 
 const isEnable = ref(true)
 const isOpen = ref(false)

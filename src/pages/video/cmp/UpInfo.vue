@@ -54,12 +54,14 @@
 <script setup lang="ts">
 
 import Image from "@/components/Image.vue";
-import {VideoView} from "@/api/video.ts";
-import {getUpCard, UpCard} from "@/api/card.ts";
+import {getUpCard} from "@/api/card.ts";
 import {computed, ref, watch} from "vue";
-import {getLiveRoomInfo, LiveRoomInfo} from "@/api/live.ts";
+import {getLiveRoomInfo} from "@/api/live.ts";
 import FollowSvg from "@/assets/icon/follow.svg";
 import {getVideoPlayCount} from "@/utils/format";
+import {UpCard} from "@/api/types/card.ts";
+import {LiveRoomInfo} from "@/api/types/live.ts";
+import {VideoView} from "@/api/types/video.ts";
 
 const upCard = ref<UpCard | null>()
 const liveRoomInfo = ref<LiveRoomInfo | null>()

@@ -44,7 +44,6 @@
 </template>
 
 <script setup lang="ts">
-import {VideoView} from "@/api/video.ts";
 import {getPubdate, getVideoPlayCount} from "@/utils/format";
 import DanmakuSvg from "@/assets/icon/danmaku.svg";
 import PlayCountSvg from "@/assets/icon/play-count.svg";
@@ -52,6 +51,7 @@ import WarnSvg from "@/assets/icon/warn.svg";
 import ForbidSvg from "@/assets/icon/forbid.svg";
 import HonorSvg from "@/assets/icon/honor.svg";
 import HonorArrowSvg from "@/assets/icon/honor-arrow.svg";
+import {VideoView} from "@/api/types/video.ts";
 
 defineProps<{ videoView: VideoView | null }>()
 

@@ -53,9 +53,10 @@
 import {ref} from "vue";
 import CleanSvg from '@/assets/icon/clean.svg'
 import SearchSvg from '@/assets/icon/search.svg'
-import {getDefaultSearch, getSearchSuggest, getTrendingList, SuggestItem, TrendingItem} from "@/api/serach.ts";
+import {getDefaultSearch, getSearchSuggest, getTrendingList} from "@/api/search.ts";
 import Image from "@/components/Image.vue";
 import {Fn, useDebounceFn, useEventListener} from '@vueuse/core'
+import {SuggestItem, TrendingItem} from "@/api/types/serach.ts";
 
 const searchValue = ref('')
 const defaultSearch = ref('')

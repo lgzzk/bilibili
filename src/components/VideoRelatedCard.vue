@@ -35,13 +35,13 @@
 </template>
 
 <script setup lang="ts">
-import {VideoRelated} from "@/api/video.ts";
 import Image from "@/components/Image.vue";
 import UpSvg from "@/assets/icon/up.svg"
 import PlayCountSvg from "@/assets/icon/play-count.svg"
 import {getDuration, getVideoPlayCount} from "@/utils/format";
 import DanmakuSvg from "@/assets/icon/danmaku.svg";
 import router from "@/router";
+import {VideoRelated} from "@/api/types/video.ts";
 
 const {videoRelated} = defineProps<{ videoRelated: VideoRelated }>()
 

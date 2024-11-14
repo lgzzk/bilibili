@@ -42,9 +42,10 @@
 import EllipsisBoldSvg from "@/assets/icon/ellipsis-bold.svg";
 import ArrowSvg from "@/assets/icon/arrow.svg";
 import {ref, watch} from "vue";
-import {parseDanmaku, SimpleDanmaku} from "@/api/danmaku.ts";
-import {VideoView} from "@/api/video.ts";
+import {parseDanmaku} from "@/api/danmaku.ts";
 import {formatSendTime, formatVideoTime} from "@/utils/format";
+import {SimpleDanmaku} from "@/api/types/danmaku.ts";
+import {VideoView} from "@/api/types/video.ts";
 
 const isOpen = ref(false)
 const danmakuList = ref<SimpleDanmaku[]>()

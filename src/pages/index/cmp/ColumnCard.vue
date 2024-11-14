@@ -65,13 +65,13 @@
 </template>
 
 <script setup lang="ts">
-import {RecommendVideo} from "@/api/video.ts";
 import Image from "@/components/Image.vue";
 import UpSvg from "@/assets/icon/up.svg"
 import PlayCountSvg from "@/assets/icon/play-count.svg"
 import DanmakuSvg from "@/assets/icon/danmaku.svg"
 import WatchLaterSvg from "@/assets/icon/watch-later.svg"
 import {ref} from "vue";
+import {RecommendVideo} from "@/api/types/video.ts";
 
 // TODO 待完成ColumnCard列表
 

@@ -24,8 +24,8 @@
 <script setup lang="ts">
 
 import Image from "@/components/Image.vue";
-import {LayerItem} from "@/api/header.ts";
 import httpApi from "@/utils/request";
+import {LayerItem} from "@/api/types/header.ts";
 
 defineProps<{
   layerItems: LayerItem[]

@@ -1,19 +1,27 @@
 <template>
-  <video
-      ref="video"
-      :src="videoSrc"
-      class="w-full h-[480px]  bg-black"
-      loop controls autoplay muted preload="auto"></video>
+  <div class="w-full h-[480px]  bg-black">
+    <video
+        v-if="videoPlayer"
+        ref="video"
+        :src="videoSrc"
+        class="w-full h-full"
+        loop controls autoplay muted preload="auto"></video>
+      <Image  v-else :src="videoView?.pic || ''"
+            class="w-full h-full"/>
+  </div>
 </template>
 
 <script setup lang="ts">
 import {ref, watch} from "vue";
-import {Audio, getVideoPlayer, Video, VideoView} from "@/api/video.ts";
+import {getVideoPlayer} from "@/api/video.ts";
 import {getRange, setSourceBuffer} from "@/api/play.ts";
+import Image from "@/components/Image.vue";
+import {Audio, Video, VideoPlayer, VideoView} from "@/api/types/video.ts";
 
 const videoSrc = ref()
 const video = ref<HTMLVideoElement | null>(null)
 const props = defineProps<{ videoView: VideoView | null }>()
+const videoPlayer = ref<VideoPlayer | null>({} as VideoPlayer)
 let mediaSource: MediaSource | null = null
 let videoDash: Video
 let audioDash: Audio
@@ -26,17 +34,18 @@ watch(() => props.videoView, async (newVideoView) => {
 }, {immediate: true})
 
 async function loadVideo(videoView: VideoView) {
-  let videoPlayer = await getVideoPlayer(videoView);
-  let videoList = videoPlayer.dash.video.filter(item => {
+  videoPlayer.value = await getVideoPlayer(videoView)
+  console.log(videoPlayer, 'videoPlayer')
+  let videoList = videoPlayer.value.dash.video.filter(item => {
     let url = new URL(item.baseUrl)
     return !item.codecs.includes('hev') && url.pathname.startsWith('/v1')
   })
-  if (videoList.length === 0) videoList = videoPlayer.dash.video.filter(item => {
+  if (videoList.length === 0) videoList = videoPlayer.value.dash.video.filter(item => {
     return !item.codecs.includes('hev')
   })
 
   videoDash = videoList[0]
-  audioDash = videoPlayer.dash.audio[2] || videoPlayer.dash.audio[1]
+  audioDash = videoPlayer.value.dash.audio[2] || videoPlayer.value.dash.audio[1]
 
   mediaSource = new MediaSource()
   videoSrc.value = URL.createObjectURL(mediaSource)
@@ -109,7 +118,6 @@ function clearMediaSource() {
     currentController = null
   }
   if (mediaSource) {
-    console.log("clearMediaSource")
     mediaSource.endOfStream()
     mediaSource.removeEventListener('sourceopen', handleSourceOpen)
     videoSrc.value = null

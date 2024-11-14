@@ -45,12 +45,13 @@
 <script setup lang="ts">
 import Header from "@/pages/index/cmp/Header.vue";
 import Swiper from "@/pages/index/cmp/Swiper.vue";
-import {getRecommendVideos, RecommendVideo} from "@/api/video.ts";
+import {getRecommendVideos} from "@/api/video.ts";
 import {nextTick, Ref, ref, watch} from "vue";
 import VideoCard from "@/components/VideoCard.vue";
 import FlushedSvg from "@/assets/icon/flushed.svg"
 import {useIntersectionObserver} from "@vueuse/core";
 import {useWindowScroll} from '@vueuse/core'
+import {RecommendVideo} from "@/api/types/video.ts";
 
 
 const recmdList = ref<RecommendVideo[]>([])

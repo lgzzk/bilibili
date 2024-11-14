@@ -1,13 +1,6 @@
 import httpApi from "@/utils/request";
+import {SwipeItem} from "@/api/types/swiper.ts";
 
-export interface SwipeItem {
-    id: number
-    name: string
-    pic: string
-    url: string
-    color: string
-    server_type: number
-}
 
 export async function getRecommendSwipe(): Promise<SwipeItem[]> {
     return (await httpApi('/api/x/web-show/res/locs', {

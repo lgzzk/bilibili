@@ -1,33 +1,9 @@
 import {Root} from 'protobufjs'
 import httpApi from "@/utils/request";
 import {VideoView} from "@/api/video.ts";
+import {IDanmakuElem, SimpleDanmaku} from "@/api/types/danmaku.ts";
 
-// 定义弹幕消息接口
-interface IDanmakuElem {
-    id: number
-    progress: number
-    mode: number
-    fontsize: number
-    color: number
-    midHash: string
-    content: string
-    ctime: string
-    weight: number
-    action: string
-    pool: number
-    idStr: string
-    attr: number
-}
 
-export interface SimpleDanmaku {
-    content: string   // 显示内容
-    time: number      // 出现时间
-    ctime: string
-    color: number     // 颜色
-    type: number      // 类型
-}
-
-// 使用protobuf
 const root = Root.fromJSON({
     nested: {
         DmSegMobileReply: {
@@ -71,8 +47,11 @@ export async function parseDanmaku(videoView: VideoView): Promise<SimpleDanmaku[
     })
     const DmSegMobileReply = root.lookupType('DmSegMobileReply')
     const message = DmSegMobileReply.decode(new Uint8Array(buffer))
+    const elems: IDanmakuElem[] = message.toJSON().elems
 
-    return (message.toJSON().elems as IDanmakuElem[]).map(elem => ({
+    if (!elems) return []
+
+    return elems.map(elem => ({
         content: elem.content,
         time: elem.progress,
         color: elem.color,

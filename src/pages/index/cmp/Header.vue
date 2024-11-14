@@ -14,7 +14,8 @@ import Banner from "@/pages/index/cmp/Banner.vue";
 import HeaderBar from "@/pages/index/cmp/HeaderBar.vue";
 import HeaderChannel from "@/pages/index/cmp/HeaderChannel.vue";
 import {ref} from "vue";
-import {getBannerLayer, LayerItem} from "@/api/header.ts";
+import {getBannerLayer} from "@/api/header.ts";
+import {LayerItem} from "@/api/types/header.ts";
 
 const bannerRes = ref()
 const layerItems = ref<LayerItem[]>([])

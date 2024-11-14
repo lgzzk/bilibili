@@ -69,7 +69,7 @@
 </template>
 
 <script setup lang="ts">
-import {getVideoPlayer, RecommendVideo, Video, VideoPlayer, VideoView} from "@/api/video.ts";
+import {getVideoPlayer} from "@/api/video.ts";
 import Image from "@/components/Image.vue";
 import UpSvg from "@/assets/icon/up.svg"
 import EllipsisSvg from "@/assets/icon/ellipsis.svg"
@@ -80,6 +80,7 @@ import {computed, ref} from "vue";
 import Skeleton from "@/components/Skeleton.vue";
 import {getRange, setSourceBuffer} from "@/api/play.ts";
 import {getDuration, getVideoPlayCount} from "@/utils/format";
+import {RecommendVideo, Video, VideoPlayer, VideoView} from "@/api/types/video.ts";
 
 const {video} = defineProps<{ video: RecommendVideo }>()
 const isDanmaku = ref(false)

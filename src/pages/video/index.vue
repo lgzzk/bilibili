@@ -17,7 +17,7 @@
 
 
 <script setup lang="ts">
-import {getVideoView, VideoView} from "@/api/video.ts";
+import {getVideoView} from "@/api/video.ts";
 import {ref, watch} from "vue";
 import HeaderBar from "@/pages/index/cmp/HeaderBar.vue";
 import VideoInfo from "@/pages/video/cmp/VideoInfo.vue";
@@ -25,6 +25,7 @@ import UpInfo from "@/pages/video/cmp/UpInfo.vue";
 import DanmakuList from "@/pages/video/cmp/DanmakuList.vue";
 import VideoPlayer from "@/components/VideoPlayer.vue";
 import RelatedList from "@/pages/video/cmp/RelatedList.vue";
+import {VideoView} from "@/api/types/video.ts";
 
 const videoView = ref<VideoView | null>(null)
 const props = defineProps({bvid: String})

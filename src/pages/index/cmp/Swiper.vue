@@ -48,11 +48,12 @@
 </template>
 
 <script setup lang="ts">
-import {getRecommendSwipe, setSwipeColor, SwipeItem} from "@/api/swiper.ts";
+import {getRecommendSwipe, setSwipeColor} from "@/api/swiper.ts";
 import {computed, ref} from "vue";
 import Image from "@/components/Image.vue";
 import Arrow from '@/assets/icon/arrow.svg'
 import {useThrottleFn} from "@vueuse/core";
+import {SwipeItem} from "@/api/types/swiper.ts";
 
 const swipes = ref<SwipeItem[]>([])
 const translateX = ref(0)
