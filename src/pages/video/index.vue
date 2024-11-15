@@ -23,17 +23,20 @@ import HeaderBar from "@/pages/index/cmp/HeaderBar.vue";
 import VideoInfo from "@/pages/video/cmp/VideoInfo.vue";
 import UpInfo from "@/pages/video/cmp/UpInfo.vue";
 import DanmakuList from "@/pages/video/cmp/DanmakuList.vue";
-import VideoPlayer from "@/components/VideoPlayer.vue";
 import RelatedList from "@/pages/video/cmp/RelatedList.vue";
 import {VideoView} from "@/api/types/video.ts";
+import {useWindowScroll} from "@vueuse/core";
+import VideoPlayer from "@/components/VideoPlayer.vue";
 
 const videoView = ref<VideoView | null>(null)
 const props = defineProps({bvid: String})
+const {y} = useWindowScroll({behavior: 'smooth'})
 
-
-watch(() => props.bvid, (newBvid) => {
+watch(() => props.bvid, async (newBvid) => {
   if (!newBvid) return
-  initVideoView()
+  y.value = 0
+  await initVideoView()
+  if (y.value !== 0) y.value = 0
 }, {immediate: true})
 
 
