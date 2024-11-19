@@ -63,7 +63,7 @@ const contentHandlers: Map<string, ContentHandler> = new Map([
     ['format/webm', (response) => response.blob()],
     ['text/html', (response) => response.text()],
     ['video/mp4', (response) => response.arrayBuffer()],
-    ['video/webm', (response) => response.arrayBuffer()]
+    ['video/webm', (response) => response.blob()]
 ])
 
 export default httpApi

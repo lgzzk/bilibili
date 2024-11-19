@@ -1,5 +1,5 @@
 import httpApi from "@/utils/request";
-import {RecommendVideo, VideoPlayConfig, VideoPlayer, VideoRelated, VideoView} from "@/api/types/video.ts";
+import {OnlineTotal, RecommendVideo, VideoPlayConfig, VideoPlayer, VideoRelated, VideoView} from "@/api/types/video.ts";
 
 
 export async function getRecommendVideos(ps: number = 11): Promise<RecommendVideo[]> {
@@ -38,5 +38,11 @@ export async function getVideoPlayConfig(video: VideoView): Promise<VideoPlayCon
     const {cid, aid} = video
     return (await httpApi('/api/x/player/wbi/v2', {
         params: {aid, cid}
+    })).data
+}
+
+export async function getOnlineTotal(video: VideoView): Promise<OnlineTotal> {
+    return (await httpApi('/api/x/player/online/total', {
+        params: {aid: video.aid, cid: video.cid}
     })).data
 }

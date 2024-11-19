@@ -349,3 +349,19 @@ export interface ElecHighLevel {
     intro: string
     new: boolean
 }
+
+export interface OnlineTotal {
+    total: string
+    count: string
+    show_switch: ShowSwitch
+    abtest: Abtest
+}
+
+export interface ShowSwitch {
+    total: boolean
+    count: boolean
+}
+
+export interface Abtest {
+    group: string
+}

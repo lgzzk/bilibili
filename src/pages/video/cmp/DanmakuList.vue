@@ -41,15 +41,12 @@
 <script setup lang="ts">
 import EllipsisBoldSvg from "@/assets/icon/ellipsis-bold.svg";
 import ArrowSvg from "@/assets/icon/arrow.svg";
-import {ref, watch} from "vue";
-import {parseDanmaku} from "@/api/danmaku.ts";
+import {ref} from "vue";
 import {formatSendTime, formatVideoTime} from "@/utils/format";
 import {SimpleDanmaku} from "@/api/types/danmaku.ts";
-import {VideoView} from "@/api/types/video.ts";
 
 const isOpen = ref(false)
-const danmakuList = ref<SimpleDanmaku[]>()
-const props = defineProps<{ videoView: VideoView | null }>()
+defineProps<{ danmakuList: SimpleDanmaku[] | null }>()
 
 const formatDanmakuContent = (danmaku: SimpleDanmaku) => {
   return danmaku.type === 7 ? JSON.parse(danmaku.content)[4].replace(/\n/g, '') : danmaku.content
@@ -58,11 +55,6 @@ const createTime = (danmaku: SimpleDanmaku) => {
   if (danmaku.type === 7) return '特殊弹幕'
   else return formatSendTime(parseInt(danmaku.ctime))
 }
-
-watch(() => props.videoView, async (newVideoView) => {
-  if (!newVideoView) return
-  danmakuList.value = await parseDanmaku(newVideoView)
-}, {immediate: true})
 
 </script>
 

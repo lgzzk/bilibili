@@ -54,39 +54,32 @@
 <script setup lang="ts">
 
 import Image from "@/components/Image.vue";
-import {getUpCard} from "@/api/card.ts";
-import {computed, ref, watch} from "vue";
-import {getLiveRoomInfo} from "@/api/live.ts";
+import {computed} from "vue";
 import FollowSvg from "@/assets/icon/follow.svg";
 import {getVideoPlayCount} from "@/utils/format";
 import {UpCard} from "@/api/types/card.ts";
 import {LiveRoomInfo} from "@/api/types/live.ts";
 import {VideoView} from "@/api/types/video.ts";
 
-const upCard = ref<UpCard | null>()
-const liveRoomInfo = ref<LiveRoomInfo | null>()
-const props = defineProps<{ videoView: VideoView | null }>()
+const props = defineProps<{
+  upCard: UpCard | null
+  videoView: VideoView | null
+  liveRoomInfo: LiveRoomInfo | null
+}>()
 
 const showVerifyIcon = computed(() =>
-    upCard.value && upCard.value.card.official_verify.type !== -1
+    props.upCard && props.upCard.card.official_verify.type !== -1
 )
 const isLiving = computed(() => {
-  return Object.keys(liveRoomInfo.value?.by_uids || {}).length > 0
+  return Object.keys(props.liveRoomInfo?.by_uids || {}).length > 0
 })
 const getLiveUrl = computed(() => {
-  if (liveRoomInfo.value) {
-    let uid = Object.keys(liveRoomInfo.value.by_uids)[0]
-    return liveRoomInfo.value.by_uids[uid].room_id
+  if (props.liveRoomInfo) {
+    let uid = Object.keys(props.liveRoomInfo.by_uids)[0]
+    return props.liveRoomInfo.by_uids[uid].room_id
   }
 })
 
-watch(() => props.videoView, async (newVideoView) => {
-  if (!newVideoView) return
-  [upCard.value, liveRoomInfo.value] = await Promise.all([
-    getUpCard(newVideoView.owner.mid),
-    getLiveRoomInfo(newVideoView.owner.mid),
-  ])
-}, {immediate: true})
 
 </script>
 

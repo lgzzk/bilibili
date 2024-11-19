@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full h-[480px]  bg-black relative">
+  <div class="w-full h-[450px]  bg-black relative">
     <video
         v-if="!videoView?.is_upower_exclusive"
         ref="video"
@@ -8,34 +8,28 @@
         loop controls autoplay muted preload="auto"></video>
     <Image v-else :src="videoView?.pic || ''"
            class="w-full h-full"/>
-    <div v-if="videoView?.is_upower_exclusive"
-         class="flex items-center absolute bottom-3 left-3 bg-[#212121e6] text-white p-3 rounded-md">
-      <div>
-        <p class="text-[15px] font-medium leading-[21px]">{{ videoPlayConfig?.elec_high_level.title }}</p>
-        <p class="text-[12px] leading-[17px] mt-[3px]">{{ videoPlayConfig?.elec_high_level.sub_title }}</p>
-      </div>
-      <div class="flex justify-center items-center bg-[#ff6699] cursor-pointer
-                  rounded-[4px] ml-[47px] h-[30px] pl-[6px] pr-[11px]">
-        <electricity-svg class="mr-0.5"/>
-        <span>去开通</span>
-      </div>
-    </div>
+    <tips-toast
+        v-if="videoView?.is_upower_exclusive"
+        :video-play-config/>
+    <player-sending-bar :online-total/>
   </div>
 </template>
 
 <script setup lang="ts">
 import {ref, watch} from "vue";
-import {getVideoPlayConfig, getVideoPlayer} from "@/api/video.ts";
+import {getOnlineTotal, getVideoPlayConfig, getVideoPlayer} from "@/api/video.ts";
 import {getRange, setSourceBuffer} from "@/api/play.ts";
 import Image from "@/components/Image.vue";
-import {Audio, Video, VideoPlayConfig, VideoPlayer, VideoView} from "@/api/types/video.ts";
-import ElectricitySvg from "@/assets/icon/electricity.svg"
+import {Audio, OnlineTotal, Video, VideoPlayConfig, VideoPlayer, VideoView} from "@/api/types/video.ts";
+import TipsToast from "@/components/video-player/TipsToast.vue";
+import PlayerSendingBar from "@/components/video-player/PlayerSendingBar.vue";
 
 const videoSrc = ref()
 const video = ref<HTMLVideoElement | null>(null)
 const props = defineProps<{ videoView: VideoView | null }>()
-const videoPlayer = ref<VideoPlayer | null>({} as VideoPlayer)
+const videoPlayer = ref<VideoPlayer | null>(null)
 const videoPlayConfig = ref<VideoPlayConfig | null>(null)
+const onlineTotal = ref<OnlineTotal | null>(null)
 let mediaSource: MediaSource | null = null
 let videoDash: Video
 let audioDash: Audio
@@ -44,33 +38,37 @@ let currentController: AbortController | null = null
 watch(() => props.videoView, async (newVideoView) => {
   if (!newVideoView) return
   clearMediaSource()
-  loadVideo(newVideoView)
+  await loadVideo(newVideoView)
 }, {immediate: true})
 
 async function loadVideo(videoView: VideoView) {
-  if (videoView.is_upower_exclusive)
-    videoPlayConfig.value = await getVideoPlayConfig(videoView)
-  else {
-    videoPlayer.value = await getVideoPlayer(videoView)
-    let videoList = videoPlayer.value.dash.video.filter(item => {
-      let url = new URL(item.baseUrl)
-      return !item.codecs.includes('hev') && url.pathname.startsWith('/v1')
-    })
-    if (videoList.length === 0) videoList = videoPlayer.value.dash.video.filter(item => {
-      return !item.codecs.includes('hev')
-    })
 
-    videoDash = videoList[0]
-    audioDash = videoPlayer.value.dash.audio[2] || videoPlayer.value.dash.audio[1]
+  [
+    videoPlayConfig.value,
+    onlineTotal.value,
+    videoPlayer.value
+  ] = await Promise.all([
+    !videoView.is_upower_exclusive ? Promise.resolve(null) : getVideoPlayConfig(videoView),
+    videoView.is_upower_exclusive ? Promise.resolve(null) : getOnlineTotal(videoView),
+    videoView.is_upower_exclusive ? Promise.resolve({} as VideoPlayer) : getVideoPlayer(videoView)
+  ])
 
-    mediaSource = new MediaSource()
-    videoSrc.value = URL.createObjectURL(mediaSource)
-    mediaSource.addEventListener('sourceopen', handleSourceOpen)
+  if (videoView.is_upower_exclusive) return
 
-    video.value?.addEventListener('error', (event) => {
-      console.error('Video error occurred:', event)
-    });
-  }
+  videoDash = getFilteredVideoList(videoPlayer.value.dash.video)[0]
+  audioDash =
+      videoPlayer.value.dash.audio[2] ||
+      videoPlayer.value.dash.audio[1] ||
+      videoPlayer.value.dash.audio[0]
+
+
+  mediaSource = new MediaSource()
+  videoSrc.value = URL.createObjectURL(mediaSource)
+  mediaSource.addEventListener('sourceopen', handleSourceOpen)
+
+  video.value?.addEventListener('error', (event) => {
+    console.error('Video error occurred:', event)
+  });
 
 }
 
@@ -141,6 +139,17 @@ function clearMediaSource() {
   }
 }
 
+function getFilteredVideoList(videoDash: Video[]) {
+  let videoList = videoDash.filter(item => {
+    let url = new URL(item.baseUrl)
+    return !item.codecs.includes('hev') && url.pathname.startsWith('/v1')
+  })
+  if (videoList.length === 0) videoList = videoDash.filter(item => {
+    return !item.codecs.includes('hev')
+  })
+
+  return videoList
+}
 </script>
 
 <style scoped>

@@ -8,29 +8,41 @@
       <div class="text-wrap">{{ videoView?.desc }}</div>
     </div>
     <div class="w-[350px] content-right h-full ml-[30px]">
-      <up-info :video-view/>
-      <danmaku-list :video-view/>
-      <related-list :bvid="videoView?.bvid || null"/>
+      <up-info :video-view :live-room-info :up-card/>
+      <danmaku-list :danmaku-list/>
+      <related-list :related-list/>
     </div>
   </div>
 </template>
 
 
 <script setup lang="ts">
-import {getVideoView} from "@/api/video.ts";
-import {ref, watch} from "vue";
+import {getVideoRelated, getVideoView} from "@/api/video.ts";
+import {provide, ref, watch} from "vue";
 import HeaderBar from "@/pages/index/cmp/HeaderBar.vue";
 import VideoInfo from "@/pages/video/cmp/VideoInfo.vue";
 import UpInfo from "@/pages/video/cmp/UpInfo.vue";
 import DanmakuList from "@/pages/video/cmp/DanmakuList.vue";
 import RelatedList from "@/pages/video/cmp/RelatedList.vue";
-import {VideoView} from "@/api/types/video.ts";
+import {VideoRelated, VideoView} from "@/api/types/video.ts";
 import {useWindowScroll} from "@vueuse/core";
-import VideoPlayer from "@/components/VideoPlayer.vue";
+import VideoPlayer from "@/components/video-player/VideoPlayer.vue";
+import {parseDanmaku} from "@/api/danmaku.ts";
+import {SimpleDanmaku} from "@/api/types/danmaku.ts";
+import {UpCard} from "@/api/types/card.ts";
+import {LiveRoomInfo} from "@/api/types/live.ts";
+import {getUpCard} from "@/api/card.ts";
+import {getLiveRoomInfo} from "@/api/live.ts";
 
+const danmakuList = ref<SimpleDanmaku[] | null>(null)
+const relatedList = ref<VideoRelated[] | null>(null)
 const videoView = ref<VideoView | null>(null)
+const upCard = ref<UpCard | null>(null)
+const liveRoomInfo = ref<LiveRoomInfo | null>(null)
 const props = defineProps({bvid: String})
 const {y} = useWindowScroll({behavior: 'smooth'})
+
+provide('danmakuList', danmakuList)
 
 watch(() => props.bvid, async (newBvid) => {
   if (!newBvid) return
@@ -41,9 +53,24 @@ watch(() => props.bvid, async (newBvid) => {
 
 
 async function initVideoView() {
-  const data = await getVideoView(props.bvid!)
-  videoView.value = data
-  document.title = data.title + '_哔哩哔哩_bilibili'
+  videoView.value = await getVideoView(props.bvid!)
+
+  document.title = videoView.value.title + '_哔哩哔哩_bilibili';
+
+  [
+    upCard.value,
+    liveRoomInfo.value,
+    relatedList.value,
+    danmakuList.value
+  ] = await Promise.all([
+    getUpCard(videoView.value.owner.mid),
+    getLiveRoomInfo(videoView.value.owner.mid),
+    getVideoRelated(videoView.value.bvid),
+    videoView.value.is_upower_exclusive
+        ? Promise.resolve(null)
+        : parseDanmaku(videoView.value)
+  ])
+
 }
 
 </script>
