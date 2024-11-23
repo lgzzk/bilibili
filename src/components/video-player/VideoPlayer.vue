@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import {ref, watch} from "vue";
+import {onUnmounted, ref, watch} from "vue";
 import {getOnlineTotal, getVideoPlayConfig, getVideoPlayer} from "@/api/video.ts";
 import {getRange, setSourceBuffer} from "@/api/play.ts";
 import Image from "@/components/Image.vue";
@@ -34,12 +34,18 @@ let mediaSource: MediaSource | null = null
 let videoDash: Video
 let audioDash: Audio
 let currentController: AbortController | null = null
+let onlineTotalTimer: NodeJS.Timeout
 
 watch(() => props.videoView, async (newVideoView) => {
   if (!newVideoView) return
   clearMediaSource()
+  clearOnlineTotalTimer()
   await loadVideo(newVideoView)
 }, {immediate: true})
+
+onUnmounted(() => {
+  clearOnlineTotalTimer()
+})
 
 async function loadVideo(videoView: VideoView) {
 
@@ -55,12 +61,13 @@ async function loadVideo(videoView: VideoView) {
 
   if (videoView.is_upower_exclusive) return
 
+  setOnlineTotalTimer(videoView)
+
   videoDash = getFilteredVideoList(videoPlayer.value.dash.video)[0]
   audioDash =
       videoPlayer.value.dash.audio[2] ||
       videoPlayer.value.dash.audio[1] ||
       videoPlayer.value.dash.audio[0]
-
 
   mediaSource = new MediaSource()
   videoSrc.value = URL.createObjectURL(mediaSource)
@@ -149,6 +156,16 @@ function getFilteredVideoList(videoDash: Video[]) {
   })
 
   return videoList
+}
+
+function setOnlineTotalTimer(videoView: VideoView) {
+  onlineTotalTimer = setInterval(async () => {
+    onlineTotal.value = await getOnlineTotal(videoView)
+  }, 1000 * 30)
+}
+
+function clearOnlineTotalTimer() {
+  onlineTotalTimer && clearInterval(onlineTotalTimer)
 }
 </script>
 

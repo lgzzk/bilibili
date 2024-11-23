@@ -131,8 +131,7 @@ setTimer()
 }
 
 .mask {
-  -webkit-mask-image: linear-gradient(0, #2f3238 11%, transparent 20%)
-
+  mask-image: linear-gradient(0, #2f3238 11%, transparent 20%)
 }
 
 .eat-haha-up {
