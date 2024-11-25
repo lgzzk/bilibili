@@ -15,9 +15,7 @@
     </div>
     <div class="fixed bottom-[30px] right-[var(--layout-right)]">
       <div class="button h-10 flex justify-center bg-white">
-        <svg class="w-[22px] h-[22px]" aria-hidden="true">
-          <use xlink:href="#widget-watch-later"></use>
-        </svg>
+        <Svg href="#widget-watch-later" class="w-[22px] h-[22px]"/>
       </div>
       <div
           :style="{opacity}"
@@ -25,16 +23,12 @@
         <div
             @click="flushed"
             class="rounded-lg py-2.5 cursor-pointer mt-1.5 text-white flex justify-center bg-[#00aeec]">
-          <svg class="w-[19px] h-[19px]" aria-hidden="true">
-            <use xlink:href="#palette-refresh"></use>
-          </svg>
+          <Svg href="#palette-refresh" class="w-[19px] h-[19px]"/>
         </div>
         <div
             @click="goTop"
             class="button pt-2 pb-1.5 mt-3 flex justify-center bg-white">
-          <svg class="w-4 h-4" aria-hidden="true">
-            <use xlink:href="#palette-top"></use>
-          </svg>
+          <Svg href="#palette-top" class="w-4 h-4"/>
           <span>顶部</span>
         </div>
       </div>
@@ -52,6 +46,7 @@ import FlushedSvg from "@/assets/icon/flushed.svg"
 import {useIntersectionObserver} from "@vueuse/core";
 import {useWindowScroll} from '@vueuse/core'
 import {RecommendVideo} from "@/api/types/video.ts";
+import Svg from "@/components/Svg.vue";
 
 
 const recmdList = ref<RecommendVideo[]>([])

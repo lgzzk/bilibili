@@ -26,9 +26,9 @@
       </a>
       <div class="flex items-center">
         <play-count-svg class="w-[18px] h-[18px] mr-1"/>
-        <span class="mr-3">{{ getVideoPlayCount(videoRelated?.stat.view) }}</span>
+        <span class="mr-3">{{ formatMillion(videoRelated?.stat.view) }}</span>
         <danmaku-svg class="w-[18px] h-[18px] mr-1"/>
-        <span>{{ getVideoPlayCount(videoRelated.stat.danmaku) }}</span>
+        <span>{{ formatMillion(videoRelated.stat.danmaku) }}</span>
       </div>
     </div>
   </div>
@@ -38,7 +38,7 @@
 import Image from "@/components/Image.vue";
 import UpSvg from "@/assets/icon/up.svg"
 import PlayCountSvg from "@/assets/icon/play-count.svg"
-import {getDuration, getVideoPlayCount} from "@/utils/format";
+import {getDuration, formatMillion} from "@/utils/format";
 import DanmakuSvg from "@/assets/icon/danmaku.svg";
 import {VideoRelated} from "@/api/types/video.ts";
 

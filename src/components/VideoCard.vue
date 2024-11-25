@@ -32,9 +32,9 @@
           class="mask mask-transition justify-between z-10">
         <div class="flex">
           <play-count-svg class="icon"/>
-          <span class="mr-3">{{ getVideoPlayCount(video.stat.view) }}</span>
+          <span class="mr-3">{{ formatMillion(video.stat.view) }}</span>
           <danmaku-svg class="icon"/>
-          <span>{{ getVideoPlayCount(video.stat.danmaku) }}</span>
+          <span>{{ formatMillion(video.stat.danmaku) }}</span>
         </div>
         <span>{{ getDuration(video.duration) }}</span>
       </div>
@@ -79,7 +79,7 @@ import WatchLaterSvg from "@/assets/icon/watch-later.svg"
 import {computed, ref} from "vue";
 import Skeleton from "@/components/Skeleton.vue";
 import {getRange, setSourceBuffer} from "@/api/play.ts";
-import {getDuration, getVideoPlayCount} from "@/utils/format";
+import {getDuration, formatMillion} from "@/utils/format";
 import {RecommendVideo, Video, VideoPlayer, VideoView} from "@/api/types/video.ts";
 
 const {video} = defineProps<{ video: RecommendVideo }>()

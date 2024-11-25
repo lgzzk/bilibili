@@ -44,7 +44,7 @@
                     h-[30px] text-white bg-[#00aeec] cursor-pointer rounded-md hover:bg-[#00b8f6]">
           <follow-svg class="w-4 h-4 mr-1"/>
           关注
-          {{ getVideoPlayCount(upCard?.card.fans || 0) }}
+          {{ formatMillion(upCard?.card.fans || 0) }}
         </div>
       </div>
     </div>
@@ -56,7 +56,7 @@
 import Image from "@/components/Image.vue";
 import {computed} from "vue";
 import FollowSvg from "@/assets/icon/follow.svg";
-import {getVideoPlayCount} from "@/utils/format";
+import {formatMillion} from "@/utils/format";
 import {UpCard} from "@/api/types/card.ts";
 import {LiveRoomInfo} from "@/api/types/live.ts";
 import {VideoView} from "@/api/types/video.ts";

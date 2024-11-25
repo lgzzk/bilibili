@@ -1,18 +1,19 @@
 <template>
-  <div class="w-full h-[450px]  bg-black relative">
+  <div class="w-full h-[450px] bg-black">
     <video
         v-if="!videoView?.is_upower_exclusive"
         ref="video"
         :src="videoSrc"
-        class="w-full h-full"
+        class="w-[770px] h-full"
         loop controls autoplay muted preload="auto"></video>
     <Image v-else :src="videoView?.pic || ''"
            class="w-full h-full"/>
     <tips-toast
         v-if="videoView?.is_upower_exclusive"
         :video-play-config/>
-    <player-sending-bar :online-total/>
   </div>
+  <player-sending-bar :online-total/>
+  <video-toolbar v-if="videoView" :stat="videoView.stat"/>
 </template>
 
 <script setup lang="ts">
@@ -23,10 +24,11 @@ import Image from "@/components/Image.vue";
 import {Audio, OnlineTotal, Video, VideoPlayConfig, VideoPlayer, VideoView} from "@/api/types/video.ts";
 import TipsToast from "@/components/video-player/TipsToast.vue";
 import PlayerSendingBar from "@/components/video-player/PlayerSendingBar.vue";
+import VideoToolbar from "@/components/video-player/VideoToolbar.vue";
 
+const props = defineProps<{ videoView: VideoView | null }>()
 const videoSrc = ref()
 const video = ref<HTMLVideoElement | null>(null)
-const props = defineProps<{ videoView: VideoView | null }>()
 const videoPlayer = ref<VideoPlayer | null>(null)
 const videoPlayConfig = ref<VideoPlayConfig | null>(null)
 const onlineTotal = ref<OnlineTotal | null>(null)
@@ -170,5 +172,7 @@ function clearOnlineTotalTimer() {
 </script>
 
 <style scoped>
-
+.video-player-container {
+  @apply flex flex-col;
+}
 </style>

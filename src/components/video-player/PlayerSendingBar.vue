@@ -15,7 +15,7 @@
           class="w-6 h-6 mr-3"/>
     </div>
     <div class="flex rounded-lg overflow-hidden w-full h-[32px] bg-[#f1f2f3]">
-      <div class="flex items-center h-full w-full">
+      <div class="flex items-center h-full w-full select-none">
         <danmaku-type-svg
             v-if="isOn"
             class="shrink-0 ml-1.5 w-6 cursor-pointer hover:text-[#00aeec]"/>

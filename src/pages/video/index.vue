@@ -2,10 +2,10 @@
   <header-bar class="relative" style="color: #18191c"/>
   <div
       class="flex justify-center  max-w-[2540px] min-w-[1080px] px-[10px] mx-auto whitespace-pre-line">
-    <div class="w-[771px] ">
+    <div>
       <video-info :video-view/>
       <video-player :video-view/>
-      <div class="text-wrap">{{ videoView?.desc }}</div>
+      <div class="text-wrap  text-[14px] leading-[24px] text-[#61666d] bg-white">{{ videoView?.desc }}</div>
     </div>
     <div class="w-[350px] content-right h-full ml-[30px]">
       <up-info :video-view :live-room-info :up-card/>

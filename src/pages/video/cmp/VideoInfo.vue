@@ -19,12 +19,12 @@
 
       <div class="flex mr-[12px]">
         <play-count-svg class="icon mr-[4px]"/>
-        <span>{{ getVideoPlayCount(videoView.stat.view) }}</span>
+        <span>{{ formatMillion(videoView.stat.view) }}</span>
       </div>
 
       <div class="flex mr-[12px]">
         <danmaku-svg class="icon mr-[4px]"/>
-        <span>{{ getVideoPlayCount(videoView.stat.danmaku) }}</span>
+        <span>{{ formatMillion(videoView.stat.danmaku) }}</span>
       </div>
 
       <span>{{ getPubdate(videoView.pubdate) }}</span>
@@ -44,7 +44,7 @@
 </template>
 
 <script setup lang="ts">
-import {getPubdate, getVideoPlayCount} from "@/utils/format";
+import {getPubdate, formatMillion} from "@/utils/format";
 import DanmakuSvg from "@/assets/icon/danmaku.svg";
 import PlayCountSvg from "@/assets/icon/play-count.svg";
 import WarnSvg from "@/assets/icon/warn.svg";
