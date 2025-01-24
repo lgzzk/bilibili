@@ -5,11 +5,13 @@ export interface HeaderBarItem {
     url: string
 }
 
-export interface Banner {
+export interface Header {
+    name: string
     pic: string
     litpic: string
+    url: string
     is_split_layer: number
-    split_layer: string
+    split_layer: LayerItem[]
     request_id: string
 }
 

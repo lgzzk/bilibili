@@ -1,22 +1,37 @@
 <template>
   <div
       class="relative flex justify-center items-center overflow-hidden h-[9.375vw] max-h-[240px] min-h-[155px] ">
-      <template v-for="i in layerItems">
+    <template
+        v-if="header.is_split_layer"
+        v-for="i in header.split_layer">
       <Image
           v-if="i.resources[0].src.includes('.png')"
           :key="'image-'+i.id"
           :src="i.resources[0].src"
-          class="banner-img"/>
+          class="banner-img"
+      />
       <video
           v-else
           :key="'format-'+i.id"
           :ref="el => setBlob(el as HTMLVideoElement,i.resources[0].src)"
           :style="{transform: `translate(${i.translate.initial[0]}px,${i.translate.initial[1]}px)`}"
           class="object-cover top-0 absolute"
-          loop playsinline muted autoplay></video>
+          loop playsinline muted autoplay>
+      </video>
     </template>
-    <Image v-if="!layerItems" :src="pic" class="banner-img"/>
-    <Image v-if="litpic" :src="litpic" class="absolute left-[var(--litpic-left)] bottom-[10px] h-[78px] w-[162px]"/>
+    <a :href="header.url" target="_blank">
+      <Image
+          v-if="!header.is_split_layer"
+          :src="header.pic"
+          class="banner-img"
+      />
+    </a>
+    <a href="/bilibili">
+      <Image
+          v-if="header.litpic"
+          :src="header.litpic"
+          class="absolute left-[var(--litpic-left)] bottom-[10px] h-[78px] w-[162px]"/>
+    </a>
     <div class="mask"></div>
   </div>
 </template>
@@ -25,12 +40,10 @@
 
 import Image from "@/components/Image.vue";
 import httpApi from "@/utils/request";
-import {LayerItem} from "@/api/types/header.ts";
+import {Header} from "@/api/types/header.ts";
 
 defineProps<{
-  layerItems: LayerItem[]
-  litpic: string
-  pic: string
+  header: Header
 }>()
 
 const setBlob = async (el: HTMLVideoElement, url: string) => {

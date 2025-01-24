@@ -1,10 +1,10 @@
 <template>
-  <div class="w-full h-[450px] bg-black">
+  <div class="w-full h-full bg-black relative">
     <video
         v-if="!videoView?.is_upower_exclusive"
         ref="video"
         :src="videoSrc"
-        class="w-[770px] h-full"
+        class="w-full h-full"
         loop controls autoplay muted preload="auto"></video>
     <Image v-else :src="videoView?.pic || ''"
            class="w-full h-full"/>
@@ -172,7 +172,4 @@ function clearOnlineTotalTimer() {
 </script>
 
 <style scoped>
-.video-player-container {
-  @apply flex flex-col;
-}
 </style>
