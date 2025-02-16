@@ -3,7 +3,7 @@
        @mousemove="onMouseMove"
        @mouseleave="onMouseleave">
     <header-bar/>
-    <Banner v-if="header" :header="header" />
+    <Banner v-if="header" :header="header" ref="bannerRes" />
   </div>
   <header-channel/>
 </template>
@@ -42,7 +42,7 @@ const setTranslateStyle = () => {
 
 const onMouseMove = (e: MouseEvent) => {
   offsetX = e.clientX - enterX
-  // setTranslateStyle()
+  setTranslateStyle()
 }
 
 const onMouseEnter = (e: MouseEvent) => {
@@ -52,7 +52,7 @@ const onMouseEnter = (e: MouseEvent) => {
 const onMouseleave = () => {
   enterX = 0
   offsetX = 0
-  // setTranslateStyle()
+  setTranslateStyle()
 }
 </script>
 

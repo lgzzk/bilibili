@@ -11,6 +11,8 @@ export async function getHeaderBar(): Promise<HeaderBarItem[]> {
 }
 
 export async function getBannerLayer(): Promise<Header> {
-    return (await httpApi('/api/x/web-show/page/header?resource_id=142')).data
+    let header = (await httpApi('/api/x/web-show/page/header?resource_id=142')).data
+    let layers = JSON.parse(header.split_layer).layers
+    return {...header,split_layer:layers}
 }
 
