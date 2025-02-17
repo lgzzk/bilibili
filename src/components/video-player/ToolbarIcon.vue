@@ -10,7 +10,7 @@
 
 import {formatMillion} from "@/utils/format";
 
-defineProps<{ icon: string, value: number }>()
+defineProps<{ icon: object | string, value: number }>()
 </script>
 
 <style scoped>

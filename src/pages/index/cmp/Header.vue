@@ -3,7 +3,7 @@
        @mousemove="onMouseMove"
        @mouseleave="onMouseleave">
     <header-bar/>
-    <Banner v-if="header" :header="header" ref="bannerRes" />
+    <Banner :header="header" ref="bannerRes" />
   </div>
   <header-channel/>
 </template>
@@ -18,7 +18,7 @@ import {getBannerLayer} from "@/api/header.ts";
 import {Header} from "@/api/types/header.ts";
 
 const bannerRes = ref()
-const header = ref<Header | null>(null)
+const header = ref<Header>({} as Header)
 
 let offsetX = 0
 let enterX = 0

@@ -21,14 +21,13 @@
     </template>
     <a :href="header.url" target="_blank">
       <Image
-          v-if="!header.is_split_layer"
+          v-if="!header.is_split_layer && header.pic"
           :src="header.pic"
           class="banner-img"
       />
     </a>
-    <a href="/bilibili">
+    <a v-if="header.litpic" href="/bilibili">
       <Image
-          v-if="header.litpic"
           :src="header.litpic"
           class="absolute left-[var(--litpic-left)] bottom-[10px] h-[78px] w-[162px]"/>
     </a>
