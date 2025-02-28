@@ -111,12 +111,13 @@ async function handleSourceOpen() {
     // console.log(mediaSource?.readyState, 'videoSourceBuffer')
     console.log(videoRange, videoMaxRange, 'videoSourceBuffer')
     if (videoRange < videoMaxRange && video.value) {
-      videoRange += await setSourceBuffer(
+      let range = await setSourceBuffer(
           videoDash.baseUrl,
           videoSourceBuffer,
           videoRange,
           initSize + videoRange, signal
       )
+      videoRange += range
     }
   })
 
@@ -124,13 +125,14 @@ async function handleSourceOpen() {
     // console.log(mediaSource?.readyState, 'audioSourceBuffer')
     console.log(audioRange, audioMaxRange, 'audioSourceBuffer')
     if (audioRange < audioMaxRange && video.value) {
-      audioRange += await setSourceBuffer(
+      let range = await setSourceBuffer(
           audioDash.baseUrl,
           audioSourceBuffer,
           audioRange,
           initSize + audioRange,
           signal
       )
+      audioRange += range
     }
   })
 }
