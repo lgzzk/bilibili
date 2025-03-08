@@ -29,7 +29,7 @@ getBannerLayer().then(res => {
 })
 
 const setTranslateStyle = () => {
-  if (!bannerRes.value) return
+  if (!header.value.is_split_layer) return
   if (imageDoms.length === 0) imageDoms = bannerRes.value.$el.querySelectorAll('.banner-img')
   imageDoms.forEach((i, index) => {
     let offset = header.value?.split_layer[index].translate.offset || [0, 0]
