@@ -51,7 +51,7 @@ import WarnSvg from "@/assets/icon/warn.svg";
 import ForbidSvg from "@/assets/icon/forbid.svg";
 import HonorSvg from "@/assets/icon/honor.svg";
 import HonorArrowSvg from "@/assets/icon/honor-arrow.svg";
-import {VideoView} from "@/api/types/video.ts";
+import type {VideoView} from "@/api/types/video";
 
 defineProps<{ videoView: VideoView | null }>()
 

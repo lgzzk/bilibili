@@ -39,7 +39,7 @@
 
 import Image from "@/components/Image.vue";
 import httpApi from "@/utils/request";
-import {Header} from "@/api/types/header.ts";
+import type {Header} from "@/api/types/header";
 
 defineProps<{
   header: Header

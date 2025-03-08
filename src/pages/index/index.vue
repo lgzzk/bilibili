@@ -39,13 +39,13 @@
 <script setup lang="ts">
 import Header from "@/pages/index/cmp/Header.vue";
 import Swiper from "@/pages/index/cmp/Swiper.vue";
-import {getRecommendVideos} from "@/api/video.ts";
-import {nextTick, Ref, ref, watch} from "vue";
+import {getRecommendVideos} from "@/api/video";
+import {nextTick, type Ref, ref, watch} from "vue";
 import VideoCard from "@/components/VideoCard.vue";
 import FlushedSvg from "@/assets/icon/flushed.svg"
 import {useIntersectionObserver} from "@vueuse/core";
 import {useWindowScroll} from '@vueuse/core'
-import {RecommendVideo} from "@/api/types/video.ts";
+import type {RecommendVideo} from "@/api/types/video";
 import Svg from "@/components/Svg.vue";
 
 

@@ -1,5 +1,5 @@
 import httpApi from "@/utils/request";
-import {LiveRoomInfo} from "@/api/types/live.ts";
+import type {LiveRoomInfo} from "@/api/types/live";
 
 
 export async function getLiveRoomInfo(mid: number): Promise<LiveRoomInfo> {

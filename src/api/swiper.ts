@@ -1,5 +1,5 @@
 import httpApi from "@/utils/request";
-import {SwipeItem} from "@/api/types/swiper.ts";
+import type {SwipeItem} from "@/api/types/swiper";
 
 
 export async function getRecommendSwipe(): Promise<SwipeItem[]> {

@@ -1,7 +1,7 @@
 import {Root} from 'protobufjs'
 import httpApi from "@/utils/request";
-import {IDanmakuElem, SimpleDanmaku} from "@/api/types/danmaku.ts";
-import {VideoView} from "@/api/types/video.ts";
+import type {IDanmakuElem, SimpleDanmaku} from "@/api/types/danmaku";
+import type {VideoView} from "@/api/types/video";
 
 
 const root = Root.fromJSON({

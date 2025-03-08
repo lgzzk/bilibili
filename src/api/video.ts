@@ -1,5 +1,5 @@
 import httpApi from "@/utils/request";
-import {OnlineTotal, RecommendVideo, VideoPlayConfig, VideoPlayer, VideoRelated, VideoView} from "@/api/types/video.ts";
+import type {OnlineTotal, RecommendVideo, VideoPlayConfig, VideoPlayer, VideoRelated, VideoView} from "@/api/types/video";
 
 
 export async function getRecommendVideos(ps: number = 11): Promise<RecommendVideo[]> {

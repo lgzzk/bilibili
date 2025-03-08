@@ -71,7 +71,7 @@ import PlayCountSvg from "@/assets/icon/play-count.svg"
 import DanmakuSvg from "@/assets/icon/danmaku.svg"
 import WatchLaterSvg from "@/assets/icon/watch-later.svg"
 import {ref} from "vue";
-import {RecommendVideo} from "@/api/types/video.ts";
+import type {RecommendVideo} from "@/api/types/video";
 
 // TODO 待完成ColumnCard列表
 

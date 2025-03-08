@@ -57,10 +57,10 @@ import FavoriteSvg from '@/assets/icon/favorite.svg'
 import HistorySvg from '@/assets/icon/history.svg'
 import CreationSvg from '@/assets/icon/creation.svg'
 import UploadSvg from '@/assets/icon/upload.svg'
-import {getHeaderBar} from "@/api/header.ts";
+import {getHeaderBar} from "@/api/header";
 import {ref} from "vue";
 import Image from "@/components/Image.vue";
-import {HeaderBarItem} from "@/api/types/header.ts";
+import type {HeaderBarItem} from "@/api/types/header";
 
 
 interface BarItem {

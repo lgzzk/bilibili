@@ -14,8 +14,8 @@ import Banner from "@/pages/index/cmp/Banner.vue";
 import HeaderBar from "@/pages/index/cmp/HeaderBar.vue";
 import HeaderChannel from "@/pages/index/cmp/HeaderChannel.vue";
 import {ref} from "vue";
-import {getBannerLayer} from "@/api/header.ts";
-import {Header} from "@/api/types/header.ts";
+import {getBannerLayer} from "@/api/header";
+import type {Header} from "@/api/types/header";
 
 const bannerRes = ref()
 const header = ref<Header>({} as Header)

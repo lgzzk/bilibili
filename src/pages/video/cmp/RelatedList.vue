@@ -36,7 +36,7 @@
 import {ref} from "vue";
 import SwitchButton from "@/components/SwitchButton.vue";
 import VideoRelatedCard from "@/components/VideoRelatedCard.vue";
-import {VideoRelated} from "@/api/types/video.ts";
+import type {VideoRelated} from "@/api/types/video";
 
 const isEnable = ref(true)
 const isOpen = ref(false)

@@ -43,7 +43,7 @@ import EllipsisBoldSvg from "@/assets/icon/ellipsis-bold.svg";
 import ArrowSvg from "@/assets/icon/arrow.svg";
 import {ref} from "vue";
 import {formatSendTime, formatVideoTime} from "@/utils/format";
-import {SimpleDanmaku} from "@/api/types/danmaku.ts";
+import type {SimpleDanmaku} from "@/api/types/danmaku";
 
 const isOpen = ref(false)
 defineProps<{ danmakuList: SimpleDanmaku[] | null }>()

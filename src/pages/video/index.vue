@@ -17,22 +17,22 @@
 
 
 <script setup lang="ts">
-import {getVideoRelated, getVideoView} from "@/api/video.ts";
+import {getVideoRelated, getVideoView} from "@/api/video";
 import {provide, ref, watch} from "vue";
 import HeaderBar from "@/pages/index/cmp/HeaderBar.vue";
 import VideoInfo from "@/pages/video/cmp/VideoInfo.vue";
 import UpInfo from "@/pages/video/cmp/UpInfo.vue";
 import DanmakuList from "@/pages/video/cmp/DanmakuList.vue";
 import RelatedList from "@/pages/video/cmp/RelatedList.vue";
-import {VideoRelated, VideoView} from "@/api/types/video.ts";
+import type {VideoRelated, VideoView} from "@/api/types/video";
 import {useWindowScroll} from "@vueuse/core";
 import VideoPlayer from "@/components/video-player/VideoPlayer.vue";
-import {parseDanmaku} from "@/api/danmaku.ts";
-import {SimpleDanmaku} from "@/api/types/danmaku.ts";
-import {UpCard} from "@/api/types/card.ts";
-import {LiveRoomInfo} from "@/api/types/live.ts";
-import {getUpCard} from "@/api/card.ts";
-import {getLiveRoomInfo} from "@/api/live.ts";
+import {parseDanmaku} from "@/api/danmaku";
+import type {SimpleDanmaku} from "@/api/types/danmaku";
+import type {UpCard} from "@/api/types/card";
+import type {LiveRoomInfo} from "@/api/types/live";
+import {getUpCard} from "@/api/card";
+import {getLiveRoomInfo} from "@/api/live";
 
 const danmakuList = ref<SimpleDanmaku[] | null>(null)
 const relatedList = ref<VideoRelated[] | null>(null)

@@ -1,5 +1,5 @@
 import httpApi from "@/utils/request";
-import {DefaultSuggest, SuggestItem, TrendingItem} from "@/api/types/serach.ts";
+import type {DefaultSuggest, SuggestItem, TrendingItem} from "@/api/types/serach";
 
 
 export async function getDefaultSearch(): Promise<DefaultSuggest> {

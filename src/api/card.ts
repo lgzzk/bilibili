@@ -1,5 +1,5 @@
 import httpApi from "@/utils/request";
-import {UpCard} from "@/api/types/card.ts";
+import type {UpCard} from "@/api/types/card";
 
 export async function getUpCard(mid: number): Promise<UpCard> {
     return (await httpApi('/api/x/web-interface/card', {

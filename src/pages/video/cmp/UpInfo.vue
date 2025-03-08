@@ -57,9 +57,9 @@ import Image from "@/components/Image.vue";
 import {computed} from "vue";
 import FollowSvg from "@/assets/icon/follow.svg";
 import {formatMillion} from "@/utils/format";
-import {UpCard} from "@/api/types/card.ts";
-import {LiveRoomInfo} from "@/api/types/live.ts";
-import {VideoView} from "@/api/types/video.ts";
+import type {UpCard} from "@/api/types/card";
+import type {LiveRoomInfo} from "@/api/types/live";
+import type {VideoView} from "@/api/types/video";
 
 const props = defineProps<{
   upCard: UpCard | null

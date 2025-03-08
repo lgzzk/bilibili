@@ -1,5 +1,5 @@
 import httpApi from "@/utils/request";
-import {Header, HeaderBarItem} from "@/api/types/header.ts";
+import type {Header, HeaderBarItem} from "@/api/types/header";
 
 
 export async function getHeaderBar(): Promise<HeaderBarItem[]> {
