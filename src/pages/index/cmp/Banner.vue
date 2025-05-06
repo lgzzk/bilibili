@@ -14,7 +14,10 @@
           v-else
           :key="'format-'+i.id"
           :ref="el => setBlob(el as HTMLVideoElement,i.resources[0].src)"
-          :style="{transform: `translate(${i.translate.initial[0]}px,${i.translate.initial[1]}px)`}"
+          :style="{
+            transform:
+            `translate(${i.translate.initial?.[0] || i.translate.initial?.[0]}px,${i.translate.initial?.[1] || i.translate.initial}px)`
+          }"
           class="object-cover top-0 absolute"
           loop playsinline muted autoplay>
       </video>
